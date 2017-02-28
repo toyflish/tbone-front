@@ -9,7 +9,6 @@ import App from './App'
 import Selfies from './components/Selfies'
 import Goals from './components/Goals'
 import Achievements from './components/Achievements'
-import Archive from './components/Archive'
 import Node from './components/Node'
 
 import VueRouter from 'vue-router'
@@ -30,10 +29,6 @@ const router = new VueRouter({
     {
       path: '/achievements',
       component: Achievements
-    },
-    {
-      path: '/archive',
-      component: Archive
     },
     {
       path: '/:slug',

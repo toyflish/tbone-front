@@ -4,10 +4,12 @@
     <h1>{{node.name}}</h1>
     <img v-bind:src="node.attachment_url" />
     <div class="children">
-      <div class="node" v-for="node in node.children">
-        <router-link :to="{ path: node.slug }">
-          <img v-bind:src="node.preview_url" v-bind:alt="node.name"/>
-        </router-link>
+      <div class="batch" v-for="batch in childrenInBatches">
+        <div class="node" v-for="node in batch">
+          <router-link :to="{ path: node.slug }" style="display:block">
+            <img v-bind:src="node.preview_url" v-bind:alt="node.name"/>
+          </router-link>
+        </div>
       </div>
     </div>
   </div>
@@ -19,6 +21,28 @@
   export default {
     name: 'showDefaultNode',
     props: ['node'],
+    data: function () {
+      return {
+        batches: [1, 2, 3]
+      }
+    },
+    computed: {
+      childrenInBatches: function () {
+        if (typeof (this.node) === 'object' && this.node.children instanceof (Array)) {
+          return this.inBatches(this.node.children, 3)
+        }
+      }
+    },
+    methods: {
+      inBatches: function (nodes, size) {
+        console.log(nodes)
+        let batches = []
+        for (let i = 0; i < nodes.length; i += size) {
+          batches.push(nodes.slice(i, size + i))
+        }
+        return batches
+      }
+    },
     components: {
       BreadCrumb
     }
@@ -26,13 +50,26 @@
 </script>
 
 
-<style>
-.show-default-node .children {
-  background: yellow;
-}
+<style lang="scss">
 .show-default-node {
   .children {
-    background: red;
+    .batch {
+      margin-bottom: 3px;
+      display: flex;
+      flex-wrap: wrap;
+      .node {
+        width: 32%;
+        * {
+          display: block;
+        }
+      }
+      .node:nth-child(3n+1) {
+        margin-right: 3px;
+      }
+      .node:nth-child(3n+3) {
+        margin-left: 3px;
+      }
+    }
   }
 }
 </style>
