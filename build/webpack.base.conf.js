@@ -57,6 +57,10 @@ module.exports = {
         loader: 'vue'
       },
       {
+        test: /\.scss$/,
+        loader: ['style', 'css', 'sass']
+      },
+      {
         test: /\.js$/,
         loader: 'babel',
         include: [
