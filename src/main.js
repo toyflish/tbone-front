@@ -2,6 +2,7 @@
 // (runtime-only or standalone) has been set in webpack.base.conf with an alias.
 
 import 'normalize.css/normalize.css'
+// import './css/denormalize.scss'
 import './css/denormalize.css'
 
 import Vue from 'vue'
