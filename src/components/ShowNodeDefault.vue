@@ -28,17 +28,16 @@
     },
     computed: {
       childrenInBatches: function () {
-        if (typeof (this.node) === 'object' && this.node.children instanceof (Array)) {
-          return this.inBatches(this.node.children, 3)
-        }
+        return this.inBatches(this.node.children, 3)
       }
     },
     methods: {
       inBatches: function (nodes, size) {
-        console.log(nodes)
         let batches = []
-        for (let i = 0; i < nodes.length; i += size) {
-          batches.push(nodes.slice(i, size + i))
+        if (nodes instanceof (Array)) {
+          for (let i = 0; i < nodes.length; i += size) {
+            batches.push(nodes.slice(i, size + i))
+          }
         }
         return batches
       }
