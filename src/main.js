@@ -13,8 +13,23 @@ import Achievements from './components/Achievements'
 import Node from './components/Node'
 
 import VueRouter from 'vue-router'
+import Vuex from 'vuex'
 
+Vue.use(Vuex)
 Vue.use(VueRouter)
+
+const store = new Vuex.Store({
+  strict: true,
+  state: {
+    activeNode: {name: 'initial'}
+  },
+  mutations: {
+    setActiveNode (state, node) {
+      console.log('mutations::setActiveNode', node)
+      state.activeNode = node
+    }
+  }
+})
 
 const router = new VueRouter({
   mode: 'history',
@@ -41,6 +56,7 @@ const router = new VueRouter({
 /* eslint-disable no-new */
 new Vue({
   router,
+  store,
   el: '#app',
   template: '<App />',
   components: { App },

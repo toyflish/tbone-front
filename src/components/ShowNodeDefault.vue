@@ -1,6 +1,5 @@
 <template>
   <div class="show-default-node">
-    <breadCrumb v-bind:node="node" />
     <h1>{{node.name}}</h1>
     <img v-bind:src="node.attachment_url" />
     <div v-html="node.content"></div>
@@ -28,8 +27,6 @@
 </template>
 
 <script>
-  import BreadCrumb from './BreadCrumb'
-
   export default {
     name: 'showDefaultNode',
     props: ['node'],
@@ -62,9 +59,6 @@
         }
         return batches
       }
-    },
-    components: {
-      BreadCrumb
     }
   }
 </script>

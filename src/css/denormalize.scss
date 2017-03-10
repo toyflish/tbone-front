@@ -81,56 +81,45 @@
     }
   }
 
-  .back-wrapper {
-    z-index: 10;
+  .breadcrumb {
     position: absolute;
-    bottom: 0px;
+    bottom: 35px;
     left: 0px;
-    height: 75px;
-    width: 75px;
+    width: 300px;
+    height: 45px;
+    z-index: 10;
 
-    .back-icon {
+    div {
       position: relative;
-      margin: 15px;
-
-      width: 45px;
-      height: 45px;
-
-      transform: rotate(0deg);
-      transition: .5s ease-in-out;
-      cursor: pointer;
-
-      transform: scale(0.6);
-
-
-      span {
+      height: 75px;
+      float: left;
+      // defaults
+      width:60px;
+      a {
         display: block;
         position: absolute;
-        height: 6px;
-        width: 100%;
-        background: #fefefe;
-        border-radius: 2px;
-        opacity: 1;
-        box-shadow: rgba(0, 0, 0, 0.4) 1px 1px 10px;
-        left: 0;
-        transform: rotate(0deg);
-        transition: .25s ease-in-out;
-
-        &:nth-child(1) {
-          top: 15px;
-          transform: rotate(135deg);
+        width:100%;
+        bottom: 6px;
+        svg {
+          bottom: 0px;
         }
+      }
 
-        &:nth-child(2) {
-          top: 43px;
-          transform: rotate(45deg);
-        }
-
-        &:nth-child(3) {
-          top: 15px;
-          transform: rotate(135deg);
-          box-shadow: none;
-        }
+      // overwrites
+      &:nth-child(1) {
+        width:60px;
+        a { bottom: 0px}
+      }
+      &:nth-child(2) {
+        width:40px;
+        a { bottom: 4px}
+      }
+      &:nth-child(3) {
+        width:35px;
+        a { bottom: 5px}
+      }
+      &:nth-child(4) {
+        width:30px;
       }
     }
   }
