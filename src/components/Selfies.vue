@@ -21,7 +21,7 @@
     methods: {
       fetchSelfies: function () {
         let thisVue = this
-        axios.get('http://toyflish.dev/api/nodes/13940.json?level_down=1&full_crop=600x')
+        axios.get(`${this.$store.state.apiUrl}/api/nodes/13940.json?level_down=1&full_crop=600x`)
         .then(function (response) {
           console.log(response.data)
           thisVue.selfies = response.data.children

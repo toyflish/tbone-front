@@ -15,13 +15,17 @@ import Node from './components/Node'
 import VueRouter from 'vue-router'
 import Vuex from 'vuex'
 
+const apiUrl = process.env.API_URL
+console.log('api url', apiUrl)
+
 Vue.use(Vuex)
 Vue.use(VueRouter)
 
 const store = new Vuex.Store({
   strict: true,
   state: {
-    activeNode: {name: 'initial'}
+    activeNode: {name: 'initial'},
+    apiUrl: apiUrl
   },
   mutations: {
     setActiveNode (state, node) {

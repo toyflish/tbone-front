@@ -4,7 +4,6 @@
 
 <script>
   import NodeService from '../services/NodeService'
-  import BreadCrumb from './BreadCrumb'
   import ShowNodeDefault from './ShowNodeDefault'
 
   export default {
@@ -36,7 +35,6 @@
       }
     },
     components: {
-      BreadCrumb,
       ShowNodeDefault
     }
   }

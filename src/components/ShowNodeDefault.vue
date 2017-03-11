@@ -79,10 +79,10 @@
         }
       }
       .node:nth-child(3n+1) {
-        margin-right: 3px;
+        margin-right: 0.5%;
       }
       .node:nth-child(3n+3) {
-        margin-left: 3px;
+        margin-left: 0.5%;
       }
     }
   }

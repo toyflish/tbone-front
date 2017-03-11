@@ -78,7 +78,7 @@ export default {
   },
   mounted: function () {
     let thisView = this
-    axios.get(`http://toyflish.dev/api/nodes/menu.json`)
+    axios.get(`${this.$store.state.apiUrl}/api/nodes/menu.json`)
     .then(function (response) {
       thisView.items = response.data
     })
