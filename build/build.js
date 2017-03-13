@@ -23,6 +23,7 @@ rm('-rf', assetsPath)
 mkdir('-p', assetsPath)
 cp('-R', 'static/*', assetsPath)
 cp('static/.htaccess', 'dist/.htaccess')
+cp('static/favicon.ico', 'dist/favicon.ico')
 
 webpack(webpackConfig, function (err, stats) {
   spinner.stop()
