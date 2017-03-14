@@ -19,7 +19,7 @@ class NodeService {
   fetchBySlug (slug) {
     console.log(`NodeService.fetchBySlug ${slug}`)
     let thisService = this
-    return axios.get(`${apiUrl}/api/nodes/by_slug.json?slug=${slug}&level_down=2&full_crop=600x`)
+    return axios.get(`${apiUrl}/api/nodes/by_slug.json?slug=${slug}&level_down=2&full_crop=600x&grand_children_limit=5`)
     .then(function (response) {
       console.log(response.data)
       thisService.nodeData = response.data

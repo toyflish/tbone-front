@@ -36,7 +36,7 @@
     },
     methods: {
       fetchNode: function (slug) {
-        console.log('Node::fetchNode slug:', slug)
+        console.log('NodeDispatcher::fetchNode slug:', slug)
         let thisVue = this
         let n = new NodeService()
         n.fetchBySlug(slug).then(function (node) {
@@ -59,14 +59,15 @@
       }
     },
     mounted: function () {
-      // this.$store.commit('setActiveNode', {empty: 'node'})
-      console.log(`Node::mounted.fetchNode(${this.$route.params.slug})`)
-      if (this.props !== undefined && this.props.node !== undefined) {
-        console.log('PropsNode')
-      } else {
-        console.log('ParamsNode')
-        this.fetchNode(this.$route.params.slug)
+      console.log(`NodeDispatcher::mounted.fetchNode(${this.$route.params.slug})`)
+      let slug = this.$route.params.slug
+
+      // sanitize slug if document-root is called
+      if (slug === undefined) {
+        console.log('NodeDispatcher::mounted: slug undefinde maybee "/" !')
+        slug = ''
       }
+      this.fetchNode(slug)
     }
   }
 </script>

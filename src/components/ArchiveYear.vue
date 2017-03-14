@@ -1,25 +1,20 @@
 <template>
-  <div class="show-default-node">
+  <div class="archive-year">
     <h1>{{node.name}}</h1>
     <img v-bind:src="node.attachment_url" />
     <div v-html="node.content"></div>
-    <div v-if="validateAllHavePreviewUrl(node.children)" class="children">
-      <div class="batch" v-for="batch in childrenInBatches">
-        <div class="node" v-for="node in batch">
-          <router-link :to="{ path: node.slug }" style="display:block">
-            <img v-if="node.preview_url" v-bind:src="node.preview_url" v-bind:alt="node.name"/>
-            <span v-else class="primer">{{node.name}}</span>
-          </router-link>
-        </div>
-      </div>
-    </div>
-    <div v-else class="children">
-      <div class="list">
-        <div class="node" v-for="node in node.children">
-          <router-link :to="{ path: node.slug }" style="display:block">
-            <img v-if="node.attachment_url" v-bind:src="node.attachment_url" v-bind:alt="node.name"/>
-            <span v-else class="primer">{{node.name}}</span>
-          </router-link>
+    <div class="children">
+      <div class="child" v-for="child in node.children">
+        <router-link :to="{ path: child.slug }" style="display:block">
+          <img v-if="child.attachment_url" v-bind:src="child.attachment_url" v-bind:alt="child.name"/>
+          <span v-else class="primer">{{child.name}}</span>
+        </router-link>
+        <div class="grand-children">
+          <div class="grand-child" v-for="grandChild in child.children.slice(0,4)">
+            <router-link :to="{ path: grandChild.slug }" style="display:block">
+              <img v-if="grandChild.preview_url" v-bind:src="grandChild.preview_url" v-bind:alt="grandChild.name"/>
+            </router-link>
+          </div>
         </div>
       </div>
     </div>
@@ -28,61 +23,30 @@
 
 <script>
   export default {
-    name: 'showDefaultNode',
-    props: ['node'],
-    data: function () {
-      return {
-        batches: [1, 2, 3]
-      }
-    },
-    computed: {
-      childrenInBatches: function () {
-        return this.inBatches(this.node.children, 3)
-      }
-    },
-    methods: {
-      validateAllHavePreviewUrl: function (nodes) {
-        if (nodes instanceof (Array)) {
-          return nodes.find(function (n) {
-            return n.preview_url === undefined
-          }) === undefined
-        } else {
-          return undefined
-        }
-      },
-      inBatches: function (nodes, size) {
-        let batches = []
-        if (nodes instanceof (Array)) {
-          for (let i = 0; i < nodes.length; i += size) {
-            batches.push(nodes.slice(i, size + i))
-          }
-        }
-        return batches
-      }
-    }
+    name: 'archiveYear',
+    props: ['node']
   }
 </script>
 
 
 <style lang="scss">
-.show-default-node {
+.archive-year {
   .children {
-    .batch {
-      margin-bottom: 3px;
-      display: flex;
-      flex-wrap: wrap;
-      .node {
-        // 3x33 => 99% + 2 x 3px (0.5%)
-        width: 33%;
-        * {
-          display: block;
+    .child {
+      .grand-children {
+        margin-bottom: 3px;
+        display: flex;
+        flex-wrap: wrap;
+        .grand-child {
+          width: 24.7%;
+          margin-right: 0.4%;
+          * {
+            display: block;
+          }
         }
-      }
-      .node:nth-child(3n+1) {
-        margin-right: 0.5%;
-      }
-      .node:nth-child(3n+3) {
-        margin-left: 0.5%;
+        .grand-child:nth-child(4) {
+          margin-right: 0;
+        }
       }
     }
   }
