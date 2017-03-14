@@ -44,7 +44,7 @@ export default {
   },
   computed: {
     breadcrumb: function () {
-      console.log('computed::breadcrumb')
+      console.log('NavBar::computed:breadcrumb')
       if (this.$route.path === '/') {
         return []
       } else {

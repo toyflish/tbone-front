@@ -6,11 +6,11 @@ import 'normalize.css/normalize.css'
 require('!style-loader!css-loader!sass-loader!./css/denormalize.scss')
 
 import Vue from 'vue'
-import App from './App'
-import Selfies from './components/Selfies'
+import NavBar from './components/NavBar'
+import Home from './components/Home'
 import Goals from './components/Goals'
 import Achievements from './components/Achievements'
-import Node from './components/Node'
+import NodeDispatcher from './components/NodeDispatcher'
 
 import VueRouter from 'vue-router'
 import Vuex from 'vuex'
@@ -39,10 +39,6 @@ const router = new VueRouter({
   mode: 'history',
   routes: [
     {
-      path: '/',
-      component: Selfies
-    },
-    {
       path: '/goals',
       component: Goals
     },
@@ -51,8 +47,14 @@ const router = new VueRouter({
       component: Achievements
     },
     {
+      path: '/',
+      name: 'root',
+      component: NodeDispatcher
+    },
+    {
       path: '/:slug',
-      component: Node
+      name: 'nodeSlug',
+      component: NodeDispatcher
     }
   ]
 })
@@ -62,11 +64,26 @@ new Vue({
   router,
   store,
   el: '#app',
-  template: '<App />',
-  components: { App },
-  methods: {
-    addGoal: function (name) {
-      this.$firebaseRefs.goals.push({name: name})
+  data: function () {
+    return {
+      // node: {}
+    }
+  },
+  components: {
+    Home,
+    NodeDispatcher,
+    NavBar
+  },
+  template: `
+    <div class="container">
+      <navBar></navBar>
+      <router-view :key="$route"></router-view>
+    </div>
+  `,
+  computed: {
+    node: function () {
+      console.log('Main::computed:node')
+      return this.$store.state.activeNode
     }
   }
 })
