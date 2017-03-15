@@ -31,11 +31,27 @@ const store = new Vuex.Store({
   },
   mutations: {
     setActiveNode (state, node) {
-      console.log('mutations::setActiveNode', node)
+      console.log('Store:mutations:setActiveNode', node)
       state.activeNode = node
     }
   }
 })
+
+
+// Title change on Node change
+let setDocumentTitle = function (title) {
+  document.title = title
+}
+
+let setDocumentTitleByActiveNode = function () {
+  setDocumentTitle(store.state.activeNode.title)
+}
+
+store.watch(
+  function (state) {
+    return state.activeNode
+  }, setDocumentTitleByActiveNode
+)
 
 const router = new VueRouter({
   mode: 'history',
@@ -90,5 +106,6 @@ new Vue({
       console.log('Main::computed:node')
       return this.$store.state.activeNode
     }
+
   }
 })
