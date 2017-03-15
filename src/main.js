@@ -15,6 +15,8 @@ import NodeDispatcher from './components/NodeDispatcher'
 import VueRouter from 'vue-router'
 import Vuex from 'vuex'
 
+import VueAnalytics from 'vue-analytics'
+
 const apiUrl = process.env.API_URL
 console.log('api url', apiUrl)
 
@@ -58,6 +60,9 @@ const router = new VueRouter({
     }
   ]
 })
+
+const id = 'UA-627798-1'
+Vue.use(VueAnalytics, { id, router })
 
 /* eslint-disable no-new */
 new Vue({
