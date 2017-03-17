@@ -18,6 +18,9 @@
 
 <style lang="scss">
   .home {
+    .content {
+      padding: 15px;
+    }
     padding-top: 100px;
 
     .avatar {

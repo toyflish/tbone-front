@@ -37,7 +37,6 @@ const store = new Vuex.Store({
   }
 })
 
-
 // Title change on Node change
 let setDocumentTitle = function (title) {
   document.title = title
@@ -96,7 +95,7 @@ new Vue({
     NavBar
   },
   template: `
-    <div class="container">
+    <div class="container main">
       <navBar></navBar>
       <router-view :key="$route"></router-view>
     </div>
