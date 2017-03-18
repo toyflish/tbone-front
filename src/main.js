@@ -2,8 +2,7 @@
 // (runtime-only or standalone) has been set in webpack.base.conf with an alias.
 
 import 'normalize.css/normalize.css'
-// import './css/denormalize.scss'
-require('!style-loader!css-loader!sass-loader!./css/denormalize.scss')
+import './css/denormalize.scss'
 
 import Vue from 'vue'
 import NavBar from './components/NavBar'
