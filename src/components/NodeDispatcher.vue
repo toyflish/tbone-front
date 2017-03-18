@@ -1,5 +1,8 @@
 <template>
   <div class="dispatcher">
+    <div class="logo-wrapper" v-if="showLogo">
+      <Logo />
+    </div>
     <div v-if="loading" class="loading">
       loading ...
     </div>
@@ -10,21 +13,26 @@
 <script>
   import NodeService from '../services/NodeService'
 
+  import Logo from './Logo'
+
   import Home from './Home'
   import DefaultNode from './DefaultNode'
   import Gallery from './Gallery'
   import GalleryListing from './GalleryListing'
   import ArchiveYear from './ArchiveYear'
   import Archive from './Archive'
+  import Timeline from './Timeline'
 
   export default {
     components: {
+      Logo,
       Home,
       DefaultNode,
       Gallery,
       GalleryListing,
       ArchiveYear,
-      Archive
+      Archive,
+      Timeline
     },
     name: 'nodeDispatcher',
     props: ['slug'],
@@ -56,6 +64,10 @@
         } else {
           return view
         }
+      },
+      showLogo: function () {
+        console.log('showLogo', this.$store.state.activeNode.id)
+        return this.$store.state.activeNode.id !== undefined && this.$store.state.activeNode.id !== 1
       }
     },
     mounted: function () {
@@ -71,3 +83,7 @@
     }
   }
 </script>
+
+<style>
+
+</style>

@@ -1,8 +1,8 @@
 <template>
-  <div class="show-default-node">
+  <div class="node-default">
     <h1>{{node.name}}</h1>
     <img v-bind:src="node.attachment_url" />
-    <div v-html="node.content"></div>
+    <div class="container-text" v-html="node.content"></div>
     <div v-if="validateAllHavePreviewUrl(node.children)" class="children">
       <div class="batch" v-for="batch in childrenInBatches">
         <div class="node" v-for="node in batch">
@@ -15,12 +15,15 @@
     </div>
     <div v-else class="children">
       <div class="list">
-        <div class="node" v-for="node in node.children">
-          <router-link :to="{ path: node.slug }" style="display:block">
-            <img v-if="node.attachment_url" v-bind:src="node.attachment_url" v-bind:alt="node.name"/>
-            <span v-else class="primer">{{node.name}}</span>
+        <article class="node" v-for="node in node.children">
+          <router-link v-if="node.attachment_url" :to="{ path: node.slug }" style="display:block">
+            <img  v-bind:src="node.attachment_url" v-bind:alt="node.name"/>
           </router-link>
-        </div>
+          <div v-else class="container-text">
+            <h2 ><router-link :to="{ path: node.slug }">{{node.name}}</router-link></h2>
+            <span class="subtitle">{{node.teaser}}</span>
+          </div>
+        </article>
       </div>
     </div>
   </div>
@@ -28,7 +31,7 @@
 
 <script>
   export default {
-    name: 'showDefaultNode',
+    name: 'defaultNode',
     props: ['node'],
     data: function () {
       return {
@@ -65,7 +68,10 @@
 
 
 <style lang="scss">
-.show-default-node {
+.node-default {
+  .container-text {
+    margin-bottom: 30px;
+  }
   .children {
     .batch {
       margin-bottom: 3px;
@@ -84,6 +90,9 @@
       .node:nth-child(3n+3) {
         margin-left: 0.5%;
       }
+    }
+    .article {
+      margin: 15px auto;
     }
   }
 }

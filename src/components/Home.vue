@@ -3,7 +3,7 @@
     <div class="avatar" v-bind:style="{ backgroundImage: 'url(' + node.attachment_url + ')' }" >
     </div>
     <h1>{{node.name}}</h1>
-    <div class="content" v-html="node.content"></div>
+    <div class="container-text" v-html="node.content"></div>
 
   </div>
 </template>

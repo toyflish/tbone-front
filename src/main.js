@@ -51,6 +51,10 @@ store.watch(
   }, setDocumentTitleByActiveNode
 )
 
+Vue.filter('date', function (value) {
+  return (new Date(value)).toLocaleDateString()
+})
+
 const router = new VueRouter({
   mode: 'history',
   routes: [

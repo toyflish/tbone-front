@@ -2,7 +2,7 @@
   <div class="show-default-node">
     <h1>{{node.name}}</h1>
     <img v-bind:src="node.attachment_url" />
-    <div v-html="node.content"></div>
+    <div class="container-text" v-html="node.content"></div>
     <div v-if="validateAllHavePreviewUrl(node.children)" class="children">
       <div class="batch" v-for="batch in childrenInBatches">
         <div class="node" v-for="node in batch">
@@ -67,6 +67,7 @@
 <style lang="scss">
 .show-default-node {
   .children {
+    margin: 15px auto;
     .batch {
       margin-bottom: 3px;
       display: flex;

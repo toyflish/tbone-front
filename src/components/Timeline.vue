@@ -1,14 +1,18 @@
 <template>
-  <div class="archive-year">
+  <div class="timeline">
     <h1>{{node.name}}</h1>
     <img v-bind:src="node.attachment_url" />
     <div v-html="node.content"></div>
     <section class="children">
-      <article class="child" v-for="child in node.children">
+      <article v-for="child in node.linked_nodes">
         <router-link :to="{ path: child.slug }" style="display:block">
           <img v-if="child.attachment_url" v-bind:src="child.attachment_url" v-bind:alt="child.name"/>
-          <span v-else class="primer">{{child.name}}</span>
         </router-link>
+        <div class="container-text">
+          <h2 class="subtitled"><router-link :to="{ path: child.slug }">{{child.name}}</router-link></h2>
+          <span class="subtitle">{{child.teaser}}</span>
+          <span class="captured-at">{{child.captured_at | date}}</span>
+        </div>
         <div class="grand-children">
           <div class="grand-child" v-for="grandChild in child.children.slice(0,4)">
             <router-link :to="{ path: grandChild.slug }" style="display:block">
@@ -23,16 +27,17 @@
 
 <script>
   export default {
-    name: 'archiveYear',
+    name: 'Timeline',
     props: ['node']
   }
 </script>
 
 
 <style lang="scss">
-.archive-year {
+.timeline {
   .children {
-    .child {
+    article {
+      margin-top: 40px;
       .grand-children {
         margin-bottom: 3px;
         display: flex;
