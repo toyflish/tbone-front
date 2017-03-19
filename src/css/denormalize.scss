@@ -5,6 +5,10 @@ $link-color: #48879a;
 $link-color-hover: #111;
 $subtitle-color: rgba(0,0,0,.44);
 
+div, section, article {
+  box-sizing: border-box;
+}
+
 a {
   color: $link-color;
   text-decoration: none;
