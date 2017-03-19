@@ -1,7 +1,9 @@
 <template>
-  <div class="logo">
-    <div class="label">t</div>
-  </div>
+  <router-link :to="{path: '/'}">
+    <div class="logo">
+      <div class="label">t</div>
+    </div>
+  </router-link>
 </template>
 
 <script>

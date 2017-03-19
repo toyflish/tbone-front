@@ -1,4 +1,42 @@
 /* denormalize - kleiner joke */
+
+$font-color: #000;
+$link-color: #48879a;
+$link-color-hover: #111;
+$subtitle-color: rgba(0,0,0,.44);
+
+a {
+  color: $link-color;
+  text-decoration: none;
+  transition: all .1s ease-out;
+
+  &:hover {
+    color: $link-color-hover;
+  }
+}
+
+h1 a, h2 a, h3 a, h4 a, h5 a, .primer a {
+  color: $font-color;
+}
+
+.container-text a {
+  color: $link-color;
+  padding: 10px 0;
+  background-image: linear-gradient(currentColor,currentColor);
+  background-repeat: no-repeat;
+  background-size: 100% 1.5px;
+  background-position: center bottom 27%;
+  background-origin: padding-box;
+  text-shadow: 3px 0 #fff,2px 0 #fff,1px 0 #fff,-1px 0 #fff,-2px 0 #fff,-3px 0 #fff;
+
+  &:hover {
+    color: $link-color-hover;
+    text-decoration: none;
+    background-size: 100% 2.5px;
+    background-position: center bottom 25%;
+  }
+}
+
 h1 {
    // margin-top: 0;
 }
@@ -24,8 +62,8 @@ p {
     letter-spacing: 0;
     font-weight: 300;
     font-style: normal;
-    color: rgba(0,0,0,.44);
-    fill: rgba(0,0,0,.44);
+    color: $subtitle-color;
+    fill: $subtitle-color;
 }
 
 .container-text {
@@ -40,7 +78,8 @@ p {
 }
 
 .main {
-  margin: 15px 0px 75px 0px;
+  margin-top: 15px;
+  margin-bottom: 75px;
 }
 .logo-wrapper {
   margin-bottom: 15px;
@@ -180,9 +219,7 @@ p {
 
     /* Effects */
     visibility: hidden;
-    -webkit-transform: translateY(60%) scale(0);
     transform: translateY(60%) scale(0);
-    -webkit-transition: -webkit-transform 0.4s, visibility 0s 0.4s;
     transition: transform 0.4s, visibility 0s 0.4s;
 
     &.open {
@@ -193,13 +230,9 @@ p {
       left: 0;
 
       visibility: visible;
-      -webkit-transform: translateY(0%) scale(1);
       transform: translateY(0%) scale(1);
-      -webkit-transition: -webkit-transform 0.4s;
       transition: transform 0.4s;
     }
-
-
 
     /* Menu style */
     nav {
@@ -207,7 +240,6 @@ p {
       position: relative;
       top: 50%;
       height: 60%;
-      -webkit-transform: translateY(-50%);
       transform: translateY(-50%);
     }
 
@@ -223,15 +255,16 @@ p {
         display: block;
         height: 20%;
         min-height: 54px;
-        -webkit-backface-visibility: hidden;
         backface-visibility: hidden;
 
         a {
+          text-decoration: none;
+          text-shadow: none;
+          background: none;
           font-size: 54px;
           font-weight: 300;
           display: block;
           color: #fff;
-          -webkit-transition: color 0.2s;
           transition: color 0.2s;
 
           &:hover,
@@ -271,7 +304,4 @@ img {
     text-align: center;
 }
 
-a {
-  text-decoration: none;
-  color: #111;
-}
+
