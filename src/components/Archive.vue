@@ -11,9 +11,7 @@
               <span>{{child.name}}</span>
             </router-link>
           </div>
-          <div class="descendants">
-            <span>{{child.descendant_count}}</span>
-          </div>
+          <div class="descendants" :id="child.id">-</div>
         </div>
       </div>
     </div>
@@ -21,10 +19,26 @@
 </template>
 
 <script>
+  import CountUp from 'countup'
+
   export default {
     name: 'archive',
     props: ['node'],
     methods: {
+      countUp: function (id, max) {
+        let options = {
+          useEasing: true,
+          useGrouping: false,
+          separator: '',
+          decimal: '',
+          prefix: '',
+          suffix: ''
+        };
+        (new CountUp(String(id), 0, max, 0, 2.5, options)).start()
+      }
+    },
+    mounted: function () {
+      this.node.children.forEach((child) => this.countUp(child.id, child.descendant_count))
     }
   }
 </script>

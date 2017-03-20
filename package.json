@@ -13,6 +13,7 @@
   },
   "dependencies": {
     "axios": "^0.15.3",
+    "countup": "^1.8.2",
     "normalize.css": "^5.0.0",
     "vue": "^2.2.1",
     "vue-analytics": "^3.0.1",
