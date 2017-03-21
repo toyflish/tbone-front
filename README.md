@@ -1,6 +1,8 @@
 # tbone-front
 
-> A Vue.js project
+A singlepage frontend to the bone-cms rails-json-service based on Vue.js and Vuex.
+
+[Demo](https://toyflish.com) can be found at [toyflish.com](https://toyflish.com) serving 15000 images in 400 galleries
 
 ## Build Setup
 
@@ -18,4 +20,3 @@ npm run build
 npm run build --report
 ```
 
-For detailed explanation on how things work, checkout the [guide](http://vuejs-templates.github.io/webpack/) and [docs for vue-loader](http://vuejs.github.io/vue-loader).
