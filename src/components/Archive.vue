@@ -4,7 +4,7 @@
     <img v-bind:src="node.attachment_url" />
     <div v-html="node.content"></div>
     <div class="children">
-      <div class="square" v-for="child in node.children">
+      <div class="square" v-for="child in childrenReverse()">
         <div class="content" v-on:click="$router.push({ path: child.slug })">
           <div class="name">
             <router-link :to="{ path: child.slug }" style="display:block">
@@ -34,7 +34,12 @@
           prefix: '',
           suffix: ''
         };
-        (new CountUp(String(id), 0, max, 0, 2.5, options)).start()
+        (new CountUp(String(id), 0, max, 0, max / 1000 * 0.5, options)).start()
+      },
+      childrenReverse: function () {
+        let arr = []
+        this.node.children.forEach((child) => arr.unshift(child))
+        return arr
       }
     },
     mounted: function () {

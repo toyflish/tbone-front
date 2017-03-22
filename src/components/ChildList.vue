@@ -6,8 +6,8 @@
       </router-link>
       <div class="container-text">
         <h2 class="subtitled"><router-link :to="{ path: child.slug }">{{child.name}}</router-link></h2>
+        <div class="captured-at">{{child.captured_at | date}}</div>
         <span class="subtitle">{{child.teaser}}</span>
-        <span class="captured-at">{{child.captured_at | date}}</span>
       </div>
       <div class="grand-children">
         <div class="grand-child" v-for="grandChild in child.children.slice(0,4)">
@@ -32,6 +32,12 @@
 .children {
   article {
     margin-top: 40px;
+    .captured-at {
+      font-family: Georgia, serif;
+      font-style: italic;
+      font-size: smaller;
+      color: #aaa;
+    }
     .grand-children {
       margin-bottom: 3px;
       display: flex;
