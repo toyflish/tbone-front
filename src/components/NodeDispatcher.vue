@@ -25,6 +25,7 @@
   import ArchiveYear from './ArchiveYear'
   import Archive from './Archive'
   import Timeline from './Timeline'
+  import Gems from './Gems'
 
   export default {
     components: {
@@ -35,7 +36,8 @@
       GalleryListing,
       ArchiveYear,
       Archive,
-      Timeline
+      Timeline,
+      Gems
     },
     name: 'nodeDispatcher',
     props: ['slug'],
@@ -62,13 +64,16 @@
           thisVue.error = true
           thisVue.errorMsg = error.message
         })
+      },
+      componentsRegistered: function () {
+        return Object.keys(this.$options.components)
       }
     },
     computed: {
       activeNodeView: function () {
         let view = this.$store.state.activeNode.view
-        if (view === undefined) {
-          console.log('NodeDispatcher: view undefined, fall back to DefaultNode')
+        if (view === undefined || !this.componentsRegistered().includes(view)) {
+          console.log(`NodeDispatcher: view(${view}) not registred, fall back to DefaultNode`)
           return 'DefaultNode'
         } else {
           return view

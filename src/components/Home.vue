@@ -4,14 +4,19 @@
     </div>
     <h1>{{node.name}}</h1>
     <div class="container-text" v-html="node.content"></div>
+    <ChildList :children="node.linked_nodes" />
 
   </div>
 </template>
 
 <script>
+  import ChildList from './ChildList'
   export default {
     name: 'home',
-    props: ['node']
+    props: ['node'],
+    components: {
+      ChildList
+    }
   }
 </script>
 
