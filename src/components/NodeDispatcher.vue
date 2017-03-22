@@ -6,6 +6,9 @@
     <div v-if="loading" class="loading">
       loading ...
     </div>
+    <div v-if="error" class="loading">
+      Loading error : {{errorMsg}}
+    </div>
     <component :node="node" v-bind:is="activeNodeView"/>
   </div>
 </template>
@@ -39,6 +42,8 @@
     data: function () {
       return {
         loading: true,
+        error: false,
+        errorMsg: '',
         node: {}
       }
     },
@@ -52,6 +57,10 @@
           thisVue.loading = false
           console.log(thisVue.node.view)
           thisVue.$store.commit('setActiveNode', node)
+        }).catch(function (error) {
+          thisVue.loading = false
+          thisVue.error = true
+          thisVue.errorMsg = error.message
         })
       }
     },
