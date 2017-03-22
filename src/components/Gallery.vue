@@ -1,5 +1,5 @@
 <template>
-  <div class="show-default-node">
+  <div class="gallery">
     <h1>{{node.name}}</h1>
     <img v-bind:src="node.attachment_url" />
     <div class="container-text" v-html="node.content"></div>
@@ -23,13 +23,36 @@
         </div>
       </div>
     </div>
+
+    <div class="swiper-container">
+      <div class="swiper-wrapper">
+        <div class="swiper-slide" v-for="child in node.children">
+          <img v-if="child.attachment_url" v-bind:src="child.attachment_url" v-bind:alt="child.name"/>
+        </div>
+      </div>
+      <!-- Add Arrows -->
+      <div class="swiper-button-next"></div>
+      <div class="swiper-button-prev"></div>
+    </div>
   </div>
 </template>
 
 <script>
+  import Swiper from 'swiper'
+
   export default {
-    name: 'showDefaultNode',
+    name: 'gallery',
     props: ['node'],
+    mounted: function () {
+      let swiper = new Swiper('.swiper-container', {
+        paginationClickable: true,
+        nextButton: '.swiper-button-next',
+        prevButton: '.swiper-button-prev',
+        spaceBetween: 30,
+        autoHeight: true
+      })
+      swiper
+    },
     data: function () {
       return {
         batches: [1, 2, 3]
@@ -65,7 +88,7 @@
 
 
 <style lang="scss">
-.show-default-node {
+.gallery {
   .children {
     margin: 15px auto;
     .batch {
@@ -87,5 +110,20 @@
       }
     }
   }
+
+  .swiper-container {
+    width: 100%;
+    height: 100%;
+  }
+  .swiper-slide {
+    text-align: center;
+    font-size: 18px;
+    background: #fff;
+    /* Center slide text vertically */
+    display: flex;
+    justify-content: center;
+    align-items: center;
+  }
+
 }
 </style>
