@@ -2,7 +2,7 @@
   <div class="gems">
     <h1>{{node.name}}</h1>
     <img v-bind:src="node.attachment_url" />
-    <div v-html="node.content"></div>
+    <div class="container-text" v-html="node.content"></div>
     <ChildList :children="node.children" />
   </div>
 </template>

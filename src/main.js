@@ -52,7 +52,7 @@ store.watch(
 )
 
 Vue.filter('date', function (value) {
-  return (new Date(value)).toLocaleDateString()
+  return (value === null || value === undefined || value === '') ? '' : (new Date(value)).toLocaleDateString()
 })
 
 const router = new VueRouter({
