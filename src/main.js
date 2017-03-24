@@ -80,9 +80,10 @@ const router = new VueRouter({
 })
 
 // activate analytics only on production
+console.log('process.env.NODE_ENV: ',process.env.NODE_ENV)
 if (process.env.NODE_ENV === 'production') {
   const analyticsId = 'UA-627798-1'
-  Vue.use(VueAnalytics, { analyticsId, router })
+  Vue.use(VueAnalytics, { id: analyticsId, router: router })
 }
 
 /* eslint-disable no-new */
