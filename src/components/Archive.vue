@@ -5,9 +5,9 @@
     <div v-html="node.content"></div>
     <div class="children">
       <div class="square" v-for="child in childrenReverse()">
-        <div class="content" v-on:click="$router.push({ path: child.slug })">
+        <div class="content" v-on:click="$router.push({ path: child.href })">
           <div class="name">
-            <router-link :to="{ path: child.slug }" style="display:block">
+            <router-link :to="{ path: child.href }" style="display:block">
               <span>{{child.name}}</span>
             </router-link>
           </div>
@@ -36,14 +36,20 @@
         };
         (new CountUp(String(id), 0, max, 0, max / 1000 * 0.5, options)).start()
       },
+      // child nodes in reverse order without mutation outside Vuex
       childrenReverse: function () {
         let arr = []
-        this.node.children.forEach((child) => arr.unshift(child))
+        if (this.node.children !== undefined) {
+          this.node.children.forEach((child) => arr.unshift(child))
+        }
         return arr
       }
     },
     mounted: function () {
-      this.node.children.forEach((child) => this.countUp(child.id, child.descendant_count))
+      // trigger countUp effect
+      if (this.node.children !== undefined) {
+        this.node.children.forEach((child) => this.countUp(child.id, child.descendant_count))
+      }
     }
   }
 </script>

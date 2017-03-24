@@ -1,17 +1,17 @@
 <template>
   <section class="children">
     <article v-for="child in children" v-bind:class="child.view.toLowerCase()">
-      <router-link :to="{ path: child.slug }" style="display:block">
+      <router-link :to="{ path: child.href }" style="display:block">
         <img v-if="child.attachment_url" v-bind:src="child.attachment_url" v-bind:alt="child.name"/>
       </router-link>
       <div class="container-text">
-        <h2 class="subtitled"><router-link :to="{ path: child.slug }">{{child.name}}</router-link></h2>
+        <h2 class="subtitled"><router-link :to="{ path: child.href }">{{child.name}}</router-link></h2>
         <div class="captured-at">{{child.captured_at | date}}</div>
         <span class="subtitle">{{child.teaser}}</span>
       </div>
       <div class="grand-children">
         <div class="grand-child" v-for="grandChild in child.children.slice(0,4)">
-          <router-link :to="{ path: grandChild.slug }" style="display:block">
+          <router-link :to="{ path: grandChild.href }" style="display:block">
             <img v-if="grandChild.preview_url" v-bind:src="grandChild.preview_url" v-bind:alt="grandChild.name"/>
           </router-link>
         </div>

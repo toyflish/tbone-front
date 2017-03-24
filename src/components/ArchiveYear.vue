@@ -13,9 +13,12 @@
     name: 'archiveYear',
     props: ['node'],
     methods: {
+      // child nodes in reverse order without mutation outside Vuex
       childrenReverse: function () {
         let arr = []
-        this.node.children.forEach((child) => arr.unshift(child))
+        if (this.node.children !== undefined) {
+          this.node.children.forEach((child) => arr.unshift(child))
+        }
         return arr
       }
     },
