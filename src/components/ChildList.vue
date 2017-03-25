@@ -9,8 +9,8 @@
         <div class="captured-at">{{child.captured_at | date}}</div>
         <span class="subtitle">{{child.teaser}}</span>
       </div>
-      <div class="grand-children">
-        <div class="grand-child" v-for="grandChild in child.children.slice(0,4)">
+      <div v-if="child.children !== undefined" class="grand-children">
+        <div class="grand-child" v-for="grandChild in child.children.slice(0,4)" >
           <router-link :to="{ path: grandChild.href }" style="display:block">
             <img v-if="grandChild.preview_url" v-bind:src="grandChild.preview_url" v-bind:alt="grandChild.name"/>
           </router-link>
