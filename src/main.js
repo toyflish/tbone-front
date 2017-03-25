@@ -53,7 +53,7 @@ store.watch(
 )
 
 Vue.filter('date', function (value) {
-  return (new Date(value)).toLocaleDateString()
+  return (value === null || value === undefined || value === '') ? '' : (new Date(value)).toLocaleDateString()
 })
 
 const router = new VueRouter({
@@ -83,7 +83,7 @@ const router = new VueRouter({
 // activate analytics only on production
 if (process.env.NODE_ENV === 'production') {
   const analyticsId = 'UA-627798-1'
-  Vue.use(VueAnalytics, { analyticsId, router })
+  Vue.use(VueAnalytics, { id: analyticsId, router: router })
 }
 
 /* eslint-disable no-new */

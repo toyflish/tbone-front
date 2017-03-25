@@ -10,7 +10,7 @@
       </div>
       <div class="breadcrumb">
         <div v-for="crumb in breadcrumb">
-          <router-link :to="{path: sanitizeSlug(crumb.slug)}">
+          <router-link :to="{path: sanitizeSlug(crumb.href)}">
             <BreadCrumbArrow />
           </router-link>
         </div>
@@ -19,7 +19,7 @@
         <nav>
           <ul>
             <li style="height: 20%" v-for="item in items">
-              <router-link :to="{path: sanitizeSlug(item.slug)}" v-on:click.native="toggleMenuState">
+              <router-link :to="{path: sanitizeSlug(item.href)}" v-on:click.native="toggleMenuState">
                 {{item.link_name}}
               </router-link>
             </li>

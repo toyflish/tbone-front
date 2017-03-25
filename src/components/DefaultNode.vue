@@ -6,7 +6,7 @@
     <div v-if="validateAllHavePreviewUrl(node.children)" class="children">
       <div class="batch" v-for="batch in childrenInBatches">
         <div class="node" v-for="node in batch">
-          <router-link :to="{ path: node.slug }" style="display:block">
+          <router-link :to="{ path: node.href }" style="display:block">
             <img v-if="node.preview_url" v-bind:src="node.preview_url" v-bind:alt="node.name"/>
             <span v-else class="primer">{{node.name}}</span>
           </router-link>
@@ -16,11 +16,11 @@
     <div v-else class="children">
       <div class="list">
         <article class="node" v-for="node in node.children">
-          <router-link v-if="node.attachment_url" :to="{ path: node.slug }" style="display:block">
+          <router-link v-if="node.attachment_url" :to="{ path: node.href }" style="display:block">
             <img  v-bind:src="node.attachment_url" v-bind:alt="node.name"/>
           </router-link>
           <div v-else class="container-text">
-            <h2 ><router-link :to="{ path: node.slug }">{{node.name}}</router-link></h2>
+            <h2 ><router-link :to="{ path: node.href }">{{node.name}}</router-link></h2>
             <span class="subtitle">{{node.teaser}}</span>
           </div>
         </article>

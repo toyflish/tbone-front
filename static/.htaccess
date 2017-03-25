@@ -1,4 +1,18 @@
+
 RewriteEngine on
+
+Redirect 301 /fotos-2005 /fotos_2005
+Redirect 301 /fotos-2007 /fotos_2007
+
+RewriteCond %{HTTP_HOST}   www\.kairautenberg\.de
+RewriteRule (.*) https://kairautenberg.de%{REQUEST_URI} [R=301,L]
+
+RewriteCond %{HTTPS} off
+RewriteCond %{HTTP_HOST}   kairautenberg\.de
+RewriteRule (.*) https://kairautenberg.de%{REQUEST_URI} [R=301,L]
+
+RewriteCond %{HTTP_HOST}  .*toyflish\.de
+RewriteRule (.*) https://toyflish.com%{REQUEST_URI} [R=301,L]
 
 RewriteCond %{HTTPS} off
 # RewriteRule (.*) https://%{HTTP_HOST}%{REQUEST_URI} [R=301,L]
