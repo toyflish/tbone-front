@@ -9,6 +9,7 @@ import Vue from 'vue'
 import NavBar from './components/NavBar'
 import Home from './components/Home'
 import NodeDispatcher from './components/NodeDispatcher'
+import NodeService from './services/NodeService'
 
 import VueRouter from 'vue-router'
 import Vuex from 'vuex'
@@ -24,6 +25,7 @@ const store = new Vuex.Store({
   strict: true,
   state: {
     activeNode: {name: 'initial'},
+    nodeService: new NodeService(),
     apiUrl: apiUrl,
     overlayOpen: false,
     hamburgerClickEvent: 'openMainMenu'
@@ -94,7 +96,7 @@ if (process.env.NODE_ENV === 'production') {
 }
 
 /* eslint-disable no-new */
-new Vue({
+window.v = new Vue({
   router,
   store,
   el: '#app',

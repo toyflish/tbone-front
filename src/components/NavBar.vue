@@ -32,10 +32,12 @@
 
 <script>
 import axios from 'axios'
+
+// import NodeService from '../services/NodeService'
 import BreadCrumbArrow from './BreadCrumbArrow'
 
 export default {
-  name: 'navBarKai',
+  name: 'navBar',
   data () {
     return {
       menuOpen: false,
@@ -43,25 +45,15 @@ export default {
     }
   },
   computed: {
+    node: function () {
+      return this.$store.state.activeNode
+    },
     breadcrumb: function () {
-      if (this.$route.path === '/') {
-        return []
-      } else {
-        let bcShifted = this.parentsArray(this.$store.state.activeNode)
-        bcShifted.shift()
-        return bcShifted
-      }
+      // let node = this.$store.state.activeNode
+      return typeof this.node.breadcrumb === 'function' ? this.node.breadcrumb() : []
     }
   },
   methods: {
-    parentsArray: function (node) {
-      let parents = []
-      if (node.parent !== null && typeof node.parent === 'object') {
-        parents = this.parentsArray(node.parent)
-      }
-      parents.unshift(node)
-      return parents
-    },
     hamburgerClick: function () {
       console.log('emiting: ', this.$store.state.hamburgerClickEvent)
       this.$emit(this.$store.state.hamburgerClickEvent)

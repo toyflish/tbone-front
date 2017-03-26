@@ -14,8 +14,6 @@
 </template>
 
 <script>
-  import NodeService from '../services/NodeService'
-
   import Logo from './Logo'
 
   import Home from './Home'
@@ -51,13 +49,11 @@
     },
     methods: {
       fetchNode: function (slug) {
-        console.log('NodeDispatcher::fetchNode slug:', slug)
+        console.log('NodeDispatcher::fetchNode')
         let thisVue = this
-        let n = new NodeService()
-        n.fetchBySlug(slug).then(function (node) {
+        this.$store.state.nodeService.fetchBySlug(slug).then(function (node) {
           thisVue.node = node
           thisVue.loading = false
-          console.log(thisVue.node.view)
           thisVue.$store.commit('setActiveNode', node)
         }).catch(function (error) {
           thisVue.loading = false
@@ -80,12 +76,11 @@
         }
       },
       showLogo: function () {
-        console.log('showLogo', this.$store.state.activeNode.id)
         return this.$store.state.activeNode.id !== undefined && this.$store.state.activeNode.id !== 1
       }
     },
     mounted: function () {
-      console.log(`NodeDispatcher::mounted.fetchNode(${this.$route.params.slug})`)
+      console.log(`NodeDispatcher::mounted`)
       let slug = this.$route.params.slug
 
       // sanitize slug if document-root is called
