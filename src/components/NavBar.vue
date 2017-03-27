@@ -2,7 +2,7 @@
   <div class="nav">
     <div class="container">
       <Hamburger />
-      <div class="breadcrumb">
+      <div class="breadcrumb" v-if="breadcrumbVisible">
         <div v-for="crumb in breadcrumb">
           <router-link :to="{path: crumb.href}">
             <BreadCrumbArrow />
@@ -51,6 +51,9 @@ export default {
         default:
           return false
       }
+    },
+    breadcrumbVisible: function () {
+      return this.$store.state.hamburgerClickEvent === 'openMainMenu'
     }
   },
 

@@ -18,6 +18,8 @@ export default {
           return false
         case 'closeMainMenu':
           return true
+        case 'closeSwiper':
+          return true
         default:
           return false
       }
