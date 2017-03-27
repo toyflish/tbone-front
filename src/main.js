@@ -27,7 +27,6 @@ const store = new Vuex.Store({
     activeNode: {name: 'initial'},
     nodeService: new NodeService(),
     apiUrl: apiUrl,
-    overlayOpen: false,
     hamburgerClickEvent: 'openMainMenu'
   },
   mutations: {

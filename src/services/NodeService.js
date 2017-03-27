@@ -30,6 +30,13 @@ class NodeService {
     })
   }
 
+  fetchMenu () {
+    return axios.get(`${apiUrl}/api/nodes/menu.json`)
+    .then(function (response) {
+      return response.data
+    })
+  }
+
   // create Node Object with Node functionality from json
   nodify (data) {
     return Object.assign(data, this.nodeFactory())
