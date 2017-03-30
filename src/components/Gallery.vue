@@ -7,7 +7,7 @@
       <div class="batch" v-for="batch in childrenInBatches">
         <div class="node" v-for="child in batch">
           <a v-on:click="showSwiper(child)">
-            <img v-if="child.preview_url" v-bind:src="child.preview_url" v-bind:alt="child.name"/>
+            <img v-if="child.preview_url" v-bind:src="child.preview_url" v-bind:alt="child.alt"/>
             <span v-else class="primer">{{child.name}}</span>
           </a>
         </div>
@@ -17,28 +17,29 @@
       <div class="list">
         <div class="node" v-for="node in node.children">
           <router-link :to="{ path: node.href }" style="display:block">
-            <img v-if="node.attachment_url" v-bind:src="node.attachment_url" v-bind:alt="node.name"/>
+            <img v-if="node.attachment_url" v-bind:src="node.attachment_url" v-bind:alt="node.name" />
             <span v-else class="primer">{{node.name}}</span>
           </router-link>
         </div>
       </div>
     </div>
 
-    <div v-if="swiperVisible" class="swiper-container">
+    <div v-if="swiperVisible" id="swiper-container">
       <div class="swiper-wrapper">
-        <div class="swiper-slide" v-for="child in node.children" :data-hash="child.slug">
-          <img v-if="child.attachment_url" v-bind:src="child.attachment_url" v-bind:alt="child.name"/>
+        <div class="swiper-slide" :id="child.slug" v-for="child in node.children" :data-slug="child.slug">
+          <img v-if="child.attachment_url"
+            v-bind:src="child.attachment_url"
+            v-bind:alt="child.alt"
+            v-bind:style="{ width: `${swiperSlideWidth()}px`, height: `${swiperHeightFor(child.attachment_width, child.attachment_height)}px` }"
+          />
         </div>
       </div>
-      <!-- Add Arrows -->
-      <div class="swiper-button-next"></div>
-      <div class="swiper-button-prev"></div>
     </div>
   </div>
 </template>
 
 <script>
-  import Swiper from 'swiper'
+  import { doScrolling } from '../utils/doScrolling'
 
   export default {
     name: 'gallery',
@@ -58,6 +59,12 @@
       }
     },
     methods: {
+      swiperSlideWidth: function () {
+        return document.body.querySelector('.gallery').offsetWidth
+      },
+      swiperHeightFor: function (width, height) {
+        return this.swiperSlideWidth() / (width / height)
+      },
       validateAllHavePreviewUrl: function (nodes) {
         if (nodes instanceof (Array)) {
           return nodes.find(function (n) {
@@ -81,27 +88,16 @@
         // set hash for swiper to show the image
         window.history.pushState({}, null, `${this.node.href}#${node.slug}`)
         this.$store.commit('setHamburgerClickEvent', 'closeSwiper')
+        this.$nextTick(() => doScrolling(`#swiper-container [data-slug="${node.slug}"]`, 500, 50))
 
         this.$nextTick(() => this.initSwiper())
       },
       initSwiper: function () {
         console.log('Gallery::initSwiper')
+        // prepare the closing icon
         this.$root.$on('closeSwiper', function () {
           this.$store.commit('setHamburgerClickEvent', 'openMainMenu')
         })
-        this.swiper = new Swiper('.swiper-container', {
-          initialSlide: 4,
-          // paginationClickable: true,
-          // simulateTouch: true,
-          nextButton: '.swiper-button-next',
-          prevButton: '.swiper-button-prev',
-          spaceBetween: 30,
-          autoHeight: false,
-          hashnav: true,
-          hashnavWatchState: true,
-          replaceState: true
-        })
-        window.s = this.swiper
       }
     }
   }
@@ -132,18 +128,20 @@
     }
   }
 
-  $backdrop: rgba(0,0,0, 1);
-  .swiper-container {
-    position: fixed;
+  $backdrop: rgba(255,255,255, 0.8);
+  #swiper-container {
+    position: absolute;
+    // position: fixed;
     top:0;
-    bottom:0;
-    left:0;
-    right:0;
+    // bottom:0;
+    // left:0;
+    // right:0;
     width: 100%;
     height: 100%;
     background: $backdrop;
   }
   .swiper-slide {
+    margin-top: 50px;
     text-align: center;
     font-size: 18px;
     background: $backdrop;

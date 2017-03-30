@@ -2,7 +2,6 @@
 // (runtime-only or standalone) has been set in webpack.base.conf with an alias.
 
 import 'normalize.css/normalize.css'
-import 'swiper/dist/css/swiper.css'
 import './css/denormalize.scss'
 
 import Vue from 'vue'
