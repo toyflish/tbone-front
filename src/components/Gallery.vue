@@ -6,7 +6,7 @@
     <div v-if="validateAllHavePreviewUrl(node.children)" class="children">
       <div class="batch" v-for="batch in childrenInBatches">
         <div class="node" v-for="child in batch">
-          <a v-on:click="showSwiper(child)">
+          <a v-on:click="swiperShow(child)">
             <img v-if="child.preview_url" v-bind:src="child.preview_url" v-bind:alt="child.alt"/>
             <span v-else class="primer">{{child.name}}</span>
           </a>
@@ -64,13 +64,14 @@
       let hash = window.location.hash.substr(1)
       if (hash !== '') {
         let node = this.node.children.find((n) => n.slug === hash)
-        this.showSwiper(node)
+        this.swiperShow(node)
       }
     },
     data: function () {
       return {
         batches: [1, 2, 3],
-        swiper: {}
+        pageYOffset: 0
+
       }
     },
     computed: {
@@ -111,8 +112,10 @@
         this.$root.$emit('closeSwiper')
         this.$router.push(href)
       },
-      showSwiper: function (node) {
-        console.log('Gallery::showSwiper', node)
+      swiperShow: function (node) {
+        // store actual position in gridview
+        let pageYOffset = window.pageYOffset
+        console.log('Gallery::swiperShow', node)
         // trigger first call to selected image
         /* global Image */
         let img = new Image()
@@ -120,6 +123,8 @@
         this.$store.commit('setHamburgerClickEvent', 'closeSwiper')
         // prepare the closing icon
         this.$root.$on('closeSwiper', function () {
+          // restore position in gridview
+          window.scrollTo(0, pageYOffset)
           this.$store.commit('setHamburgerClickEvent', 'openMainMenu')
         })
         this.$nextTick(() => doScrolling(`#swiper-container [data-slug="${node.slug}"]`, 500, 50))
@@ -162,6 +167,8 @@
     position: absolute;
     // position: fixed;
     top:0;
+    // height: 100vh;
+    // overflow-y: scroll;
     // bottom:0;
     // left:0;
     // right:0;
