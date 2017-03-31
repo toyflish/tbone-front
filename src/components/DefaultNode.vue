@@ -1,8 +1,10 @@
 <template>
   <div class="node-default">
-    <h1>{{node.name}}</h1>
+    <div class="container-text">
+      <h1>{{node.name}}</h1>
+    </div>
     <img v-bind:src="node.attachment_url" />
-    <div class="container-text" v-html="node.content"></div>
+    <div class="container-text content" v-html="node.content"></div>
     <div v-if="validateAllHavePreviewUrl(node.children)" class="children">
       <div class="batch" v-for="batch in childrenInBatches">
         <div class="node" v-for="node in batch">
@@ -26,10 +28,15 @@
         </article>
       </div>
     </div>
+    <div class="container-text">
+      <VueDisqus shortname="toyflish" :identifier="String(node.id)" :url="`https://toyflish.com${node.href}`"></VueDisqus>
+    </div>
   </div>
 </template>
 
 <script>
+  import VueDisqus from 'vue-disqus/VueDisqus.vue'
+
   export default {
     name: 'defaultNode',
     props: ['node'],
@@ -62,6 +69,9 @@
         }
         return batches
       }
+    },
+    components: {
+      VueDisqus
     }
   }
 </script>
@@ -69,8 +79,9 @@
 
 <style lang="scss">
 .node-default {
-  .container-text {
+  .container-text.content {
     margin-bottom: 30px;
+    text-align: left;
   }
   .children {
     .batch {

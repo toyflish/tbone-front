@@ -23,15 +23,21 @@
         </div>
       </div>
     </div>
-
+    <div class="container-text">
+      <VueDisqus shortname="toyflish" :identifier="String(node.id)" :url="`https://toyflish.com${node.href}`"></VueDisqus>
+    </div>
     <div v-if="swiperVisible" id="swiper-container">
       <div class="swiper-wrapper">
         <div class="swiper-slide" :id="child.slug" v-for="child in node.children" :data-slug="child.slug">
-          <img v-if="child.attachment_url"
-            v-bind:src="child.attachment_url"
-            v-bind:alt="child.alt"
-            v-bind:style="{ width: `${swiperSlideWidth()}px`, height: `${swiperHeightFor(child.attachment_width, child.attachment_height)}px` }"
-          />
+          <div class="img-wrapper"
+            @click="swiperCloseAndRouteTo(child.href)"
+            v-bind:style="{ width: `${swiperSlideWidth()}px`, height: `${swiperHeightFor(child.attachment_width, child.attachment_height)}px` }">
+            <img v-if="child.attachment_url"
+              v-bind:src="child.attachment_url"
+              v-bind:alt="child.alt"
+              v-bind:style="{ width: `${swiperSlideWidth()}px`, height: `${swiperHeightFor(child.attachment_width, child.attachment_height)}px` }"
+            />
+          </div>
         </div>
       </div>
     </div>
@@ -40,10 +46,27 @@
 
 <script>
   import { doScrolling } from '../utils/doScrolling'
+  import VueDisqus from 'vue-disqus/VueDisqus.vue'
 
   export default {
     name: 'gallery',
     props: ['node'],
+    components: {
+      VueDisqus
+    },
+    watch: {
+      node: function (n) {
+        console.log('node changed to :', n)
+      }
+    },
+    mounted: function () {
+      console.log('Gallery mounted')
+      let hash = window.location.hash.substr(1)
+      if (hash !== '') {
+        let node = this.node.children.find((n) => n.slug === hash)
+        this.showSwiper(node)
+      }
+    },
     data: function () {
       return {
         batches: [1, 2, 3],
@@ -59,11 +82,14 @@
       }
     },
     methods: {
-      swiperSlideWidth: function () {
-        return document.body.querySelector('.gallery').offsetWidth
-      },
-      swiperHeightFor: function (width, height) {
-        return this.swiperSlideWidth() / (width / height)
+      inBatches: function (nodes, size) {
+        let batches = []
+        if (nodes instanceof (Array)) {
+          for (let i = 0; i < nodes.length; i += size) {
+            batches.push(nodes.slice(i, size + i))
+          }
+        }
+        return batches
       },
       validateAllHavePreviewUrl: function (nodes) {
         if (nodes instanceof (Array)) {
@@ -74,30 +100,32 @@
           return undefined
         }
       },
-      inBatches: function (nodes, size) {
-        let batches = []
-        if (nodes instanceof (Array)) {
-          for (let i = 0; i < nodes.length; i += size) {
-            batches.push(nodes.slice(i, size + i))
-          }
-        }
-        return batches
+
+      swiperSlideWidth: function () {
+        return document.body.querySelector('.gallery').offsetWidth
+      },
+      swiperHeightFor: function (width, height) {
+        return this.swiperSlideWidth() / (width / height)
+      },
+      swiperCloseAndRouteTo: function (href) {
+        this.$root.$emit('closeSwiper')
+        this.$router.push(href)
       },
       showSwiper: function (node) {
         console.log('Gallery::showSwiper', node)
-        // set hash for swiper to show the image
-        window.history.pushState({}, null, `${this.node.href}#${node.slug}`)
+        // trigger first call to selected image
+        /* global Image */
+        let img = new Image()
+        img.src = node.attachment_url
         this.$store.commit('setHamburgerClickEvent', 'closeSwiper')
-        this.$nextTick(() => doScrolling(`#swiper-container [data-slug="${node.slug}"]`, 500, 50))
-
-        this.$nextTick(() => this.initSwiper())
-      },
-      initSwiper: function () {
-        console.log('Gallery::initSwiper')
         // prepare the closing icon
         this.$root.$on('closeSwiper', function () {
           this.$store.commit('setHamburgerClickEvent', 'openMainMenu')
         })
+        this.$nextTick(() => doScrolling(`#swiper-container [data-slug="${node.slug}"]`, 500, 50))
+
+        // set hash
+        window.history.pushState({}, null, `${this.node.href}#${node.slug}`)
       }
     }
   }
@@ -113,6 +141,7 @@
       display: flex;
       flex-wrap: wrap;
       .node {
+        cursor: pointer;
         // 3x33 => 99% + 2 x 3px (0.5%)
         width: 33%;
         * {
@@ -128,7 +157,7 @@
     }
   }
 
-  $backdrop: rgba(255,255,255, 0.8);
+  $backdrop: rgba(255,255,255, 1);
   #swiper-container {
     position: absolute;
     // position: fixed;
@@ -149,6 +178,12 @@
     display: flex;
     justify-content: center;
     align-items: center;
+
+    .img-wrapper {
+      background-color: rgba(245, 245, 245, 1);
+      color: #fff;
+      cursor: pointer;
+    }
   }
 
 }
