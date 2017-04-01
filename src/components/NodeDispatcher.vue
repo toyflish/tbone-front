@@ -80,7 +80,6 @@
       }
     },
     mounted: function () {
-      console.log(`NodeDispatcher::mounted`)
       let slug = this.$route.params.slug
 
       // sanitize slug if document-root is called

@@ -30,7 +30,6 @@ const store = new Vuex.Store({
   },
   mutations: {
     setActiveNode (state, node) {
-      console.log('Store:mutations:setActiveNode', node)
       state.activeNode = node
     },
     setHamburgerClickEvent: function (state, ename) {
@@ -77,16 +76,6 @@ const router = new VueRouter({
   ]
 })
 
-router.beforeEach((to, from, next) => {
-  console.log('ROUTE DEBUG to:', to, 'from:', from)
-  if (to.params.slug === from.params.slug) {
-    // next(false)
-    next()
-  } else {
-    next()
-  }
-})
-
 // activate analytics only on production
 if (process.env.NODE_ENV === 'production') {
   const analyticsId = 'UA-627798-1'
@@ -98,11 +87,6 @@ window.v = new Vue({
   router,
   store,
   el: '#app',
-  data: function () {
-    return {
-      // node: {}
-    }
-  },
   components: {
     Home,
     NodeDispatcher,
@@ -113,12 +97,5 @@ window.v = new Vue({
       <navBar></navBar>
       <router-view :key="$route"></router-view>
     </div>
-  `,
-  computed: {
-    node: function () {
-      console.log('Main::computed:node')
-      return this.$store.state.activeNode
-    }
-
-  }
+  `
 })

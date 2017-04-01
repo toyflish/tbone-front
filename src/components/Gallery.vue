@@ -54,11 +54,6 @@
     components: {
       VueDisqus
     },
-    watch: {
-      node: function (n) {
-        console.log('node changed to :', n)
-      }
-    },
     mounted: function () {
       console.log('Gallery mounted')
       let hash = window.location.hash.substr(1)
@@ -115,7 +110,6 @@
       swiperShow: function (node) {
         // store actual position in gridview
         let pageYOffset = window.pageYOffset
-        console.log('Gallery::swiperShow', node)
         // trigger first call to selected image
         /* global Image */
         let img = new Image()

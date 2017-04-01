@@ -27,7 +27,6 @@ export default {
   },
   methods: {
     hamburgerClick: function () {
-      console.log('emiting: ', this.$store.state.hamburgerClickEvent)
       this.$root.$emit(this.$store.state.hamburgerClickEvent)
     }
   }
