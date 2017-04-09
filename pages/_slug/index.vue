@@ -41,6 +41,18 @@
     },
     name: 'nodeDispatcher',
     props: ['slug'],
+    head: function () {
+      return {
+        title: this.$store.state.requestNode.title,
+        meta: [
+          {
+            // hid: this.$store.state.requestNode.meta_description,
+            name: 'description',
+            content: this.$store.state.requestNode.meta_description
+          }
+        ]
+      }
+    },
     methods: {
       componentsRegistered: function () {
         return Object.keys(this.$options.components)
