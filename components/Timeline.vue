@@ -1,16 +1,17 @@
 <template>
-  <div class="gems">
+  <div class="timeline">
     <h1>{{node.name}}</h1>
     <img v-bind:src="node.attachment_url" />
-    <div class="container-text" v-html="node.content"></div>
-    <ChildList :children="node.children" />
+    <div v-html="node.content"></div>
+
+    <ChildList :children="node.linked_nodes" />
   </div>
 </template>
 
 <script>
   import ChildList from './ChildList'
   export default {
-    name: 'Gems',
+    name: 'Timeline',
     props: ['node'],
     components: {
       ChildList
@@ -20,11 +21,6 @@
 
 
 <style lang="scss">
-.gems {
-  .children {
-    article {
-      margin-top: 40px;
-    }
-  }
+.timeline {
 }
 </style>

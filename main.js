@@ -1,3 +1,4 @@
+
 // The Vue build version to load with the `import` command
 // (runtime-only or standalone) has been set in webpack.base.conf with an alias.
 
@@ -23,14 +24,14 @@ Vue.use(VueRouter)
 const store = new Vuex.Store({
   strict: true,
   state: {
-    activeNode: {name: 'initial'},
+    requestNode: {name: 'initial'},
     nodeService: new NodeService(),
     apiUrl: apiUrl,
     hamburgerClickEvent: 'openMainMenu'
   },
   mutations: {
-    setActiveNode (state, node) {
-      state.activeNode = node
+    setRequestNode (state, node) {
+      state.requestNode = node
     },
     setHamburgerClickEvent: function (state, ename) {
       state.hamburgerClickEvent = ename
@@ -42,13 +43,13 @@ const store = new Vuex.Store({
 let setDocumentTitle = function (title) {
   document.title = title
 }
-let setDocumentTitleByActiveNode = function () {
-  setDocumentTitle(store.state.activeNode.title)
+let setDocumentTitleByRequestNode = function () {
+  setDocumentTitle(store.state.requestNode.title)
 }
 store.watch(
   function (state) {
-    return state.activeNode
-  }, setDocumentTitleByActiveNode
+    return state.requestNode
+  }, setDocumentTitleByRequestNode
 )
 
 Vue.filter('date', function (value) {

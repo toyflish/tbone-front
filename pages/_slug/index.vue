@@ -1,6 +1,7 @@
 <template>
-  <div class="dispatcher">
-    <div class="logo-wrapper" v-if="showLogo">
+  <div class="container main">
+  <NavBar />
+  <div class="logo-wrapper" v-if="showLogo">
       <Logo />
     </div>
     <div v-if="loading" class="loading">
@@ -9,21 +10,23 @@
     <div v-if="error" class="loading">
       Loading error : {{errorMsg}}
     </div>
-    <component :node="node" v-bind:is="activeNodeView"/>
+    <component :node="$store.state.requestNode" v-bind:is="requestNodeView"/>
   </div>
 </template>
 
 <script>
-  import Logo from './Logo'
+  import NodeService from '../../services/NodeService'
+  import NavBar from '../../components/NavBar'
+  import Logo from '../../components/Logo'
 
-  import Home from './Home'
-  import DefaultNode from './DefaultNode'
-  import Gallery from './Gallery'
-  import GalleryListing from './GalleryListing'
-  import ArchiveYear from './ArchiveYear'
-  import Archive from './Archive'
-  import Timeline from './Timeline'
-  import Gems from './Gems'
+  import Home from '../../components/Home'
+  import DefaultNode from '../../components/DefaultNode'
+  import Gallery from '../../components/Gallery'
+  import GalleryListing from '../../components/GalleryListing'
+  import ArchiveYear from '../../components/ArchiveYear'
+  import Archive from '../../components/Archive'
+  import Timeline from '../../components/Timeline'
+  import Gems from '../../components/Gems'
 
   export default {
     components: {
@@ -35,7 +38,8 @@
       ArchiveYear,
       Archive,
       Timeline,
-      Gems
+      Gems,
+      NavBar
     },
     name: 'nodeDispatcher',
     props: ['slug'],
@@ -54,7 +58,7 @@
         this.$store.state.nodeService.fetchBySlug(slug).then(function (node) {
           thisVue.node = node
           thisVue.loading = false
-          thisVue.$store.commit('setActiveNode', node)
+          thisVue.$store.commit('setRequestNode', node)
         }).catch(function (error) {
           thisVue.loading = false
           thisVue.error = true
@@ -66,8 +70,8 @@
       }
     },
     computed: {
-      activeNodeView: function () {
-        let view = this.$store.state.activeNode.view
+      requestNodeView: function () {
+        let view = this.$store.state.requestNode.view
         if (view === undefined || !this.componentsRegistered().includes(view)) {
           console.log(`NodeDispatcher: view(${view}) not registred, fall back to DefaultNode`)
           return 'DefaultNode'
@@ -76,7 +80,7 @@
         }
       },
       showLogo: function () {
-        return this.$store.state.activeNode.id !== undefined && this.$store.state.activeNode.id !== 1
+        return this.$store.state.requestNode.id !== undefined && this.$store.state.requestNode.id !== 1
       }
     },
     mounted: function () {
@@ -87,7 +91,17 @@
         console.log('NodeDispatcher::mounted: slug undefinde maybee "/" !')
         slug = ''
       }
-      this.fetchNode(slug)
+      // this.fetchNode(slug)
+    },
+    fetch: function ({ store, params }) {
+      let ns = new NodeService()
+      return Promise.all([ns.fetchBySlug(params.slug || '').then(function (node) {
+        store.commit('setRequestNode', node)
+      }),
+        ns.fetchMenu().then(function (items) {
+          store.commit('setMenuItems', items)
+        })
+      ])
     }
   }
 </script>

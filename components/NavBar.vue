@@ -12,7 +12,7 @@
       <div class="overlay-menu" v-bind:class="{ open: menuOpen }">
         <nav>
           <ul>
-            <li style="height: 20%" v-for="item in items">
+            <li style="height: 20%" v-for="item in $store.state.menuItems">
               <router-link :to="{path: item.href}" v-on:click.native="$root.$emit('closeMainMenu')">
                 {{item.link_name}}
               </router-link>
@@ -30,14 +30,9 @@ import BreadCrumbArrow from './BreadCrumbArrow'
 
 export default {
   name: 'navBar',
-  data () {
-    return {
-      items: []
-    }
-  },
   computed: {
     node: function () {
-      return this.$store.state.activeNode
+      return this.$store.state.requestNode
     },
     breadcrumb: function () {
       return typeof this.node.breadcrumb === 'function' ? this.node.breadcrumb() : []
@@ -64,11 +59,6 @@ export default {
 
     this.$root.$on('closeMainMenu', function () {
       this.$store.commit('setHamburgerClickEvent', 'openMainMenu')
-    })
-
-    let thisView = this
-    this.$store.state.nodeService.fetchMenu().then(function (menuData) {
-      thisView.items = menuData
     })
   },
   components: {
