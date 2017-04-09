@@ -7,14 +7,6 @@
       <Logo />
     </div>
 
-    <div v-if="loading" class="loading">
-      loading ...
-    </div>
-
-    <div v-if="error" class="loading">
-      Loading error : {{errorMsg}}
-    </div>
-
     <component :node="$store.state.requestNode" v-bind:is="requestNodeView"/>
 
   </div>
@@ -49,28 +41,7 @@
     },
     name: 'nodeDispatcher',
     props: ['slug'],
-    data: function () {
-      return {
-        loading: true,
-        error: false,
-        errorMsg: '',
-        node: {}
-      }
-    },
     methods: {
-      fetchNode: function (slug) {
-        console.log('NodeDispatcher::fetchNode')
-        let thisVue = this
-        this.$store.state.nodeService.fetchBySlug(slug).then(function (node) {
-          thisVue.node = node
-          thisVue.loading = false
-          thisVue.$store.commit('setRequestNode', node)
-        }).catch(function (error) {
-          thisVue.loading = false
-          thisVue.error = true
-          thisVue.errorMsg = error.message
-        })
-      },
       componentsRegistered: function () {
         return Object.keys(this.$options.components)
       }
@@ -88,16 +59,6 @@
       showLogo: function () {
         return this.$store.state.requestNode.id !== undefined && this.$store.state.requestNode.id !== 1
       }
-    },
-    mounted: function () {
-      let slug = this.$route.params.slug
-
-      // sanitize slug if document-root is called
-      if (slug === undefined) {
-        console.log('NodeDispatcher::mounted: slug undefinde maybee "/" !')
-        slug = ''
-      }
-      // this.fetchNode(slug)
     },
     fetch: function ({ store, params }) {
       let ns = new NodeService()
