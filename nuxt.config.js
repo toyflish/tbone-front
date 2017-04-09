@@ -7,6 +7,7 @@ module.exports = {
     'normalize.css/normalize.css',
     { src: '~assets/denormalize.scss', lang: 'scss' }
   ],
+  plugins: ['~plugins/filters.js'],
   /*
   ** Headers of the page
   */

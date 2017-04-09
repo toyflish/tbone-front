@@ -1,16 +1,22 @@
 <template>
   <div class="container main">
-  <NavBar />
-  <div class="logo-wrapper" v-if="showLogo">
+
+    <NavBar/>
+
+    <div class="logo-wrapper" v-if="showLogo">
       <Logo />
     </div>
+
     <div v-if="loading" class="loading">
       loading ...
     </div>
+
     <div v-if="error" class="loading">
       Loading error : {{errorMsg}}
     </div>
+
     <component :node="$store.state.requestNode" v-bind:is="requestNodeView"/>
+
   </div>
 </template>
 

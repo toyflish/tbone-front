@@ -2,13 +2,15 @@
   <div class="nav">
     <div class="container">
       <Hamburger />
+
       <div class="breadcrumb" v-if="breadcrumbVisible">
-        <div v-for="crumb in breadcrumb">
-          <router-link :to="{path: crumb.href}">
+        <div v-for="item in breadcrumb">
+          <router-link :to="{path: item.href}">
             <BreadCrumbArrow />
           </router-link>
         </div>
       </div>
+
       <div class="overlay-menu" v-bind:class="{ open: menuOpen }">
         <nav>
           <ul>
@@ -25,6 +27,7 @@
 </template>
 
 <script>
+import NodeService from '../services/NodeService'
 import Hamburger from './Hamburger'
 import BreadCrumbArrow from './BreadCrumbArrow'
 
@@ -35,7 +38,8 @@ export default {
       return this.$store.state.requestNode
     },
     breadcrumb: function () {
-      return typeof this.node.breadcrumb === 'function' ? this.node.breadcrumb() : []
+      let ns = new NodeService()
+      return (ns.nodify(this.$store.state.requestNode)).breadcrumb()
     },
     menuOpen: function () {
       switch (this.$store.state.hamburgerClickEvent) {
