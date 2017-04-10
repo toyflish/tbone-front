@@ -7,7 +7,10 @@ module.exports = {
     'normalize.css/normalize.css',
     { src: '~assets/denormalize.scss', lang: 'scss' }
   ],
-  plugins: ['~plugins/filters.js'],
+  plugins: [
+    '~plugins/filters.js',
+    { src: '~plugins/ga.js', ssr: false }
+  ],
   /*
   ** Headers of the page
   */
