@@ -48,7 +48,7 @@
           {
             // hid: this.$store.state.requestNode.meta_description,
             name: 'description',
-            content: this.$store.state.requestNode.meta_description
+            content: this.$store.state.requestNode.meta_description || ''
           }
         ]
       }
