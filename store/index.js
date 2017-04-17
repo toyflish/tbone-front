@@ -22,7 +22,7 @@ const store = new Vuex.Store({
   actions: {
     fetchRequestNode (context, payload) {
       let ns = new NodeService()
-      ns.fetchBySlug(payload).then((node) => context.commit('setRequestNode', node))
+      return ns.fetchBySlug(payload).then((node) => context.commit('setRequestNode', node))
     }
   }
 })

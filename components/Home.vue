@@ -5,7 +5,7 @@
     <h1>{{node.name}}</h1>
     <div class="container-text" v-html="node.content"></div>
     <ChildList :children="node.linked_nodes" />
-    <MoreBtn label="Show More" v-on:hit="loadMore" />
+    <MoreBtn :label="moreBtnLabel" v-on:hit="loadMore" :loading="loading" />
   </div>
 </template>
 
@@ -17,16 +17,27 @@
     props: ['node'],
     data: function () {
       return {
+        loading: false,
         linkedNodeOffest: 0,
         linkedNodeslimit: 10
       }
     },
+    computed: {
+      moreBtnLabel () {
+        return this.loading ? '... Loading ...' : 'Show More'
+      }
+    },
     methods: {
       loadMore () {
+        let thisVue = this
         // this.linkedNodeOffest += 10
         this.linkedNodeslimit += 10
+        // prevent double klicks
+        if (!this.loading) {
+          this.loading = true
 
-        this.$store.dispatch('fetchRequestNode', {slug: '', linked_nodes_level_down: 1, linked_nodes_limit: this.linkedNodeslimit})
+          this.$store.dispatch('fetchRequestNode', {slug: '', linked_nodes_level_down: 1, linked_nodes_limit: this.linkedNodeslimit}).then(function () { thisVue.loading = false })
+        }
       }
     },
     components: {

@@ -1,5 +1,5 @@
 <template>
-  <div class="more-btn">
+  <div class="more-btn" v-bind:class="{ loading: loading }">
     <a v-on:click.stop="$emit('hit')">{{label}}</a>
   </div>
 </template>
@@ -11,6 +11,10 @@
       label: {
         type: String,
         default: 'More'
+      },
+      loading: {
+        type: Boolean,
+        default: false
       }
     }
   }
@@ -21,6 +25,7 @@
   $more-btn-color-hover: pink;
 
   .more-btn {
+    cursor: pointer;
     width:120px;
     height: 120px;
     display: table;
@@ -58,6 +63,14 @@
     }
     &:hover:before {
       border-color: $more-btn-color-hover;
+    }
+    &.loading {
+      a {
+        color: $more-btn-color-hover;
+      }
+      &:before {
+        border-color: $more-btn-color-hover;
+      }
     }
   }
 </style>
