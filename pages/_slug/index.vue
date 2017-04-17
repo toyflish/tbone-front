@@ -74,7 +74,7 @@
     },
     fetch: function ({ store, params }) {
       let ns = new NodeService()
-      return Promise.all([ns.fetchBySlug(params.slug || '').then(function (node) {
+      return Promise.all([ns.fetchBySlug({slug: (params.slug || '')}).then(function (node) {
         store.commit('setRequestNode', node)
       }),
         ns.fetchMenu().then(function (items) {

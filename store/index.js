@@ -1,5 +1,5 @@
 import Vuex from 'vuex'
-// import NodeService from '../services/NodeService.js'
+import NodeService from '../services/NodeService.js'
 const store = new Vuex.Store({
   state: {
     requestNode: {name: 'initial'},
@@ -17,6 +17,12 @@ const store = new Vuex.Store({
     },
     setHamburgerClickEvent: function (state, ename) {
       state.hamburgerClickEvent = ename
+    }
+  },
+  actions: {
+    fetchRequestNode (context, payload) {
+      let ns = new NodeService()
+      ns.fetchBySlug(payload).then((node) => context.commit('setRequestNode', node))
     }
   }
 })

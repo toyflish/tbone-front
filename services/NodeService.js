@@ -14,17 +14,10 @@ class NodeService {
     })
   }
 
-  fetchBySlug (slug) {
-    console.log(`NodeService.fetchBySlug ${slug}`)
+  fetchBySlug (params) {
+    console.log(`NodeService.fetchBySlug(slug: ${params.slug})`)
     let thisService = this
-    let params = {
-      slug: slug,
-      level_down: 2,
-      full_crop: '600x',
-      grand_children_limit: 5,
-      linked_nodes_level_down: 1
-    }
-    return axios.get(`${apiUrl}/api/nodes/by_slug.json`, { params })
+    return axios.get(`${apiUrl}/api/nodes/by_slug.json`, {params: params})
     .then(function (response) {
       return thisService.nodify(response.data)
     })
