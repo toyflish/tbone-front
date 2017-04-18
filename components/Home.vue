@@ -1,5 +1,6 @@
 <template>
   <div class="home">
+    <img class="preload-helper" :src="node.attachment_url" style="display:none">
     <div class="avatar" v-bind:style="{ backgroundImage: 'url(' + node.attachment_url + ')' }" >
     </div>
     <h1>{{node.name}}</h1>
