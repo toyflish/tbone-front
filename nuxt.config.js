@@ -9,6 +9,8 @@ module.exports = {
   ],
   plugins: [
     '~plugins/filters.js',
+    '~plugins/sessionServicePlugin.js',
+    // '~plugins/axios.js',
     { src: '~plugins/ga.js', ssr: false }
   ],
   /*

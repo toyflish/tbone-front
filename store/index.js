@@ -2,6 +2,12 @@ import Vuex from 'vuex'
 import NodeService from '../services/NodeService.js'
 const store = new Vuex.Store({
   state: {
+    pendingSessionCheck: false,
+    currentUser: {
+      signedIn: false,
+      email: '',
+      id: null
+    },
     requestNode: {name: 'initial'},
     menuItems: [],
     breadCrumbItems: [],
@@ -17,6 +23,19 @@ const store = new Vuex.Store({
     },
     setHamburgerClickEvent: function (state, ename) {
       state.hamburgerClickEvent = ename
+    },
+    currentUserSignedIn: function (state, userData) {
+      state.currentUser.signedIn = true
+      state.currentUser.email = userData.email
+      state.currentUser.id = userData.id
+    },
+    currentUserSignedOut: function (state) {
+      state.currentUser.signedIn = false
+      state.currentUser.email = ''
+      state.currentUser.id = null
+    },
+    setPendingSessionCheck: function (state, value) {
+      state.pendingSessionCheck = value
     }
   },
   actions: {

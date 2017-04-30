@@ -19,6 +19,9 @@
                 {{item.link_name}}
               </router-link>
             </li>
+            <li>
+              <AccountLink />
+            </li>
           </ul>
         </nav>
       </div>
@@ -30,6 +33,7 @@
 import NodeService from '../services/NodeService'
 import Hamburger from './Hamburger'
 import BreadCrumbArrow from './BreadCrumbArrow'
+import AccountLink from './AccountLink'
 
 export default {
   name: 'navBar',
@@ -67,7 +71,8 @@ export default {
   },
   components: {
     BreadCrumbArrow,
-    Hamburger
+    Hamburger,
+    AccountLink
   }
 }
 </script>
