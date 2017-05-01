@@ -7,20 +7,24 @@
       <Logo />
     </div>
 
-    <div>
+    <div v-if="!currentUser.signedIn">
       <h1>Login</h1>
-      <p>
-        <input v-model="email" placeholder="email">
-      </p>
-      <p>
-        <input type="password" v-model="password">
-      </p>
-      <button @click="signIn">Login</button>
-
+      <p>You are currently not logged in!</p>
+      <form v-on:submit.prevent="signIn">
+        <p>
+          <input v-model="email" placeholder="email">
+        </p>
+        <p>
+          <input type="password" v-model="password">
+        </p>
+        <button type="submit">Login</button>
+      </form>
+    </div>
+    <div v-else >
       <div v-if="this.$store.state.currentUser.signedIn">
-        <h2>logged in</h2>
-        <p>id: {{$store.state.currentUser.id}}</p>
-        <p>email: {{$store.state.currentUser.email}}</p>
+        <h2>logged in as <br />{{currentUser.email}}</h2>
+        <p>id: {{currentUser.id}}</p>
+        <p>email: {{currentUser.email}}</p>
         <button @click="signOut">SignOut</button>
       </div>
       <div v-else>
@@ -36,6 +40,8 @@
   import NavBar from '../../components/NavBar'
   import Logo from '../../components/Logo'
 
+  import NodeService from '../../services/NodeService'
+
   export default {
     name: 'Session',
     components: {
@@ -48,6 +54,11 @@
         password: ''
       }
     },
+    computed: {
+      currentUser () {
+        return this.$store.state.currentUser
+      }
+    },
     methods: {
       signIn: function () {
         let promise = this.$sessionService.signIn(this.$store, this.email, this.password)
@@ -57,6 +68,12 @@
         let promise = this.$sessionService.signOut(this.$store)
         promise.then((data) => console.log(data))
       }
+    },
+    fetch: function ({ store, params }) {
+      let ns = new NodeService()
+      return ns.fetchMenu().then(function (items) {
+        store.commit('setMenuItems', items)
+      })
     }
   }
 </script>

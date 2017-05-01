@@ -250,35 +250,34 @@ p {
       top: 50%;
       height: 60%;
       transform: translateY(-50%);
-    }
 
-    ul {
-      list-style: none;
-      padding: 0;
-      margin: 0 auto;
-      display: inline-block;
-      height: 100%;
-      position: relative;
-
-      li {
+      ul {
+        list-style: none;
+        padding: 0;
+        margin: 0 auto;
         display: block;
-        height: 20%;
-        min-height: 54px;
-        backface-visibility: hidden;
+        position: relative;
 
-        a {
-          text-decoration: none;
-          text-shadow: none;
-          background: none;
-          font-size: 40px;
-          font-weight: 300;
+        li {
           display: block;
-          color: #fff;
-          transition: color 0.2s;
+          height: 10vh;
+          min-height: 54px;
+          backface-visibility: hidden;
 
-          &:hover,
-          &:focus {
-            color: #e3fcb1;
+          a {
+            text-decoration: none;
+            text-shadow: none;
+            background: none;
+            font-size: 40px;
+            font-weight: 300;
+            display: block;
+            color: #fff;
+            transition: color 0.2s;
+
+            &:hover,
+            &:focus {
+              color: #e3fcb1;
+            }
           }
         }
       }

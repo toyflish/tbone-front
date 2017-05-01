@@ -14,15 +14,13 @@
       <div class="overlay-menu" v-bind:class="{ open: menuOpen }">
         <nav>
           <ul>
-            <li style="height: 20%" v-for="item in $store.state.menuItems">
+            <li v-for="item in $store.state.menuItems">
               <router-link :to="{path: item.href}" v-on:click.native="$root.$emit('closeMainMenu')">
                 {{item.link_name}}
               </router-link>
             </li>
-            <li>
-              <AccountLink />
-            </li>
           </ul>
+          <UserMenu />
         </nav>
       </div>
     </div>
@@ -33,7 +31,7 @@
 import NodeService from '../services/NodeService'
 import Hamburger from './Hamburger'
 import BreadCrumbArrow from './BreadCrumbArrow'
-import AccountLink from './AccountLink'
+import UserMenu from './UserMenu'
 
 export default {
   name: 'navBar',
@@ -72,7 +70,7 @@ export default {
   components: {
     BreadCrumbArrow,
     Hamburger,
-    AccountLink
+    UserMenu
   }
 }
 </script>
