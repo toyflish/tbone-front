@@ -10,14 +10,14 @@
     <div v-if="!currentUser.signedIn">
       <h1>Login</h1>
       <p>You are currently not logged in!</p>
-      <form v-on:submit.prevent="signIn">
-        <p>
-          <input v-model="email" placeholder="email">
-        </p>
-        <p>
-          <input type="password" v-model="password">
-        </p>
-        <button type="submit">Login</button>
+      <form class="form" v-on:submit.prevent="signIn">
+        <div class="form-group">
+          <input v-model="email" placeholder="email" class="form-control">
+        </div>
+        <div class="form-group">
+          <input type="password" v-model="password" class="form-control">
+        </div>
+        <button type="submit" class="btn btn-outline-primary">Login</button>
       </form>
     </div>
     <div v-else >
@@ -25,7 +25,7 @@
         <h2>logged in as <br />{{currentUser.email}}</h2>
         <p>id: {{currentUser.id}}</p>
         <p>email: {{currentUser.email}}</p>
-        <button @click="signOut">SignOut</button>
+        <button @click="signOut" class="btn btn-outline-danger">SignOut</button>
       </div>
       <div v-else>
         <h2>logged out!</h2>

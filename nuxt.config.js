@@ -4,7 +4,9 @@ module.exports = {
   },
 
   css: [
-    'normalize.css/normalize.css',
+    // 'normalize.css/normalize.css',
+    // '~assets/bootstrap.css',
+    { src: '~assets/bootstrap/bootstrap.scss', lang: 'scss' },
     { src: '~assets/denormalize.scss', lang: 'scss' }
   ],
   plugins: [
