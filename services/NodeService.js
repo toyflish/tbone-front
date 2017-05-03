@@ -40,7 +40,7 @@ class NodeService {
     return {
       breadcrumb () {
         let bcShifted = this.parentsArray()
-        bcShifted.shift()
+        bcShifted.pop()
         return bcShifted
       },
       parentsArray () {
@@ -48,7 +48,7 @@ class NodeService {
         if (this.parent !== null && typeof this.parent === 'object') {
           parents = thisService.nodify(this.parent).parentsArray()
         }
-        parents.unshift(this)
+        parents.push(this)
         return parents
       }
 

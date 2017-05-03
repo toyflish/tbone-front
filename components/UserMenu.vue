@@ -1,5 +1,8 @@
 <template>
   <ul>
+    <li v-if="this.currentUser.signedIn">
+      <a v-on:click="editPage">edit page</a>
+    </li>
     <li v-if="!this.currentUser.signedIn">
       <a v-on:click="signIn">login</a>
     </li>
@@ -13,6 +16,10 @@
   export default {
     name: 'UserMenu',
     methods: {
+      editPage () {
+        this.$router.push({name: 'nodes-id', params: {id: this.$store.state.requestNode.id}})
+        this.$root.$emit('closeMainMenu')
+      },
       signIn () {
         this.$router.push({name: 'session'})
         this.$root.$emit('closeMainMenu')
