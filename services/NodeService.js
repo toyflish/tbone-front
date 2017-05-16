@@ -23,6 +23,17 @@ class NodeService {
     })
   }
 
+  update (node) {
+    let thisService = this
+    let nodeParams = {}
+    nodeParams.name = node.name
+    nodeParams.slug = node.slug
+    return axios.put(`${apiUrl}/api/nodes/${node.id}.json`, {node: nodeParams})
+    .then(function (response) {
+      return thisService.nodify(response.data)
+    })
+  }
+
   fetchMenu () {
     return axios.get(`${apiUrl}/api/nodes/menu.json`)
     .then(function (response) {
@@ -53,6 +64,16 @@ class NodeService {
       }
 
     }
+  }
+
+  new (src = {}) {
+    let n = {}
+    n.name = src.name || ''
+    n.slug = src.slug || ''
+    n.title = src.title || ''
+    n.link_name = src.link_name || ''
+
+    return n
   }
 }
 

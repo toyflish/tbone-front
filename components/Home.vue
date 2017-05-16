@@ -62,6 +62,7 @@
       height:200px;
       display: block;
       margin:auto;
+      margin-bottom: 25px;
       border-radius: 50%;
       box-shadow: 0 0 0 3px #fff, 0 0 0 4px #999, 0 2px 5px 4px rgba(0,0,0,.2);
 
