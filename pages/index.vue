@@ -18,9 +18,9 @@
       return Promise.all([ns.fetchBySlug({slug: '', test: 'test'}).then(function (node) {
         store.commit('setRequestNode', node)
       }),
-        ns.fetchMenu().then(function (items) {
-          store.commit('setMenuItems', items)
-        })
+      ns.fetchMenu().then(function (items) {
+        store.commit('setMenuItems', items)
+      })
       ])
     }
   }

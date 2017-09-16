@@ -8,8 +8,10 @@ module.exports = {
     { src: '~assets/denormalize.scss', lang: 'scss' }
   ],
   plugins: [
-    '~plugins/filters.js',
-    { src: '~plugins/ga.js', ssr: false }
+    '~plugins/filters.js'
+  ],
+  modules: [
+    ['@nuxtjs/google-analytics', { ua: 'UA-627798-1' }]
   ],
   /*
   ** Headers of the page
