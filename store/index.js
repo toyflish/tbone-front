@@ -21,9 +21,13 @@ const createStore = () => {
       }
     },
     actions: {
-      fetchRequestNode (context, payload) {
+      fetchRequestNode (context, params) {
         let ns = new NodeService()
-        return ns.fetchBySlug(payload).then((node) => context.commit('setRequestNode', node))
+        return ns.fetchBySlug(params).then((node) => context.commit('setRequestNode', node))
+      },
+      fetchMenu (context, payload) {
+        let ns = new NodeService()
+        return ns.fetchMenu().then((items) => context.commit('setMenuItems', items))
       }
     }
   })

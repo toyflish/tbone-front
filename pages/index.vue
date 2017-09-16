@@ -5,7 +5,6 @@
 </template>
 
 <script>
-  import NodeService from '../services/NodeService'
   import NodeDispatcher from './_slug/index'
 
   export default {
@@ -14,13 +13,9 @@
       NodeDispatcher
     },
     fetch: function ({ store, params }) {
-      let ns = new NodeService()
-      return Promise.all([ns.fetchBySlug({slug: '', test: 'test'}).then(function (node) {
-        store.commit('setRequestNode', node)
-      }),
-      ns.fetchMenu().then(function (items) {
-        store.commit('setMenuItems', items)
-      })
+      return Promise.all([
+        store.dispatch('fetchRequestNode', {slug: ''}),
+        store.dispatch('fetchMenu')
       ])
     }
   }

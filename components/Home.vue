@@ -36,8 +36,11 @@
         // prevent double klicks
         if (!this.loading) {
           this.loading = true
-
-          this.$store.dispatch('fetchRequestNode', {slug: '', linked_nodes_level_down: 1, linked_nodes_limit: this.linkedNodeslimit}).then(function () { thisVue.loading = false })
+          this.$store.dispatch('fetchRequestNode', {
+            slug: '',
+            linked_nodes_level_down: 1,
+            linked_nodes_limit: this.linkedNodeslimit
+          }).then(() => { thisVue.loading = false })
         }
       }
     },

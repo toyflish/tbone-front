@@ -13,9 +13,9 @@ class NodeService {
   }
 
   fetchBySlug (params) {
-    console.log(`NodeService.fetchBySlug(slug: ${params.slug})`)
+    console.log(`NodeService.fetchBySlug: `, params)
     let thisService = this
-    return axios.get(`${apiUrl}/api/nodes/by_slug.json`, {params: params})
+    return axios.get(`${apiUrl}/api/nodes/by_slug.json`, { params })
       .then(function (response) {
         return thisService.nodify(response.data)
       })
