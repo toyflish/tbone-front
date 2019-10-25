@@ -24,7 +24,7 @@ const createStore = () => {
       fetchRequestNode (context, params) {
         let ns = new NodeService()
         return ns.fetchBySlug(params).then((node) => {
-          if (node.visibility === 'hidden') throw ({ statusCode: 404, message: `${node.slug} visibility: hidden` })
+          if (node.visibility === 'hidden') throw new Error({ statusCode: 404, message: `${node.slug} visibility: hidden` })
           context.commit('setRequestNode', node)
         })
       },
