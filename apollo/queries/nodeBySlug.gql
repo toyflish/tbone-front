@@ -1,0 +1,13 @@
+{
+  node_by_slug(slug:""){
+    id
+    name
+    children(first:10 order:"id desc") {
+      edges{
+        node {
+          id, slug, captured_at
+        }
+      }
+    }
+  }
+}

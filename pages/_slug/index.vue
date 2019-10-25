@@ -25,6 +25,8 @@
   import Timeline from '../../components/Timeline'
   import Gems from '../../components/Gems'
 
+  import nodeBySlug from '~/apollo/queries/nodeBySlug'
+
   export default {
     components: {
       Logo,
@@ -50,6 +52,12 @@
             content: this.$store.state.requestNode.meta_description || ''
           }
         ]
+      }
+    },
+    apollo: {
+      node_by_slug: {
+        prefetch: true,
+        query: nodeBySlug
       }
     },
     methods: {

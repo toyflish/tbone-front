@@ -11,8 +11,15 @@ module.exports = {
     '~plugins/filters.js'
   ],
   modules: [
-    ['@nuxtjs/google-analytics', { ua: 'UA-627798-1' }]
+    ['@nuxtjs/google-analytics', { ua: 'UA-627798-1' }],
+    '@nuxtjs/apollo'
   ],
+  apollo: {
+    networkInterfaces: {
+      default: '~/apollo/network-interfaces/default.js'
+      // test: '~/apollo/network-interfaces/test.js'
+    }
+  },
   /*
   ** Headers of the page
   */
