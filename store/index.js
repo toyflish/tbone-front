@@ -3,7 +3,7 @@ import NodeService from '../services/NodeService.js'
 const createStore = () => {
   return new Vuex.Store({
     state: {
-      requestNode: {name: 'initial'},
+      requestNode: { name: 'initial' },
       menuItems: [],
       breadCrumbItems: [],
       hamburgerClickEvent: 'openMainMenu'
@@ -23,7 +23,10 @@ const createStore = () => {
     actions: {
       fetchRequestNode (context, params) {
         let ns = new NodeService()
-        return ns.fetchBySlug(params).then((node) => context.commit('setRequestNode', node))
+        return ns.fetchBySlug(params).then((node) => {
+          if (node.visibility === 'hidden') throw ({ statusCode: 404, message: `${node.slug} visibility: hidden` })
+          context.commit('setRequestNode', node)
+        })
       },
       fetchMenu (context, payload) {
         let ns = new NodeService()
