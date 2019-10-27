@@ -24,7 +24,7 @@ const createStore = () => {
       fetchRequestNode(context, params) {
         const ns = new NodeService()
         return ns.fetchBySlug(params).then((node) => {
-          if (node.visibility === 'hidden')
+          if (node.slug !== 'selfies' && node.visibility === 'hidden')
             throw new Error({
               statusCode: 404,
               message: `${node.slug} visibility: hidden`

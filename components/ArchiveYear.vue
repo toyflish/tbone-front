@@ -1,9 +1,11 @@
 <template>
-  <div class="archive-year">
-    <h1>{{ node.name }}</h1>
-    <img :src="node.attachment_url" />
-    <!-- eslint-disable-next-line vue/no-v-html -->
-    <div v-html="node.content"></div>
+  <div class="container archive-year">
+    <div class="px-4 container-text">
+      <h1>{{ node.name }}</h1>
+      <img v-if="node.attachment_url" :src="node.attachment_url" />
+      <!-- eslint-disable-next-line vue/no-v-html -->
+      <div v-html="node.content"></div>
+    </div>
     <ChildList :children="childrenReverse()" />
   </div>
 </template>

@@ -29,7 +29,10 @@
           :key="grandChild.id"
           class="grand-child"
         >
-          <router-link :to="{ path: grandChild.href }" style="display:block">
+          <router-link
+            :to="{ path: `${child.href}#${grandChild.slug}` }"
+            style="display:block"
+          >
             <img
               v-if="grandChild.preview_url"
               :src="grandChild.preview_url"

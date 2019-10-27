@@ -1,7 +1,7 @@
 <template>
-  <div class="archive">
+  <div class="container archive">
     <h1>{{ node.name }}</h1>
-    <img :src="node.attachment_url" />
+    <img v-if="node.attachment_url" :src="node.attachment_url" />
     <!-- eslint-disable-next-line vue/no-v-html -->
     <div v-html="node.content"></div>
     <div class="children">
@@ -12,7 +12,9 @@
               <span>{{ child.name }}</span>
             </router-link>
           </div>
-          <div :id="child.id" class="descendants">-</div>
+          <div :id="child.id" class="descendants">
+            {{ child.descendant_count }}
+          </div>
         </div>
       </div>
     </div>
@@ -20,18 +22,16 @@
 </template>
 
 <script>
-// import CountUp from "countup";
-
 export default {
   name: 'Archive',
   props: { node: { type: Object, default: null } },
   mounted() {
     // trigger countUp effect
-    if (this.node.children !== undefined) {
-      this.node.children.forEach((child) =>
-        this.countUp(child.id, child.descendant_count)
-      )
-    }
+    // if (this.node.children !== undefined) {
+    //   this.node.children.forEach((child) =>
+    //     this.countUp(child.id, child.descendant_count)
+    //   )
+    // }
   },
   methods: {
     countUp(id, max) {
@@ -43,7 +43,7 @@ export default {
       //   prefix: '',
       //   suffix: ''
       // }
-      // new CountUp(String(id), 0, max, 0, (max / 1000) * 0.5, options).start();
+      // new CountUp(String(id), 0, max, 0, (max / 1000) * 0.5, options).start()
     },
     // child nodes in reverse order without mutation outside Vuex
     childrenReverse() {
@@ -62,7 +62,7 @@ export default {
   .children {
     display: flex;
     flex-wrap: wrap;
-    justify-content: center;
+    justify-content: flex-start;
     .square {
       border: 1px solid #fff;
       position: relative;
