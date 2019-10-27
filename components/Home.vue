@@ -1,74 +1,59 @@
 <template>
-  <div class="home">
-    <img class="preload-helper" :src="node.attachment_url" style="display:none">
-    <div class="avatar" v-bind:style="{ backgroundImage: 'url(' + node.attachment_url + ')' }" >
+  <div class="pt-12">
+    <Avatar :src="node.attachment_url" class="w-48 h-48 mx-auto mb-8" />
+    <div class="px-4">
+      <h1>{{ node.name }}</h1>
+      <!-- eslint-disable-next-line vue/no-v-html -->
+      <div v-html="node.content"></div>
     </div>
-    <h1>{{node.name}}</h1>
-    <div class="container-text" v-html="node.content"></div>
     <ChildList :children="node.linked_nodes" />
-    <MoreBtn :label="moreBtnLabel" v-on:hit="loadMore" :loading="loading" />
+    <MoreBtn :label="moreBtnLabel" :loading="loading" @hit="loadMore" />
   </div>
 </template>
 
 <script>
-  import MoreBtn from './MoreBtn'
-  import ChildList from './ChildList'
-  export default {
-    name: 'home',
-    props: ['node'],
-    data: function () {
-      return {
-        loading: false,
-        linkedNodeOffest: 0,
-        linkedNodeslimit: 10
-      }
-    },
-    computed: {
-      moreBtnLabel () {
-        return this.loading ? '... Loading ...' : 'Show More'
-      }
-    },
-    methods: {
-      loadMore () {
-        let thisVue = this
-        // this.linkedNodeOffest += 10
-        this.linkedNodeslimit += 10
-        // prevent double klicks
-        if (!this.loading) {
-          this.loading = true
-          this.$store.dispatch('fetchRequestNode', {
+import MoreBtn from './MoreBtn'
+import ChildList from './ChildList'
+import Avatar from '@/components/Avatar'
+export default {
+  name: 'Home',
+  components: {
+    ChildList,
+    MoreBtn,
+    Avatar
+  },
+  props: { node: { type: Object, default: null } },
+  data() {
+    return {
+      loading: false,
+      linkedNodeOffest: 0,
+      linkedNodeslimit: 10
+    }
+  },
+  computed: {
+    moreBtnLabel() {
+      return this.loading ? '... Loading ...' : 'Show More'
+    }
+  },
+  methods: {
+    loadMore() {
+      const thisVue = this
+      // this.linkedNodeOffest += 10
+      this.linkedNodeslimit += 10
+      // prevent double klicks
+      if (!this.loading) {
+        this.loading = true
+        this.$store
+          .dispatch('fetchRequestNode', {
             slug: '',
             linked_nodes_level_down: 1,
             linked_nodes_limit: this.linkedNodeslimit
-          }).then(() => { thisVue.loading = false })
-        }
+          })
+          .then(() => {
+            thisVue.loading = false
+          })
       }
-    },
-    components: {
-      ChildList,
-      MoreBtn
     }
   }
+}
 </script>
-
-
-<style lang="scss">
-  .home {
-    .content {
-      padding: 15px;
-    }
-    padding-top: 100px;
-
-    .avatar {
-      position: relative;
-      width:200px;
-      height:200px;
-      display: block;
-      margin:auto;
-      border-radius: 50%;
-      box-shadow: 0 0 0 3px #fff, 0 0 0 4px #999, 0 2px 5px 4px rgba(0,0,0,.2);
-
-      background-size: cover;
-    }
-  }
-</style>

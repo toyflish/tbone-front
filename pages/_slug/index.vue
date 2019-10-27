@@ -1,85 +1,81 @@
 <template>
-  <div class="container main">
+  <div>
+    <NavBar />
 
-    <NavBar/>
-
-    <div class="logo-wrapper" v-if="showLogo">
+    <div v-if="showLogo" class="mb-4">
       <Logo />
     </div>
 
-    <component :node="$store.state.requestNode" v-bind:is="requestNodeView"/>
-
+    <component :is="requestNodeView" :node="$store.state.requestNode" />
   </div>
 </template>
 
 <script>
-  import NavBar from '../../components/NavBar'
-  import Logo from '../../components/Logo'
+import NavBar from '@/components/NavBar'
+import Logo from '@/components/Logo'
 
-  import Home from '../../components/Home'
-  import DefaultNode from '../../components/DefaultNode'
-  import Gallery from '../../components/Gallery'
-  import GalleryListing from '../../components/GalleryListing'
-  import ArchiveYear from '../../components/ArchiveYear'
-  import Archive from '../../components/Archive'
-  import Timeline from '../../components/Timeline'
-  import Gems from '../../components/Gems'
+import Home from '@/components/Home'
+import DefaultNode from '@/components/DefaultNode'
+import Gallery from '@/components/Gallery'
+import GalleryListing from '@/components/GalleryListing'
+import ArchiveYear from '@/components/ArchiveYear'
+import Archive from '@/components/Archive'
+import Timeline from '@/components/Timeline'
+import Gems from '@/components/Gems'
 
-  export default {
-    components: {
-      Logo,
-      Home,
-      DefaultNode,
-      Gallery,
-      GalleryListing,
-      ArchiveYear,
-      Archive,
-      Timeline,
-      Gems,
-      NavBar
-    },
-    name: 'nodeDispatcher',
-    props: ['slug'],
-    head: function () {
-      return {
-        title: this.$store.state.requestNode.title,
-        meta: [
-          {
-            // hid: this.$store.state.requestNode.meta_description,
-            name: 'description',
-            content: this.$store.state.requestNode.meta_description || ''
-          }
-        ]
-      }
-    },
-    methods: {
-      componentsRegistered: function () {
-        return Object.keys(this.$options.components)
-      }
-    },
-    computed: {
-      requestNodeView: function () {
-        let view = this.$store.state.requestNode.view
-        if (view === undefined || !this.componentsRegistered().includes(view)) {
-          console.log(`NodeDispatcher: view(${view}) not registred, fall back to DefaultNode`)
-          return 'DefaultNode'
-        } else {
-          return view
+export default {
+  name: 'NodeDispatcher',
+  components: {
+    Logo,
+    Home,
+    DefaultNode,
+    Gallery,
+    GalleryListing,
+    ArchiveYear,
+    Archive,
+    Timeline,
+    Gems,
+    NavBar
+  },
+  props: { slug: { type: String, default: '' } },
+  head() {
+    return {
+      title: this.$store.state.requestNode.title,
+      meta: [
+        {
+          // hid: this.$store.state.requestNode.meta_description,
+          name: 'description',
+          content: this.$store.state.requestNode.meta_description || ''
         }
-      },
-      showLogo: function () {
-        return this.$store.state.requestNode.id !== undefined && this.$store.state.requestNode.id !== 1
+      ]
+    }
+  },
+  computed: {
+    requestNodeView() {
+      const view = this.$store.state.requestNode.view
+      if (
+        view === undefined ||
+        !Object.keys(this.$options.components).includes(view)
+      ) {
+        return 'DefaultNode'
+      } else {
+        return view
       }
     },
-    fetch: function ({ store, params }) {
-      return Promise.all([
-        store.dispatch('fetchRequestNode', {slug: (params.slug || '')}),
-        store.dispatch('fetchMenu')
-      ])
+    showLogo() {
+      return (
+        this.$store.state.requestNode.id !== undefined &&
+        this.$store.state.requestNode.id !== 1
+      )
     }
+  },
+  fetch({ store, params }) {
+    return Promise.all([
+      store.dispatch('fetchRequestNode', { slug: params.slug || '' }),
+      store.dispatch('fetchMenu')
+    ])
   }
+}
 </script>
 
-<style>
-
-</style>
+<style></style>

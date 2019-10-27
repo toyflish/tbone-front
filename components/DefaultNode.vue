@@ -1,81 +1,99 @@
 <template>
   <div class="node-default">
     <div class="container-text">
-      <h1>{{node.name}}</h1>
+      <h1>{{ node.name }}</h1>
     </div>
-    <img v-bind:src="node.attachment_url" />
-    <div class="container-text content" v-html="node.content"></div>
+    <img :src="node.attachment_url" />
+    <!-- eslint-disable-next-line vue/no-v-html -->
+    <div class="container-text content" v-html="node.content" />
     <div v-if="validateAllHavePreviewUrl(node.children)" class="children">
-      <div class="batch" v-for="batch in childrenInBatches">
-        <div class="node" v-for="node in batch">
-          <router-link :to="{ path: node.href }" style="display:block">
-            <img v-if="node.preview_url" v-bind:src="node.preview_url" v-bind:alt="node.name"/>
-            <span v-else class="primer">{{node.name}}</span>
+      <div
+        v-for="(batch, index) in childrenInBatches"
+        :key="index"
+        class="batch"
+      >
+        <div v-for="item in batch" :key="item.id" class="node">
+          <router-link :to="{ path: item.href }" style="display:block">
+            <img
+              v-if="item.preview_url"
+              :src="item.preview_url"
+              :alt="item.name"
+            />
+            <span v-else class="primer">{{ item.name }}</span>
           </router-link>
         </div>
       </div>
     </div>
     <div v-else class="children">
       <div class="list">
-        <article class="node" v-for="node in node.children">
-          <router-link v-if="node.attachment_url" :to="{ path: node.href }" style="display:block">
-            <img  v-bind:src="node.attachment_url" v-bind:alt="node.name"/>
+        <article v-for="item in node.children" :key="item.id" class="node">
+          <router-link
+            v-if="item.attachment_url"
+            :to="{ path: item.href }"
+            style="display:block"
+          >
+            <img :src="item.attachment_url" :alt="item.name" />
           </router-link>
           <div v-else class="container-text">
-            <h2 ><router-link :to="{ path: node.href }">{{node.name}}</router-link></h2>
-            <span class="subtitle">{{node.teaser}}</span>
+            <h2>
+              <router-link :to="{ path: item.href }">{{
+                item.name
+              }}</router-link>
+            </h2>
+            <span class="subtitle">{{ item.teaser }}</span>
           </div>
         </article>
       </div>
     </div>
     <div class="container-text">
-      <VueDisqus shortname="toyflish" :identifier="String(node.id)" :url="`https://toyflish.com${node.href}`"></VueDisqus>
+      <!-- <VueDisqus shortname="toyflish" :identifier="String(node.id)" :url="`https://toyflish.com${node.href}`"></VueDisqus> -->
     </div>
   </div>
 </template>
 
 <script>
-  import VueDisqus from 'vue-disqus/VueDisqus.vue'
+// import VueDisqus from 'vue-disqus/VueDisqus.vue'
 
-  export default {
-    name: 'defaultNode',
-    props: ['node'],
-    data: function () {
-      return {
-        batches: [1, 2, 3]
-      }
-    },
-    computed: {
-      childrenInBatches: function () {
-        return this.inBatches(this.node.children, 3)
-      }
-    },
-    methods: {
-      validateAllHavePreviewUrl: function (nodes) {
-        if (nodes instanceof (Array)) {
-          return nodes.find(function (n) {
+export default {
+  name: 'DefaultNode',
+  components: {
+    // VueDisqus
+  },
+  props: { node: { type: Object, default: null } },
+  data() {
+    return {
+      batches: [1, 2, 3]
+    }
+  },
+  computed: {
+    childrenInBatches() {
+      return this.inBatches(this.node.children, 3)
+    }
+  },
+  methods: {
+    validateAllHavePreviewUrl(nodes) {
+      if (Array.isArray(nodes)) {
+        return (
+          nodes.find(function(n) {
             return n.preview_url === undefined
           }) === undefined
-        } else {
-          return undefined
-        }
-      },
-      inBatches: function (nodes, size) {
-        let batches = []
-        if (nodes instanceof (Array)) {
-          for (let i = 0; i < nodes.length; i += size) {
-            batches.push(nodes.slice(i, size + i))
-          }
-        }
-        return batches
+        )
+      } else {
+        return undefined
       }
     },
-    components: {
-      VueDisqus
+    inBatches(nodes, size) {
+      const batches = []
+      if (Array.isArray(nodes)) {
+        for (let i = 0; i < nodes.length; i += size) {
+          batches.push(nodes.slice(i, size + i))
+        }
+      }
+      return batches
     }
   }
+}
 </script>
-
 
 <style lang="scss">
 .node-default {
@@ -95,10 +113,10 @@
           display: block;
         }
       }
-      .node:nth-child(3n+1) {
+      .node:nth-child(3n + 1) {
         margin-right: 0.5%;
       }
-      .node:nth-child(3n+3) {
+      .node:nth-child(3n + 3) {
         margin-left: 0.5%;
       }
     }

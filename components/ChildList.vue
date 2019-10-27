@@ -1,18 +1,37 @@
 <template>
   <section class="children">
-    <article v-for="child in children" v-bind:class="child.view.toLowerCase()">
+    <article
+      v-for="child in children"
+      :key="child.id"
+      :class="child.view.toLowerCase()"
+    >
       <router-link :to="{ path: child.href }" style="display:block">
-        <img v-if="child.attachment_url" v-bind:src="child.attachment_url" v-bind:alt="child.name"/>
+        <img
+          v-if="child.attachment_url"
+          :src="child.attachment_url"
+          :alt="child.name"
+          class="w-full mx-auto"
+        />
       </router-link>
-      <div class="container-text">
-        <h2 class="subtitled"><router-link :to="{ path: child.href }">{{child.name}}</router-link></h2>
-        <div class="captured-at">{{child.captured_at | date}}</div>
-        <span class="subtitle">{{child.teaser}}</span>
+      <div class="px-4">
+        <h2 class="subtitled">
+          <router-link :to="{ path: child.href }">{{ child.name }}</router-link>
+        </h2>
+        <div class="captured-at">{{ child.captured_at | date }}</div>
+        <span class="subtitle">{{ child.teaser }}</span>
       </div>
       <div v-if="child.children !== undefined" class="grand-children">
-        <div class="grand-child" v-for="grandChild in child.children.slice(0,4)" >
+        <div
+          v-for="grandChild in child.children.slice(0, 4)"
+          :key="grandChild.id"
+          class="grand-child"
+        >
           <router-link :to="{ path: grandChild.href }" style="display:block">
-            <img v-if="grandChild.preview_url" v-bind:src="grandChild.preview_url" v-bind:alt="grandChild.name"/>
+            <img
+              v-if="grandChild.preview_url"
+              :src="grandChild.preview_url"
+              :alt="grandChild.name"
+            />
           </router-link>
         </div>
       </div>
@@ -21,12 +40,11 @@
 </template>
 
 <script>
-  export default {
-    name: 'ChildList',
-    props: ['children']
-  }
+export default {
+  name: 'ChildList',
+  props: { children: { type: Array, default: null } }
+}
 </script>
-
 
 <style lang="scss">
 .children {
@@ -57,17 +75,17 @@
       h2 {
         font-family: Georgia, serif;
         font-style: italic;
-        quotes: "“" "”" "‘" "’";
+        quotes: '“' '”' '‘' '’';
         &:before {
           color: #bbb;
           font-family: Georgia, serif;
           content: open-quote;
-          margin-right: .4rem;
+          margin-right: 0.4rem;
         }
         &:after {
           color: #bbb;
           content: close-quote;
-          margin-left: .4rem;
+          margin-left: 0.4rem;
         }
       }
     }

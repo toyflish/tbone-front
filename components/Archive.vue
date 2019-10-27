@@ -1,17 +1,18 @@
 <template>
   <div class="archive">
-    <h1>{{node.name}}</h1>
-    <img v-bind:src="node.attachment_url" />
+    <h1>{{ node.name }}</h1>
+    <img :src="node.attachment_url" />
+    <!-- eslint-disable-next-line vue/no-v-html -->
     <div v-html="node.content"></div>
     <div class="children">
-      <div class="square" v-for="child in childrenReverse()">
-        <div class="content" v-on:click="$router.push({ path: child.href })">
+      <div v-for="child in childrenReverse()" :key="child.id" class="square">
+        <div class="content" @click="$router.push({ path: child.href })">
           <div class="name">
             <router-link :to="{ path: child.href }" style="display:block">
-              <span>{{child.name}}</span>
+              <span>{{ child.name }}</span>
             </router-link>
           </div>
-          <div class="descendants" :id="child.id">-</div>
+          <div :id="child.id" class="descendants">-</div>
         </div>
       </div>
     </div>
@@ -19,41 +20,42 @@
 </template>
 
 <script>
-  import CountUp from 'countup'
+// import CountUp from "countup";
 
-  export default {
-    name: 'archive',
-    props: ['node'],
-    methods: {
-      countUp: function (id, max) {
-        let options = {
-          useEasing: true,
-          useGrouping: false,
-          separator: '',
-          decimal: '',
-          prefix: '',
-          suffix: ''
-        };
-        (new CountUp(String(id), 0, max, 0, max / 1000 * 0.5, options)).start()
-      },
-      // child nodes in reverse order without mutation outside Vuex
-      childrenReverse: function () {
-        let arr = []
-        if (this.node.children !== undefined) {
-          this.node.children.forEach((child) => arr.unshift(child))
-        }
-        return arr
-      }
+export default {
+  name: 'Archive',
+  props: { node: { type: Object, default: null } },
+  mounted() {
+    // trigger countUp effect
+    if (this.node.children !== undefined) {
+      this.node.children.forEach((child) =>
+        this.countUp(child.id, child.descendant_count)
+      )
+    }
+  },
+  methods: {
+    countUp(id, max) {
+      // const options = {
+      //   useEasing: true,
+      //   useGrouping: false,
+      //   separator: '',
+      //   decimal: '',
+      //   prefix: '',
+      //   suffix: ''
+      // }
+      // new CountUp(String(id), 0, max, 0, (max / 1000) * 0.5, options).start();
     },
-    mounted: function () {
-      // trigger countUp effect
+    // child nodes in reverse order without mutation outside Vuex
+    childrenReverse() {
+      const arr = []
       if (this.node.children !== undefined) {
-        this.node.children.forEach((child) => this.countUp(child.id, child.descendant_count))
+        this.node.children.forEach((child) => arr.unshift(child))
       }
+      return arr
     }
   }
+}
 </script>
-
 
 <style lang="scss">
 .archive {
@@ -70,7 +72,7 @@
       .content {
         cursor: pointer;
         background: #000;
-        position:  absolute;
+        position: absolute;
         top: 0;
         left: 0;
         bottom: 0;
@@ -83,21 +85,20 @@
         .name {
           width: 70%;
           font-weight: bold;
-          font-size:1.2em;
+          font-size: 1.2em;
           a {
             color: #fff;
           }
-
         }
         .descendants {
-          margin:5px;
+          margin: 5px;
           color: #aaa;
           font-size: smaller;
           font-weight: 400;
         }
         &:hover {
           background: #fff;
-          .name a{
+          .name a {
             color: #000;
           }
         }

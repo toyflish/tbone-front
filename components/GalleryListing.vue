@@ -1,24 +1,37 @@
 <template>
   <div class="show-default-node">
-    <h1>{{node.name}}</h1>
-    <img v-bind:src="node.attachment_url" />
+    <h1>{{ node.name }}</h1>
+    <img :src="node.attachment_url" />
+    <!-- eslint-disable-next-line vue/no-v-html -->
     <div v-html="node.content"></div>
     <div v-if="validateAllHavePreviewUrl(node.children)" class="children">
-      <div class="batch" v-for="batch in childrenInBatches">
-        <div class="node" v-for="node in batch">
-          <router-link :to="{ path: node.href }" style="display:block">
-            <img v-if="node.preview_url" v-bind:src="node.preview_url" v-bind:alt="node.name"/>
-            <span v-else class="primer">{{node.name}}</span>
+      <div
+        v-for="(batch, index) in childrenInBatches"
+        :key="index"
+        class="batch"
+      >
+        <div v-for="item in batch" :key="item.id" class="node">
+          <router-link :to="{ path: item.href }" style="display:block">
+            <img
+              v-if="item.preview_url"
+              :src="item.preview_url"
+              :alt="item.name"
+            />
+            <span v-else class="primer">{{ item.name }}</span>
           </router-link>
         </div>
       </div>
     </div>
     <div v-else class="children">
       <div class="list">
-        <div class="node" v-for="node in node.children">
-          <router-link :to="{ path: node.href }" style="display:block">
-            <img v-if="node.attachment_url" v-bind:src="node.attachment_url" v-bind:alt="node.name"/>
-            <span v-else class="primer">{{node.name}}</span>
+        <div v-for="item in node.children" :key="item.id" class="node">
+          <router-link :to="{ path: item.href }" style="display:block">
+            <img
+              v-if="item.attachment_url"
+              :src="item.attachment_url"
+              :alt="item.name"
+            />
+            <span v-else class="primer">{{ item.name }}</span>
           </router-link>
         </div>
       </div>
@@ -27,42 +40,43 @@
 </template>
 
 <script>
-  export default {
-    name: 'showDefaultNode',
-    props: ['node'],
-    data: function () {
-      return {
-        batches: [1, 2, 3]
-      }
-    },
-    computed: {
-      childrenInBatches: function () {
-        return this.inBatches(this.node.children, 3)
-      }
-    },
-    methods: {
-      validateAllHavePreviewUrl: function (nodes) {
-        if (nodes instanceof (Array)) {
-          return nodes.find(function (n) {
+export default {
+  name: 'ShowDefaultNode',
+  props: { node: { type: Object, default: null } },
+  data() {
+    return {
+      batches: [1, 2, 3]
+    }
+  },
+  computed: {
+    childrenInBatches() {
+      return this.inBatches(this.node.children, 3)
+    }
+  },
+  methods: {
+    validateAllHavePreviewUrl(nodes) {
+      if (Array.isArray(nodes)) {
+        return (
+          nodes.find(function(n) {
             return n.preview_url === undefined
           }) === undefined
-        } else {
-          return undefined
-        }
-      },
-      inBatches: function (nodes, size) {
-        let batches = []
-        if (nodes instanceof (Array)) {
-          for (let i = 0; i < nodes.length; i += size) {
-            batches.push(nodes.slice(i, size + i))
-          }
-        }
-        return batches
+        )
+      } else {
+        return undefined
       }
+    },
+    inBatches(nodes, size) {
+      const batches = []
+      if (Array.isArray(nodes)) {
+        for (let i = 0; i < nodes.length; i += size) {
+          batches.push(nodes.slice(i, size + i))
+        }
+      }
+      return batches
     }
   }
+}
 </script>
-
 
 <style lang="scss">
 .show-default-node {
@@ -78,10 +92,10 @@
           display: block;
         }
       }
-      .node:nth-child(3n+1) {
+      .node:nth-child(3n + 1) {
         margin-right: 0.5%;
       }
-      .node:nth-child(3n+3) {
+      .node:nth-child(3n + 3) {
         margin-left: 0.5%;
       }
     }

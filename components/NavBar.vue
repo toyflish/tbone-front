@@ -1,76 +1,68 @@
 <template>
-  <div class="nav">
-    <div class="container">
-      <Hamburger />
-
-      <div class="breadcrumb" v-if="breadcrumbVisible">
-        <div v-for="item in breadcrumb">
-          <router-link :to="{path: item.href}">
-            <BreadCrumbArrow />
-          </router-link>
-        </div>
-      </div>
-
-      <div class="overlay-menu" v-bind:class="{ open: menuOpen }">
-        <nav>
-          <ul>
-            <li style="height: 20%" v-for="item in $store.state.menuItems">
-              <router-link :to="{path: item.href}" v-on:click.native="$root.$emit('closeMainMenu')">
-                {{item.link_name}}
-              </router-link>
-            </li>
-          </ul>
-        </nav>
-      </div>
+  <div class="container fixed bottom-0 flex gradient px-4 py-4">
+    <div class="w-12">
+      <router-link
+        v-if="breadcrumbVisible && upLink"
+        :to="{ path: upLink.href }"
+      >
+        <BreadCrumbArrow />
+      </router-link>
     </div>
+    <div class="ml-auto w-12 z-10">
+      <Hamburger />
+    </div>
+    <MenuOverlay />
   </div>
 </template>
 
 <script>
 import NodeService from '../services/NodeService'
-import Hamburger from './Hamburger'
-import BreadCrumbArrow from './BreadCrumbArrow'
+import MenuOverlay from '@/components/MenuOverlay'
+import Hamburger from '@/components/Hamburger'
+import BreadCrumbArrow from '@/components/BreadCrumbArrow'
 
 export default {
-  name: 'navBar',
+  name: 'NavBar',
+  components: {
+    BreadCrumbArrow,
+    Hamburger,
+    MenuOverlay
+  },
   computed: {
-    node: function () {
+    node() {
       return this.$store.state.requestNode
     },
-    breadcrumb: function () {
-      let ns = new NodeService()
-      return (ns.nodify(this.$store.state.requestNode)).breadcrumb()
+    breadcrumb() {
+      const ns = new NodeService()
+      return ns.nodify(this.$store.state.requestNode).breadcrumb()
     },
-    menuOpen: function () {
-      switch (this.$store.state.hamburgerClickEvent) {
-        case 'openMainMenu':
-          return false
-        case 'closeMainMenu':
-          return true
-        default:
-          return false
-      }
+    upLink() {
+      return this.breadcrumb[0]
     },
-    breadcrumbVisible: function () {
+    breadcrumbVisible() {
       return this.$store.state.hamburgerClickEvent === 'openMainMenu'
     }
   },
 
-  mounted: function () {
-    this.$root.$on('openMainMenu', function () {
+  mounted() {
+    this.$root.$on('openMainMenu', function() {
       this.$store.commit('setHamburgerClickEvent', 'closeMainMenu')
     })
 
-    this.$root.$on('closeMainMenu', function () {
+    this.$root.$on('closeMainMenu', function() {
       this.$store.commit('setHamburgerClickEvent', 'openMainMenu')
     })
-  },
-  components: {
-    BreadCrumbArrow,
-    Hamburger
   }
 }
 </script>
 
 <style lang="scss">
+.gradient {
+  background: linear-gradient(
+    180deg,
+    rgba(255, 255, 255, 0) 0%,
+    rgba(255, 255, 255, 0.7) 50%,
+    rgba(255, 255, 255, 1) 100%
+  );
+}
 </style>
