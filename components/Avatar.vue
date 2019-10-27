@@ -15,7 +15,7 @@ export default {
   box-shadow: 0 0 0 3px #fff, 0 0 0 4px #999, 0 2px 5px 4px rgba(0, 0, 0, 0.2);
   img {
     max-height: 100%;
-    width: auto;
+    max-width: initial;
   }
 }
 </style>

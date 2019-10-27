@@ -3,7 +3,7 @@
     <h1>{{ node.name }}</h1>
     <img :src="node.attachment_url" />
     <!-- eslint-disable-next-line vue/no-v-html -->
-    <div class="container-text" v-html="node.content"></div>
+    <div class="px-4 container-text" v-html="node.content"></div>
     <ChildList :children="node.children" />
   </div>
 </template>

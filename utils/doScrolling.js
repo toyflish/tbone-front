@@ -8,10 +8,12 @@ function getElementY(query) {
 function doScrolling(element, duration, offset) {
   const startingY = window.pageYOffset
   const elementY = getElementY(element) - offset
+  console.log(elementY)
+  const pageHeight = document.documentElement.scrollHeight
   // If element is close to page's bottom then window will scroll only to some position above the element.
   const targetY =
-    document.body.scrollHeight - elementY < window.innerHeight
-      ? document.body.scrollHeight - window.innerHeight
+    pageHeight - elementY < window.innerHeight
+      ? pageHeight - window.innerHeight
       : elementY
   const diff = targetY - startingY
   // Easing function: easeInOutCubic

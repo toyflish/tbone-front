@@ -1,11 +1,11 @@
 <template>
-  <div class="node-default">
-    <div class="container-text">
+  <div class="container node-default">
+    <div class="px-4 container-text">
       <h1>{{ node.name }}</h1>
     </div>
     <img :src="node.attachment_url" />
     <!-- eslint-disable-next-line vue/no-v-html -->
-    <div class="container-text content" v-html="node.content" />
+    <div class="px-4 container-text content" v-html="node.content" />
     <div v-if="validateAllHavePreviewUrl(node.children)" class="children">
       <div
         v-for="(batch, index) in childrenInBatches"
@@ -34,7 +34,7 @@
           >
             <img :src="item.attachment_url" :alt="item.name" />
           </router-link>
-          <div v-else class="container-text">
+          <div v-else class="px-4 container-text">
             <h2>
               <router-link :to="{ path: item.href }">{{
                 item.name
@@ -45,7 +45,7 @@
         </article>
       </div>
     </div>
-    <div class="container-text">
+    <div class="px-4 container-text">
       <!-- <VueDisqus shortname="toyflish" :identifier="String(node.id)" :url="`https://toyflish.com${node.href}`"></VueDisqus> -->
     </div>
   </div>

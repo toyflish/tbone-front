@@ -5,15 +5,18 @@
       :key="child.id"
       :class="child.view.toLowerCase()"
     >
-      <router-link :to="{ path: child.href }" style="display:block">
+      <router-link
+        v-if="child.attachment_url"
+        :to="{ path: child.href }"
+        style="display:block"
+      >
         <img
-          v-if="child.attachment_url"
           :src="child.attachment_url"
           :alt="child.name"
           class="w-full mx-auto"
         />
       </router-link>
-      <div class="px-4">
+      <div class="container-text px-4">
         <h2 class="subtitled">
           <router-link :to="{ path: child.href }">{{ child.name }}</router-link>
         </h2>

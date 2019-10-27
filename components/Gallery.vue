@@ -1,46 +1,48 @@
 <template>
   <div class="gallery">
-    <h1>{{ node.name }}</h1>
-    <img :src="node.attachment_url" />
-    <!-- eslint-disable-next-line vue/no-v-html -->
-    <div class="container-text" v-html="node.content"></div>
-    <div v-if="validateAllHavePreviewUrl(node.children)" class="children">
-      <div
-        v-for="(batch, index) in childrenInBatches"
-        :key="index"
-        class="batch"
-      >
-        <div v-for="child in batch" :key="child.id" class="node">
-          <a @click="swiperShow(child)">
-            <img
-              v-if="child.preview_url"
-              :src="child.preview_url"
-              :alt="child.alt"
-            />
-            <span v-else class="primer">{{ child.name }}</span>
-          </a>
+    <div class="container">
+      <h1>{{ node.name }}</h1>
+      <img :src="node.attachment_url" />
+      <!-- eslint-disable-next-line vue/no-v-html -->
+      <div class="px-4 container-text" v-html="node.content"></div>
+      <div v-if="validateAllHavePreviewUrl(node.children)" class="children">
+        <div
+          v-for="(batch, index) in childrenInBatches"
+          :key="index"
+          class="batch"
+        >
+          <div v-for="child in batch" :key="child.id" class="node">
+            <a @click="swiperShow(child)">
+              <img
+                v-if="child.preview_url"
+                :src="child.preview_url"
+                :alt="child.alt"
+              />
+              <span v-else class="primer">{{ child.name }}</span>
+            </a>
+          </div>
         </div>
       </div>
-    </div>
-    <div v-else class="children">
-      <div class="list">
-        <div v-for="item in node.children" :key="item.id" class="node">
-          <router-link :to="{ path: item.href }" style="display:block">
-            <img
-              v-if="item.attachment_url"
-              :src="item.attachment_url"
-              :alt="item.name"
-            />
-            <span v-else class="primer">{{ item.name }}</span>
-          </router-link>
+      <div v-else class="children">
+        <div class="list">
+          <div v-for="item in node.children" :key="item.id" class="node">
+            <router-link :to="{ path: item.href }" style="display:block">
+              <img
+                v-if="item.attachment_url"
+                :src="item.attachment_url"
+                :alt="item.name"
+              />
+              <span v-else class="primer">{{ item.name }}</span>
+            </router-link>
+          </div>
         </div>
       </div>
-    </div>
-    <div class="container-text">
-      <!-- <VueDisqus shortname="toyflish" :identifier="String(node.id)" :url="`https://toyflish.com${node.href}`"></VueDisqus> -->
+      <div class="px-4 container-text">
+        <!-- <VueDisqus shortname="toyflish" :identifier="String(node.id)" :url="`https://toyflish.com${node.href}`"></VueDisqus> -->
+      </div>
     </div>
     <div v-if="swiperVisible" id="swiper-container">
-      <div class="swiper-wrapper">
+      <div class="container swiper-wrapper">
         <div
           v-for="child in node.children"
           :id="child.slug"
@@ -133,7 +135,7 @@ export default {
     },
 
     swiperSlideWidth() {
-      return document.body.querySelector('.gallery').offsetWidth
+      return document.body.querySelector('.gallery .container').offsetWidth
     },
     swiperHeightFor(width, height) {
       return this.swiperSlideWidth() / (width / height)
@@ -194,19 +196,17 @@ export default {
   $backdrop: rgba(255, 255, 255, 1);
   #swiper-container {
     position: absolute;
-    // position: fixed;
     top: 0;
-    // height: 100vh;
     // overflow-y: scroll;
     // bottom:0;
     // left:0;
-    // right:0;
+    right: 0;
     width: 100%;
-    height: 100%;
-    background: $backdrop;
+    // height: 100%;
+    background-color: $backdrop;
   }
   .swiper-slide {
-    margin-top: 50px;
+    margin: 50px auto;
     text-align: center;
     font-size: 18px;
     background: $backdrop;

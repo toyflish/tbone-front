@@ -1,8 +1,8 @@
 <template>
   <div>
-    <NavBar />
+    <NavBar class="z-10" />
 
-    <div v-if="showLogo" class="mb-4">
+    <div v-if="showLogo" class="container my-4">
       <Logo />
     </div>
 
