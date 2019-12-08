@@ -12,10 +12,11 @@ export default {
   components: {
     NodeDispatcher
   },
-  fetch: ({ store, params }) =>
-    Promise.all([
-      store.dispatch('fetchRequestNode', { slug: '' }),
+  fetch({ store, params }) {
+    return Promise.all([
+      store.dispatch('node/fetchCurrent', { slug: '' }),
       store.dispatch('fetchMenu')
     ])
+  }
 }
 </script>

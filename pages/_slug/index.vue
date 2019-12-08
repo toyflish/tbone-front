@@ -6,11 +6,12 @@
       <Logo />
     </div>
 
-    <component :is="requestNodeView" :node="$store.state.requestNode" />
+    <component :is="requestNodeView" :node="node.current" />
   </div>
 </template>
 
 <script>
+import { mapState } from 'vuex'
 import NavBar from '@/components/NavBar'
 import Logo from '@/components/Logo'
 
@@ -40,19 +41,22 @@ export default {
   props: { slug: { type: String, default: '' } },
   head() {
     return {
-      title: this.$store.state.requestNode.title,
+      title: this.node.current.title,
       meta: [
         {
           // hid: this.$store.state.requestNode.meta_description,
           name: 'description',
-          content: this.$store.state.requestNode.meta_description || ''
+          content: this.node.current.meta_description || ''
         }
       ]
     }
   },
   computed: {
+    ...mapState({
+      node: (state) => state.node
+    }),
     requestNodeView() {
-      const view = this.$store.state.requestNode.view
+      const view = this.node.current.view
       if (
         view === undefined ||
         !Object.keys(this.$options.components).includes(view)
@@ -63,15 +67,12 @@ export default {
       }
     },
     showLogo() {
-      return (
-        this.$store.state.requestNode.id !== undefined &&
-        this.$store.state.requestNode.id !== 1
-      )
+      return this.node.current.id !== undefined && this.node.current.id !== 1
     }
   },
   fetch({ store, params }) {
     return Promise.all([
-      store.dispatch('fetchRequestNode', { slug: params.slug || '' }),
+      store.dispatch('node/fetchCurrent', { slug: params.slug || '' }),
       store.dispatch('fetchMenu')
     ])
   }

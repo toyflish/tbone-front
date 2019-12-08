@@ -18,7 +18,8 @@
 </template>
 
 <script>
-import NodeService from '../services/NodeService'
+import { mapState, mapGetters } from 'vuex'
+
 import MenuOverlay from '@/components/MenuOverlay'
 import Hamburger from '@/components/Hamburger'
 import BreadCrumbArrow from '@/components/BreadCrumbArrow'
@@ -31,13 +32,10 @@ export default {
     MenuOverlay
   },
   computed: {
-    node() {
-      return this.$store.state.requestNode
-    },
-    breadcrumb() {
-      const ns = new NodeService()
-      return ns.nodify(this.$store.state.requestNode).breadcrumb()
-    },
+    ...mapState({
+      node: (state) => state.node
+    }),
+    ...mapGetters('node', ['currentHydrated', 'breadcrumb']),
     upLink() {
       return this.breadcrumb[0]
     },

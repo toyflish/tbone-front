@@ -12,6 +12,7 @@
 </template>
 
 <script>
+import { mapActions } from 'vuex'
 import MoreBtn from './MoreBtn'
 import ChildList from './ChildList'
 import Avatar from '@/components/Avatar'
@@ -36,6 +37,7 @@ export default {
     }
   },
   methods: {
+    ...mapActions('node', ['fetchCurrent']),
     loadMore() {
       const thisVue = this
       // this.linkedNodeOffest += 10
@@ -43,15 +45,13 @@ export default {
       // prevent double klicks
       if (!this.loading) {
         this.loading = true
-        this.$store
-          .dispatch('fetchRequestNode', {
-            slug: '',
-            linked_nodes_level_down: 1,
-            linked_nodes_limit: this.linkedNodeslimit
-          })
-          .then(() => {
-            thisVue.loading = false
-          })
+        this.fetchCurrent({
+          slug: '',
+          linked_nodes_level_down: 1,
+          linked_nodes_limit: this.linkedNodeslimit
+        }).then(() => {
+          thisVue.loading = false
+        })
       }
     }
   }
