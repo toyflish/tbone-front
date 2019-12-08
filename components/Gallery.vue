@@ -17,6 +17,7 @@
                 v-if="child.preview_url"
                 :src="child.preview_url"
                 :alt="child.alt"
+                :data-slug="child.slug"
               />
               <span v-else class="primer">{{ child.name }}</span>
             </a>
@@ -41,7 +42,7 @@
         <!-- <VueDisqus shortname="toyflish" :identifier="String(node.id)" :url="`https://toyflish.com${node.href}`"></VueDisqus> -->
       </div>
     </div>
-    <div v-if="swiperVisible" id="swiper-container">
+    <div v-if="swiperOverlayOpen" id="swiper-container">
       <div class="container swiper-wrapper">
         <div
           v-for="child in node.children"
@@ -81,6 +82,8 @@
 </template>
 
 <script>
+import { mapActions, mapState, mapGetters } from 'vuex'
+
 import { doScrolling } from '../utils/doScrolling'
 // import VueDisqus from 'vue-disqus/VueDisqus.vue'
 
@@ -94,15 +97,30 @@ export default {
   data() {
     return {
       batches: [1, 2, 3],
-      pageYOffset: 0
+      pageYOffset: 0,
+      currentSlugInView: null
     }
   },
   computed: {
+    ...mapState('nav', { navState: (state) => state.state }),
+    ...mapGetters('nav', ['swiperOverlayOpen']),
     childrenInBatches() {
       return this.inBatches(this.node.children, 3)
-    },
-    swiperVisible() {
-      return this.$store.state.hamburgerClickEvent === 'closeSwiper'
+    }
+  },
+  watch: {
+    navState(_, oldValue) {
+      if (oldValue === 'swiperOverlayOpen') {
+        this.$nextTick(
+          () =>
+            doScrolling(
+              `.children [data-slug="${this.currentSlugInView}"]`,
+              500,
+              50
+            ),
+          100
+        )
+      }
     }
   },
   mounted() {
@@ -111,8 +129,17 @@ export default {
       const node = this.node.children.find((n) => n.slug === hash)
       this.swiperShow(node)
     }
+    // fix history back from overlayGallery to normal gallery
+    // TODO unmuout event
+    window.onpopstate = (event) => {
+      const hash = window.location.hash.substr(1)
+      if (hash === '') {
+        this.swiperClose()
+      }
+    }
   },
   methods: {
+    ...mapActions('nav', ['swiperOpen', 'swiperClose']),
     inBatches(nodes, size) {
       const batches = []
       if (Array.isArray(nodes)) {
@@ -134,6 +161,28 @@ export default {
       }
     },
 
+    mountObserver() {
+      const galleryNodes = document.querySelectorAll(
+        '#swiper-container [data-slug]'
+      )
+
+      const observer = new IntersectionObserver(
+        (entries) => {
+          entries.forEach((entry) => {
+            if (entry.intersectionRatio > 0) {
+              const slug = entry.target.dataset.slug
+              this.currentSlugInView = slug
+            }
+          })
+        },
+        { threshold: [0.8] }
+      )
+
+      galleryNodes.forEach((image) => {
+        observer.observe(image)
+      })
+    },
+
     swiperSlideWidth() {
       return document.body.querySelector('.gallery .container').offsetWidth
     },
@@ -146,20 +195,15 @@ export default {
     },
     swiperShow(node) {
       // store actual position in gridview
-      const pageYOffset = window.pageYOffset
+      this.pageYOffset = window.pageYOffset
       // preloade image - trigger first call to selected image
       const img = new Image()
       img.src = node.attachment_url
-      this.$store.commit('setHamburgerClickEvent', 'closeSwiper')
-      // prepare the closing icon
-      this.$root.$on('closeSwiper', function() {
-        // restore position in gridview
-        window.scrollTo(0, pageYOffset)
-        this.$store.commit('setHamburgerClickEvent', 'openMainMenu')
-      })
-      this.$nextTick(() =>
+      this.swiperOpen()
+      this.$nextTick(() => {
         doScrolling(`#swiper-container [data-slug="${node.slug}"]`, 500, 50)
-      )
+        this.mountObserver()
+      }, 100)
 
       // set hash
       window.history.pushState({}, null, `${this.node.href}#${node.slug}`)

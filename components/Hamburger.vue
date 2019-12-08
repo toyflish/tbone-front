@@ -1,31 +1,22 @@
 <template>
-  <div class="hamburger-icon" :class="{ open: open }" @click="hamburgerClick">
-    <span></span>
-    <span></span>
-    <span></span>
+  <div class="hamburger-icon" :class="{ open: open }" @click="$emit('click')">
+    <span :class="{ shadow }"></span>
+    <span :class="{ shadow }"></span>
+    <span :class="{ shadow }"></span>
   </div>
 </template>
 
 <script>
 export default {
   name: 'Hamburger',
-  computed: {
-    open() {
-      switch (this.$store.state.hamburgerClickEvent) {
-        case 'openMainMenu':
-          return false
-        case 'closeMainMenu':
-          return true
-        case 'closeSwiper':
-          return true
-        default:
-          return false
-      }
-    }
-  },
-  methods: {
-    hamburgerClick() {
-      this.$root.$emit(this.$store.state.hamburgerClickEvent)
+  props: {
+    open: {
+      type: Boolean,
+      default: false
+    },
+    shadow: {
+      type: Boolean,
+      default: false
     }
   }
 }
@@ -51,7 +42,8 @@ export default {
     background: #fefefe;
     border-radius: 2px;
     opacity: 1;
-    box-shadow: rgba(0, 0, 0, 0.4) 1px 1px 10px;
+    // flat when overlay open
+    box-shadow: none;
     left: 0;
     transform: rotate(0deg);
     transition: 0.25s ease-in-out;
@@ -69,10 +61,11 @@ export default {
     }
   }
 
-  &.open span {
-    // flat when overlay open
-    box-shadow: none;
+  span.shadow {
+    box-shadow: rgba(0, 0, 0, 0.4) 1px 1px 10px;
+  }
 
+  &.open span {
     &:nth-child(1) {
       top: 18px;
       transform: rotate(135deg);

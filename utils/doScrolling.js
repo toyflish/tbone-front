@@ -1,8 +1,7 @@
 function getElementY(query) {
-  return (
-    window.pageYOffset +
-    document.querySelector(query).getBoundingClientRect().top
-  )
+  const target = document.querySelector(query)
+  if (!target) return false
+  return window.pageYOffset + target.getBoundingClientRect().top
 }
 
 function doScrolling(element, duration, offset) {

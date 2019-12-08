@@ -1,5 +1,5 @@
 <template>
-  <div class="overlay-menu" :class="{ open: menuOpen }">
+  <div class="overlay-menu" :class="{ open: menuOverlayOpen }">
     <nav>
       <ul>
         <li
@@ -18,20 +18,11 @@
   </div>
 </template>
 <script>
+import { mapGetters } from 'vuex'
+
 export default {
-  computed: {
-    menuOpen() {
-      switch (this.$store.state.hamburgerClickEvent) {
-        case 'openMainMenu':
-          return false
-        case 'closeMainMenu':
-          return true
-        default:
-          return false
-      }
-    }
-  },
-  mounted() {}
+  name: 'MenuOverlay',
+  computed: mapGetters('nav', ['menuOverlayOpen'])
 }
 </script>
 <style lang="scss">

@@ -10,7 +10,11 @@
         </router-link>
       </div>
       <div class="ml-auto w-12 z-10">
-        <Hamburger />
+        <Hamburger
+          :shadow="hamburgerShadow"
+          :open="hamburgerOpen"
+          @click="hamburgerClick"
+        />
       </div>
       <MenuOverlay />
     </div>
@@ -18,7 +22,7 @@
 </template>
 
 <script>
-import { mapState, mapGetters } from 'vuex'
+import { mapState, mapGetters, mapActions } from 'vuex'
 
 import MenuOverlay from '@/components/MenuOverlay'
 import Hamburger from '@/components/Hamburger'
@@ -33,9 +37,11 @@ export default {
   },
   computed: {
     ...mapState({
-      node: (state) => state.node
+      node: (state) => state.node,
+      nav: (state) => state.nav
     }),
     ...mapGetters('node', ['currentHydrated', 'breadcrumb']),
+    ...mapGetters('nav', ['hamburgerShadow', 'hamburgerOpen']),
     upLink() {
       return this.breadcrumb[0]
     },
@@ -43,16 +49,7 @@ export default {
       return this.$store.state.hamburgerClickEvent === 'openMainMenu'
     }
   },
-
-  mounted() {
-    this.$root.$on('openMainMenu', function() {
-      this.$store.commit('setHamburgerClickEvent', 'closeMainMenu')
-    })
-
-    this.$root.$on('closeMainMenu', function() {
-      this.$store.commit('setHamburgerClickEvent', 'openMainMenu')
-    })
-  }
+  methods: mapActions('nav', ['hamburgerClick'])
 }
 </script>
 

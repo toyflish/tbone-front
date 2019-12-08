@@ -2,11 +2,13 @@ import Vuex from 'vuex'
 import NodeService from '../services/NodeService.js'
 
 import node from '~/store/modules/node'
+import nav from '~/store/modules/nav'
 
 const createStore = () => {
   return new Vuex.Store({
     modules: {
-      node
+      node,
+      nav
     },
     state: {
       menuItems: [],
