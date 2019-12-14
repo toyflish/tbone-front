@@ -72,7 +72,10 @@ export default {
   },
   fetch({ store, params }) {
     return Promise.all([
-      store.dispatch('node/fetchCurrent', { slug: params.slug || '' }),
+      store.dispatch('node/fetchCurrent', {
+        slug: params.slug || '',
+        thumb_crop: '300x200'
+      }),
       store.dispatch('fetchMenu')
     ])
   }

@@ -5,25 +5,11 @@
       <img :src="node.attachment_url" />
       <!-- eslint-disable-next-line vue/no-v-html -->
       <div class="px-4 container-text" v-html="node.content"></div>
-      <div v-if="validateAllHavePreviewUrl(node.children)" class="children">
-        <div
-          v-for="(batch, index) in childrenInBatches"
-          :key="index"
-          class="batch"
-        >
-          <div v-for="child in batch" :key="child.id" class="node">
-            <a @click="swiperShow(child)">
-              <img
-                v-if="child.preview_url"
-                :src="child.preview_url"
-                :alt="child.alt"
-                :data-slug="child.slug"
-              />
-              <span v-else class="primer">{{ child.name }}</span>
-            </a>
-          </div>
-        </div>
-      </div>
+      <NodeThumbGrid
+        v-if="validateAllHavePreviewUrl(node.children)"
+        :nodes="node.children"
+        @click="swiperShow"
+      />
       <div v-else class="children">
         <div class="list">
           <div v-for="item in node.children" :key="item.id" class="node">
@@ -38,9 +24,9 @@
           </div>
         </div>
       </div>
-      <div class="px-4 container-text">
-        <!-- <VueDisqus shortname="toyflish" :identifier="String(node.id)" :url="`https://toyflish.com${node.href}`"></VueDisqus> -->
-      </div>
+    </div>
+    <div class="px-4 container-text">
+      <!-- <VueDisqus shortname="toyflish" :identifier="String(node.id)" :url="`https://toyflish.com${node.href}`"></VueDisqus> -->
     </div>
     <div v-if="swiperOverlayOpen" id="swiper-container">
       <div class="container swiper-wrapper">
@@ -86,11 +72,13 @@ import { mapActions, mapState, mapGetters } from 'vuex'
 
 import { doScrolling } from '../utils/doScrolling'
 // import VueDisqus from 'vue-disqus/VueDisqus.vue'
+import NodeThumbGrid from './NodeThumbGrid'
 
 export default {
   name: 'Gallery',
   components: {
     // VueDisqus
+    NodeThumbGrid
   },
   props: { node: { type: Object, default: null } },
 
@@ -213,6 +201,23 @@ export default {
 </script>
 
 <style lang="scss">
+$grid-margin: 2px;
+.children-grid {
+  &__item {
+    &:before {
+      content: '';
+      float: left;
+      padding-top: 100%;
+    }
+    img {
+      cursor: pointer;
+      transition: transform 0.2s ease-in-out;
+      &:hover {
+        transform: scale(1.03);
+      }
+    }
+  }
+}
 .gallery {
   .children {
     margin: 15px auto;
