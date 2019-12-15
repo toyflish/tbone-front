@@ -1,5 +1,5 @@
 <template>
-  <div class="overlay-menu" :class="{ open: menuOverlayOpen }">
+  <div :class="{ open: menuOverlayOpen }" class="overlay-menu">
     <nav>
       <ul>
         <li
@@ -7,22 +7,21 @@
           :key="index"
           style="height: 20%"
         >
-          <router-link
-            :to="{ path: item.href }"
-            @click.native="$root.$emit('closeMainMenu')"
-            >{{ item.link_name }}</router-link
-          >
+          <router-link :to="{ path: item.href }" @click.native="closeMenu">{{
+            item.link_name
+          }}</router-link>
         </li>
       </ul>
     </nav>
   </div>
 </template>
 <script>
-import { mapGetters } from 'vuex'
+import { mapGetters, mapActions } from 'vuex'
 
 export default {
   name: 'MenuOverlay',
-  computed: mapGetters('nav', ['menuOverlayOpen'])
+  computed: mapGetters('nav', ['menuOverlayOpen']),
+  methods: mapActions('nav', ['closeMenu'])
 }
 </script>
 <style lang="scss">

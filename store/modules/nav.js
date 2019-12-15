@@ -20,6 +20,9 @@ export default {
         'SET_STATE',
         state.state === 'closed' ? 'menuOverlayOpen' : 'closed'
       )
+    },
+    closeMenu({ commit }) {
+      commit('SET_STATE', 'closed')
     }
   },
   getters: {
