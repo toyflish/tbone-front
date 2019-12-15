@@ -35,10 +35,12 @@
 <script>
 import { mapActions, mapState, mapGetters } from 'vuex'
 
-import { doScrolling } from '../utils/doScrolling'
+import { scrollWindowTo } from '../utils/doScrolling'
 // import VueDisqus from 'vue-disqus/VueDisqus.vue'
 import ThumbGrid from './ThumbGrid'
 import SwiperSlide from './SwiperSlide'
+
+const sanitizedHash = (hash) => hash.replace('#', '')
 
 export default {
   name: 'Gallery',
@@ -49,48 +51,49 @@ export default {
   },
   props: { node: { type: Object, default: null } },
 
-  data() {
-    return {
-      pageYOffset: 0,
-      currentSlugInView: null
-    }
-  },
   computed: {
     ...mapState('nav', { navState: (state) => state.state }),
-    ...mapGetters('nav', ['swiperOverlayOpen'])
+    ...mapGetters('nav', ['swiperOverlayOpen']),
+    routeHash() {
+      return this !== undefined ? this.$route.hash.replace('#', '') : undefined
+    }
   },
   watch: {
+    routeHash(newValue, oldValue) {
+      if (newValue === '' && oldValue !== '') {
+        // history-back from open swiper to gallery view
+        this.swiperClose()
+      } else if (newValue !== '' && oldValue === '') {
+        // history back from gallery view to open swiper
+        this.swiperOpen()
+      }
+    },
     navState(_, oldValue) {
       if (oldValue === 'swiperOverlayOpen') {
-        this.$nextTick(
-          () =>
-            doScrolling(
-              `.children [data-slug="${this.currentSlugInView}"]`,
-              500,
-              50
-            ),
-          100
-        )
+        const hash = sanitizedHash(this.$route.hash)
+        console.log('watch#navState', { hash })
+        // on History-back hash is not present
+        if (hash !== '') {
+          this.$router.push(this.$route.path)
+          const scrollToElement = document.querySelector(
+            `.thumb-grid [data-slug="${hash}"]`
+          )
+          this.$nextTick(() => {
+            scrollWindowTo(scrollToElement, 500)
+          })
+        }
       }
     }
   },
   mounted() {
-    const hash = window.location.hash.substr(1)
+    const hash = sanitizedHash(this.$route.hash)
     if (hash !== '') {
       const node = this.node.children.find((n) => n.slug === hash)
-      this.swiperShow(node, false)
+      if (node) this.swiperShow(node, false)
     }
-    // // fix history back from overlayGallery to normal gallery
-    // // TODO unmuout event
-    // window.onpopstate = (event) => {
-    //   const hash = window.location.hash.substr(1)
-    //   if (hash === '') {
-    //     this.swiperClose()
-    //   }
-    // }
   },
   methods: {
-    ...mapActions('nav', ['swiperOpen']),
+    ...mapActions('nav', ['swiperOpen', 'swiperClose']),
     validateAllHavePreviewUrl(nodes) {
       if (Array.isArray(nodes)) {
         return (
@@ -103,10 +106,9 @@ export default {
       }
     },
 
-    swiperShow(node, pushState = true) {
-      // store actual position in gridview
-      this.pageYOffset = window.pageYOffset
+    sanitizedRouteHash: () => this.$route.hash.replace('#', ''),
 
+    swiperShow(node, pushState = true) {
       if (pushState) {
         // set hash
         window.history.pushState({}, null, `${this.node.href}#${node.slug}`)

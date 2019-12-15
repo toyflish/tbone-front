@@ -76,24 +76,24 @@ export default {
     },
 
     mountObserver() {
-      const galleryNodes = document.querySelectorAll(
-        '#swiper-container [data-slug]'
-      )
-
       const observer = new IntersectionObserver(
         (entries) => {
           entries.forEach((entry) => {
             if (entry.intersectionRatio > 0) {
               const slug = entry.target.dataset.slug
-              this.currentSlugInView = slug
+              // this.currentSlugInView = slug
+              this.$router.replace({ path: this.$route.path, hash: slug })
+              // this.$emit('scrolledToSlug', slug)
             }
           })
         },
         { threshold: [0.8] }
       )
 
-      galleryNodes.forEach((image) => {
-        observer.observe(image)
+      const images = this.nodes.map((node) => this.$refs[node.slug][0])
+
+      images.forEach((img) => {
+        observer.observe(img)
       })
     },
 

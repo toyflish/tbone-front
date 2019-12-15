@@ -1,19 +1,17 @@
-function getElementY(query) {
-  const target = document.querySelector(query)
-  if (!target) return false
-  return window.pageYOffset + target.getBoundingClientRect().top
-}
-
 // element is a selector-string
 // scroll window-based
-function doScrolling(element, duration, offset) {
+function scrollWindowTo(element, duration, offset = 'center') {
   const startingY = window.pageYOffset
-  const elementY = getElementY(element) - offset
-  const pageHeight = document.documentElement.scrollHeight
+  if (offset === 'center') {
+    offset = (window.innerHeight - element.clientHeight) / 2
+  }
+  const elementY =
+    window.pageYOffset + element.getBoundingClientRect().top - offset
+  const bodyHeight = document.documentElement.scrollHeight
   // If element is close to page's bottom then window will scroll only to some position above the element.
   const targetY =
-    pageHeight - elementY < window.innerHeight
-      ? pageHeight - window.innerHeight
+    bodyHeight - elementY < window.innerHeight
+      ? bodyHeight - window.innerHeight
       : elementY
   const diff = targetY - startingY
   // Easing function: easeInOutCubic
@@ -23,7 +21,8 @@ function doScrolling(element, duration, offset) {
   }
   let start
 
-  if (!diff) return
+  // position interfiers with router if we directly return
+  // if (!diff) return
 
   // Bootstrap our animation - it will get called right before next frame shall be rendered.
   window.requestAnimationFrame(function step(timestamp) {
@@ -83,4 +82,4 @@ function scrollContainerTo(container, element, duration, offset = 'center') {
   })
 }
 
-export { getElementY, doScrolling, scrollContainerTo }
+export { scrollWindowTo, scrollContainerTo }
