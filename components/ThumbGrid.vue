@@ -1,9 +1,9 @@
 <template>
-  <div class="flex flex-wrap children-grid">
+  <div class="flex flex-wrap thumb-grid">
     <div
       v-for="node in nodes"
       :key="node.id"
-      class="w-1/3 relative overflow-hidden children-grid__item"
+      class="w-1/3 relative overflow-hidden thumb-grid__item"
     >
       <img
         v-if="node.preview_url"
@@ -20,7 +20,7 @@
 
 <script>
 export default {
-  name: 'NodeThumbGrid',
+  name: 'ThumbGrid',
   props: {
     nodes: {
       type: Array,
@@ -30,4 +30,22 @@ export default {
 }
 </script>
 
-<style></style>
+<style lang="scss">
+$grid-margin: 2px;
+.thumb-grid {
+  &__item {
+    &:before {
+      content: '';
+      float: left;
+      padding-top: 100%;
+    }
+    img {
+      cursor: pointer;
+      transition: transform 0.2s ease-in-out;
+      &:hover {
+        transform: scale(1.03);
+      }
+    }
+  }
+}
+</style>

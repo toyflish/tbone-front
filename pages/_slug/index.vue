@@ -6,7 +6,11 @@
       <Logo />
     </div>
 
-    <component :is="requestNodeView" :node="node.current" />
+    <component
+      :is="requestNodeView"
+      :key="node.current.slug"
+      :node="node.current"
+    />
   </div>
 </template>
 
