@@ -1,5 +1,5 @@
 <template>
-  <div class="hamburger-icon" :class="{ open: open }" @click="$emit('click')">
+  <div :class="{ open: open }" @click="$emit('click')" class="hamburger-icon">
     <span :class="{ shadow }"></span>
     <span :class="{ shadow }"></span>
     <span :class="{ shadow }"></span>
@@ -72,13 +72,14 @@ export default {
     }
 
     &:nth-child(2) {
-      opacity: 0;
-      left: -60px;
+      top: 18px;
+      transform: rotate(-135deg);
     }
 
     &:nth-child(3) {
       top: 18px;
-      transform: rotate(-135deg);
+      transform: rotate(135deg);
+      box-shadow: none;
     }
   }
 }
