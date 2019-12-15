@@ -6,14 +6,15 @@
       <Logo />
     </div>
 
+    <!-- eslint-disable vue/require-component-is -->
     <component
       :is="requestNodeView"
       :key="node.current.slug"
       :node="node.current"
     />
+    <!-- eslint-enable vue/require-component-is -->
   </div>
 </template>
-
 <script>
 import { mapState } from 'vuex'
 import NavBar from '@/components/NavBar'
@@ -30,6 +31,7 @@ import Gems from '@/components/Gems'
 
 export default {
   name: 'NodeDispatcher',
+  /* eslint-disable */
   components: {
     Logo,
     Home,
@@ -42,6 +44,7 @@ export default {
     Gems,
     NavBar
   },
+  /* eslint-enable */
   props: { slug: { type: String, default: '' } },
   head() {
     return {

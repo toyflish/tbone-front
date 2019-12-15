@@ -10,7 +10,6 @@
         :id="node.slug"
         :ref="node.slug"
         :key="node.id"
-        class="relative w-full my-4"
         :data-slug="node.slug"
         :style="{
           'padding-top': ratioPercent(
@@ -18,13 +17,22 @@
             node.attachment_height
           )
         }"
+        class="relative w-full my-4"
       >
-        <img
-          v-if="node.attachment_url"
-          :src="node.attachment_url"
-          :alt="node.alt"
-          class="object-cover object-center absolute top-0 left-0 w-full h-full"
-        />
+        <div class="absolute top-0 left-0 w-full h-full bg-orange-200 wrapper">
+          <VImg
+            v-if="node.attachment_url"
+            :src="node.attachment_url"
+            :alt="node.alt"
+            :placeholder="node.preview_url"
+            :classes="{
+              root: '',
+              placeholder: 'object-cover object-center w-full',
+              img: 'object-cover object-center w-full'
+            }"
+          />
+        </div>
+        <!-- class="object-cover object-center absolute top-0 left-0 w-full h-full" -->
       </div>
     </div>
   </div>
@@ -32,17 +40,20 @@
 
 <script>
 import { mapActions, mapState, mapGetters } from 'vuex'
+import { VImg } from 'vuetensils'
 
 import { scrollContainerTo } from '../utils/doScrolling'
 export default {
   nSlide: 'SwiperSlide',
+  components: {
+    VImg
+  },
   props: {
     nodes: {
       type: Array,
       default: () => []
     }
   },
-
   data() {
     return {
       currentSlugInView: null

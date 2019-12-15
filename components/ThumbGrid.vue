@@ -1,8 +1,9 @@
 <template>
   <div class="flex flex-wrap thumb-grid">
     <div
-      v-for="node in nodes"
+      v-for="(node, i) in nodes"
       :key="node.id"
+      :class="{ 'bg-orange-200': i % 2 }"
       class="w-1/3 relative overflow-hidden thumb-grid__item"
     >
       <img
@@ -10,8 +11,8 @@
         :src="node.preview_url"
         :alt="node.alt"
         :data-slug="node.slug"
-        class="object-cover object-center absolute top-0 left-0 w-full h-full"
         @click="$emit('click', node)"
+        class="object-cover object-center absolute top-0 left-0 w-full h-full"
       />
       <span v-else class="primer">{{ node.name }}</span>
     </div>
