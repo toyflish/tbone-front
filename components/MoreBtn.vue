@@ -1,6 +1,6 @@
 <template>
-  <div class="more-btn" :class="{ loading: loading }">
-    <a @click.stop="$emit('hit')">{{ label }}</a>
+  <div :class="{ loading: loading }" class="more-btn">
+    <a @click.prevent.stop="$emit('hit')" href="/archive">{{ label }}</a>
   </div>
 </template>
 

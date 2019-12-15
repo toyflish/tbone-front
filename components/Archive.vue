@@ -6,7 +6,7 @@
     <div v-html="node.content"></div>
     <div class="children">
       <div v-for="child in childrenReverse()" :key="child.id" class="square">
-        <div class="content" @click="$router.push({ path: child.href })">
+        <div @click="$router.push({ path: child.href })" class="content">
           <div class="name">
             <router-link :to="{ path: child.href }" style="display:block">
               <span>{{ child.name }}</span>

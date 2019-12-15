@@ -2,7 +2,7 @@
   <div
     class="rounded-full flex items-center justify-center overflow-hidden avatar"
   >
-    <img class="object-cover" :src="src" />
+    <img :src="src" class="object-cover" />
   </div>
 </template>
 <script>

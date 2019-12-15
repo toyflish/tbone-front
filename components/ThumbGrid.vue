@@ -3,26 +3,32 @@
     <div
       v-for="node in nodes"
       :key="node.id"
+      @click="$emit('click', node)"
       class="w-1/3 relative thumb-grid__item"
     >
-      <div class="overflow-hidden relative full-w full-h bg-orange-200 wrapper">
-        <img
-          v-if="node.preview_url"
-          :src="node.preview_url"
-          :alt="node.alt"
-          :data-slug="node.slug"
-          @click="$emit('click', node)"
-          class="object-cover object-center absolute top-0 left-0 w-full h-full"
-        />
-        <span v-else class="primer">{{ node.name }}</span>
-      </div>
+      <VImg
+        v-if="node.preview_url"
+        :src="node.preview_url"
+        :alt="node.alt"
+        :data-slug="node.slug"
+        :classes="{
+          root: 'overflow-hidden relative full-w bg-orange-200 wrapper',
+          img: 'object-cover object-center w-full'
+        }"
+      />
+      <span v-else class="primer">{{ node.name }}</span>
     </div>
   </div>
 </template>
 
 <script>
+import { VImg } from 'vuetensils'
+
 export default {
   name: 'ThumbGrid',
+  components: {
+    VImg
+  },
   props: {
     nodes: {
       type: Array,
@@ -36,6 +42,7 @@ export default {
 $grid-margin: 2px;
 .thumb-grid {
   margin-left: -$grid-margin;
+  cursor: pointer;
   &__item {
     padding: 0 0 $grid-margin $grid-margin;
     &:before {
@@ -48,7 +55,7 @@ $grid-margin: 2px;
       width: 100%;
       height: 100%;
       img {
-        cursor: pointer;
+        height: 100%;
         transition: transform 0.2s ease-in-out;
         &:hover {
           transform: scale(1.03);

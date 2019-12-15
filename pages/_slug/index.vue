@@ -1,5 +1,5 @@
 <template>
-  <div>
+  <div class="pb-20">
     <NavBar class="z-10" />
 
     <div v-if="showLogo" class="container my-4">

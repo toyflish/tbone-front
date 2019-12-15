@@ -4,7 +4,7 @@
       <h1>{{ node.name }}</h1>
       <img :src="node.attachment_url" />
       <!-- eslint-disable-next-line vue/no-v-html -->
-      <div class="px-4 container-text" v-html="node.content"></div>
+      <div v-html="node.content" class="px-4 container-text"></div>
       <ThumbGrid
         v-if="validateAllHavePreviewUrl(node.children)"
         :nodes="node.children"
@@ -71,7 +71,6 @@ export default {
     navState(_, oldValue) {
       if (oldValue === 'swiperOverlayOpen') {
         const hash = sanitizedHash(this.$route.hash)
-        console.log('watch#navState', { hash })
         // on History-back hash is not present
         if (hash !== '') {
           this.$router.push(this.$route.path)

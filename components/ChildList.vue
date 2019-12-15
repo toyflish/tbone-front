@@ -10,9 +10,15 @@
         :to="{ path: child.href }"
         style="display:block"
       >
-        <img
+        <VImg
           :src="child.attachment_url"
+          :placeholder="child.preview_url"
           :alt="child.name"
+          :classes="{
+            root: 'w-full mx-auto',
+            placeholder: 'w-full',
+            img: 'w-full'
+          }"
           class="w-full mx-auto"
         />
       </router-link>
@@ -23,32 +29,31 @@
         <div class="captured-at">{{ child.captured_at | date }}</div>
         <span class="subtitle">{{ child.teaser }}</span>
       </div>
-      <div v-if="child.children !== undefined" class="grand-children">
-        <div
-          v-for="grandChild in child.children.slice(0, 4)"
-          :key="grandChild.id"
-          class="grand-child"
-        >
-          <router-link
-            :to="{ path: `${child.href}#${grandChild.slug}` }"
-            style="display:block"
-          >
-            <img
-              v-if="grandChild.preview_url"
-              :src="grandChild.preview_url"
-              :alt="grandChild.name"
-            />
-          </router-link>
-        </div>
-      </div>
+      <ThumbGrid
+        v-if="child.children !== undefined"
+        :nodes="child.children.slice(0, 3)"
+        @click="() => routerPush(child)"
+      />
     </article>
   </section>
 </template>
 
 <script>
+import { VImg } from 'vuetensils'
+import ThumbGrid from '@/components/ThumbGrid'
+
 export default {
   name: 'ChildList',
-  props: { children: { type: Array, default: null } }
+  components: {
+    ThumbGrid,
+    VImg
+  },
+  props: { children: { type: Array, default: null } },
+  methods: {
+    routerPush(node) {
+      this.$router.push({ path: node.slug })
+    }
+  }
 }
 </script>
 

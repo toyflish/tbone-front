@@ -5,7 +5,7 @@
     </div>
     <img :src="node.attachment_url" />
     <!-- eslint-disable-next-line vue/no-v-html -->
-    <div class="px-4 container-text content" v-html="node.content" />
+    <div v-html="node.content" class="px-4 container-text content" />
     <div v-if="validateAllHavePreviewUrl(node.children)" class="children">
       <div
         v-for="(batch, index) in childrenInBatches"
