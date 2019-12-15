@@ -13,32 +13,30 @@
         class="batch"
       >
         <div v-for="item in batch" :key="item.id" class="node">
-          <router-link :to="{ path: item.href }" style="display:block">
+          <nuxt-link :to="{ path: item.href }" style="display:block">
             <img
               v-if="item.preview_url"
               :src="item.preview_url"
               :alt="item.name"
             />
             <span v-else class="primer">{{ item.name }}</span>
-          </router-link>
+          </nuxt-link>
         </div>
       </div>
     </div>
     <div v-else class="children">
       <div class="list">
         <article v-for="item in node.children" :key="item.id" class="node">
-          <router-link
+          <nuxt-link
             v-if="item.attachment_url"
             :to="{ path: item.href }"
             style="display:block"
           >
             <img :src="item.attachment_url" :alt="item.name" />
-          </router-link>
+          </nuxt-link>
           <div v-else class="px-4 container-text">
             <h2>
-              <router-link :to="{ path: item.href }">{{
-                item.name
-              }}</router-link>
+              <nuxt-link :to="{ path: item.href }">{{ item.name }}</nuxt-link>
             </h2>
             <span class="subtitle">{{ item.teaser }}</span>
           </div>

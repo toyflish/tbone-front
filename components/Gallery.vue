@@ -13,14 +13,14 @@
       <div v-else class="children">
         <div class="list">
           <div v-for="item in node.children" :key="item.id" class="node">
-            <router-link :to="{ path: item.href }" style="display:block">
+            <nuxt-link :to="{ path: item.href }" style="display:block">
               <img
                 v-if="item.attachment_url"
                 :src="item.attachment_url"
                 :alt="item.name"
               />
               <span v-else class="primer">{{ item.name }}</span>
-            </router-link>
+            </nuxt-link>
           </div>
         </div>
       </div>

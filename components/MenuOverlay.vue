@@ -7,9 +7,9 @@
           :key="index"
           style="height: 20%"
         >
-          <router-link :to="{ path: item.href }" @click.native="closeMenu">{{
+          <nuxt-link :to="{ path: item.href }" @click.native="closeMenu">{{
             item.link_name
-          }}</router-link>
+          }}</nuxt-link>
         </li>
       </ul>
     </nav>

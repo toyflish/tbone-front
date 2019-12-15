@@ -5,7 +5,7 @@
       :key="child.id"
       :class="child.view.toLowerCase()"
     >
-      <router-link
+      <nuxt-link
         v-if="child.attachment_url"
         :to="{ path: child.href }"
         style="display:block"
@@ -21,10 +21,10 @@
           }"
           class="w-full mx-auto"
         />
-      </router-link>
+      </nuxt-link>
       <div class="container-text px-4">
         <h2 class="subtitled">
-          <router-link :to="{ path: child.href }">{{ child.name }}</router-link>
+          <nuxt-link :to="{ path: child.href }">{{ child.name }}</nuxt-link>
         </h2>
         <div class="captured-at">{{ child.captured_at | date }}</div>
         <span class="subtitle">{{ child.teaser }}</span>

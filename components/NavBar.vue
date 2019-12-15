@@ -2,12 +2,12 @@
   <div class="fixed bottom-0 w-full gradient">
     <div class="container flex px-4 py-4">
       <div class="w-12">
-        <router-link
+        <nuxt-link
           v-if="breadcrumbVisible && upLink"
           :to="{ path: upLink.href }"
         >
           <BreadCrumbArrow />
-        </router-link>
+        </nuxt-link>
       </div>
       <div class="ml-auto w-12 z-10">
         <Hamburger

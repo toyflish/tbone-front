@@ -1,9 +1,9 @@
 <template>
-  <router-link :to="{ path: '/' }">
+  <nuxt-link :to="{ path: '/' }">
     <div class="logo">
       <div class="label">t</div>
     </div>
-  </router-link>
+  </nuxt-link>
 </template>
 
 <script>

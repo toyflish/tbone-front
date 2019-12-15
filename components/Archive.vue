@@ -8,9 +8,9 @@
       <div v-for="child in childrenReverse()" :key="child.id" class="square">
         <div @click="$router.push({ path: child.href })" class="content">
           <div class="name">
-            <router-link :to="{ path: child.href }" style="display:block">
+            <nuxt-link :to="{ path: child.href }" style="display:block">
               <span>{{ child.name }}</span>
-            </router-link>
+            </nuxt-link>
           </div>
           <div :id="child.id" class="descendants">
             {{ child.descendant_count }}
