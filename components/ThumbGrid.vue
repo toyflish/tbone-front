@@ -22,7 +22,7 @@
 </template>
 
 <script>
-import { VImg } from 'vuetensils'
+import VImg from '@/components/VImg'
 
 export default {
   name: 'ThumbGrid',
