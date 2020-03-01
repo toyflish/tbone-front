@@ -1,9 +1,15 @@
 <template>
-  <div :class="{ open: open }" @click="$emit('click')" class="hamburger-icon">
+  <button
+    :class="{ open: open }"
+    @click="$emit('click')"
+    class="hamburger-icon"
+    role="menuitem"
+    aria-label="toggle main menu"
+  >
     <span :class="{ shadow }"></span>
     <span :class="{ shadow }"></span>
     <span :class="{ shadow }"></span>
-  </div>
+  </button>
 </template>
 
 <script>
