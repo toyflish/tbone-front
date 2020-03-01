@@ -7,8 +7,8 @@
     <!-- eslint-disable-next-line vue/no-v-html -->
     <div
       v-if="node.content"
-      class="px-4 container-text"
       v-html="node.content"
+      class="px-4 container-text"
     ></div>
     <ChildList :children="node.children" />
   </div>

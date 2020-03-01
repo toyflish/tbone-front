@@ -12,7 +12,6 @@
       >
         <VImg
           :src="child.attachment_url"
-          :placeholder="child.preview_url"
           :alt="child.name"
           :classes="{
             root: 'w-full mx-auto',
