@@ -43,6 +43,10 @@ export default {
     '@nuxtjs/tailwindcss',
     '@nuxtjs/gtm'
   ],
+  purgeCSS: {
+    paths: ['./node_modules/highlight.js/styles/monokai-sublime.css']
+  },
+
   /*
    ** Nuxt.js modules
    */

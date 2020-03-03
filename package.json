@@ -16,6 +16,7 @@
     "@nuxtjs/axios": "^5.3.6",
     "@nuxtjs/dotenv": "^1.4.1",
     "@nuxtjs/gtm": "^2.2.2",
+    "highlight.js": "^9.18.1",
     "nuxt": "^2.0.0",
     "vuetensils": "^0.4.3"
   },

@@ -5,3 +5,12 @@
 h1 {
   @apply text-2xl text-center;
 }
+
+pre {
+  white-space: normal;
+  @apply mb-4;
+}
+pre code {
+  white-space: pre;
+  @apply rounded-md shadow-code
+}

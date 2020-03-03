@@ -5,7 +5,7 @@
     </div>
     <img :src="node.attachment_url" />
     <!-- eslint-disable-next-line vue/no-v-html -->
-    <div v-html="node.content" class="px-4 container-text content" />
+    <RichText :content="node.content" class="px-4 pb-8" />
     <div v-if="validateAllHavePreviewUrl(node.children)" class="children">
       <div
         v-for="(batch, index) in childrenInBatches"
@@ -51,11 +51,12 @@
 
 <script>
 // import VueDisqus from 'vue-disqus/VueDisqus.vue'
+import RichText from '@/components/RichText'
 
 export default {
   name: 'DefaultNode',
   components: {
-    // VueDisqus
+    RichText
   },
   props: { node: { type: Object, default: null } },
   data() {
@@ -95,10 +96,6 @@ export default {
 
 <style lang="scss">
 .node-default {
-  .container-text.content {
-    margin-bottom: 30px;
-    text-align: left;
-  }
   .children {
     .batch {
       margin-bottom: 3px;
