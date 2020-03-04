@@ -1,6 +1,10 @@
 <template>
   <div class="container py-16">
-    <Avatar :src="node.attachment_url" class="w-48 h-48 mx-auto mb-8" />
+    <Avatar
+      :src="node.attachment_url"
+      :alt="node.name"
+      class="w-48 h-48 mx-auto mb-8"
+    />
     <div class="px-4 container-text">
       <h1>{{ node.name }}</h1>
       <!-- eslint-disable-next-line vue/no-v-html -->

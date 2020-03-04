@@ -2,12 +2,18 @@
   <div
     class="rounded-full flex items-center justify-center overflow-hidden avatar"
   >
-    <img :src="src" class="object-cover" />
+    <img :src="src" :alt="alt" class="object-cover" />
   </div>
 </template>
 <script>
 export default {
-  props: { src: { type: String, default: null } }
+  props: {
+    src: { type: String, required: true },
+    alt: {
+      type: String,
+      default: ''
+    }
+  }
 }
 </script>
 <style lang="scss">
