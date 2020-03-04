@@ -2,7 +2,7 @@
   <div :class="['vts-img', classes.root]">
     <div
       ref="placeholder"
-      v-if="dataUrl"
+      v-if="placeholder || dataUrl"
       :class="['vts-img__placeholder', classes.placeholder]"
       :style="{ background }"
     >
@@ -172,10 +172,15 @@ export default {
 
 .vts-img__placeholder {
   position: absolute;
+  top: 0;
+  left: 0;
+  width: 100%;
+  height: 100%;
   overflow: hidden;
 }
 
 .vts-img__placeholder img {
+  width: 100%;
   transform: scale(1.05);
   filter: blur(10px);
 }

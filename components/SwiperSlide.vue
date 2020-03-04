@@ -25,6 +25,7 @@
             :src="node.attachment_url"
             :alt="node.alt"
             :placeholder="node.preview_url"
+            :transitionDuration="1000"
             :classes="{
               root: '',
               placeholder: 'object-cover object-center w-full',
