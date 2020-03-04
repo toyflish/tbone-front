@@ -30,7 +30,7 @@ export default {
 <style lang="scss">
 .hamburger-icon {
   position: relative;
-
+  outline: none !important;
   width: 45px;
   height: 45px;
 
