@@ -81,7 +81,8 @@ export default {
     return Promise.all([
       store.dispatch('node/fetchCurrent', {
         slug: params.slug || '',
-        thumb_crop: '300x200'
+        thumb_crop: '300x',
+        full_crop: '600x'
       }),
       store.dispatch('fetchMenu')
     ])
