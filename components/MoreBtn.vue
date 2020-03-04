@@ -16,6 +16,24 @@ export default {
       type: Boolean,
       default: false
     }
+  },
+  mounted() {
+    // trigger click if window scrollposition is one window-height away
+    const options = {
+      rootMargin: `${window.innerHeight}px`,
+      threshold: 1.0
+    }
+    const target = this.$el
+    const callback = (entries, observer) => {
+      entries.forEach((entry) => {
+        if (entry.isIntersecting) this.$emit('hit')
+      })
+    }
+    this.observer = new IntersectionObserver(callback, options)
+    this.observer.observe(target)
+  },
+  beforeDestroy() {
+    this.observer.disconnect()
   }
 }
 </script>
@@ -23,6 +41,15 @@ export default {
 <style lang="scss">
 $more-btn-color: #222;
 $more-btn-color-hover: pink;
+
+@keyframes spin {
+  from {
+    transform: rotate(0deg);
+  }
+  to {
+    transform: rotate(360deg);
+  }
+}
 
 .more-btn {
   cursor: pointer;
@@ -71,6 +98,11 @@ $more-btn-color-hover: pink;
     &:before {
       border-color: $more-btn-color-hover;
     }
+    animation-name: spin;
+    animation-duration: 2000ms;
+    animation-iteration-count: infinite;
+    animation-timing-function: linear;
+    margin-bottom: 60vh;
   }
 }
 </style>

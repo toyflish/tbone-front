@@ -49,6 +49,7 @@ export default {
       // prevent double klicks
       if (!this.loading) {
         this.loading = true
+
         this.fetchCurrent({
           slug: '',
           linked_nodes_level_down: 1,
