@@ -6,7 +6,12 @@
       :class="['vts-img__placeholder', classes.placeholder]"
       :style="{ background }"
     >
-      <img :src="placeholder || dataUrl" v-bind="$attrs" alt="" />
+      <img
+        :src="placeholder || dataUrl"
+        v-bind="$attrs"
+        :class="classes.img"
+        alt=""
+      />
     </div>
     <img
       ref="img"
@@ -117,7 +122,6 @@ export default {
 
     handler([entry]) {
       const { $el } = this
-      // const { img, placeholder } = this.$refs
 
       if (entry.isIntersecting) {
         // Element is in viewport
@@ -140,7 +144,6 @@ export default {
     },
 
     onLoad() {
-      // eslint-disable-next-line no-unused-vars
       const { $el } = this
       const { img, placeholder } = this.$refs
 
@@ -180,7 +183,6 @@ export default {
 }
 
 .vts-img__placeholder img {
-  width: 100%;
   transform: scale(1.05);
   filter: blur(10px);
 }
