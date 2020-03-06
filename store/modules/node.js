@@ -16,11 +16,12 @@ export default {
   actions: {
     fetchCurrent({ commit }, params) {
       return nodes.fetchBySlug(params).then((node) => {
-        if (node.slug !== 'selfies' && node.visibility === 'hidden')
-          throw new Error({
-            statusCode: 404,
-            message: `${node.slug} visibility: hidden`
-          })
+        if (node.slug !== 'selfies' && node.visibility === 'hidden') {
+          const e = new Error(401)
+          e.statusCode = 401
+          e.message = 'not authorized'
+          throw e
+        }
         commit('SET_CURRENT', node)
       })
     }

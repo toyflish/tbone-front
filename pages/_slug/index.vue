@@ -77,7 +77,7 @@ export default {
       return this.node.current.id !== undefined && this.node.current.id !== 1
     }
   },
-  fetch({ store, params }) {
+  fetch({ store, params, error }) {
     return Promise.all([
       store.dispatch('node/fetchCurrent', {
         slug: params.slug || '',
@@ -85,7 +85,15 @@ export default {
         full_crop: '600x'
       }),
       store.dispatch('fetchMenu')
-    ])
+    ]).catch((e) => {
+      if (e.isAxiosError) {
+        error({ statusCode: e.response.status, message: e.response.statusText })
+      } else {
+        // custom error
+        error({ statusCode: e.statusCode, message: e.message })
+      }
+      return false
+    })
   }
 }
 </script>
