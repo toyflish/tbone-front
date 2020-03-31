@@ -46,6 +46,7 @@ export default {
       const thisVue = this
       // this.linkedNodeOffest += 10
       this.linkedNodeslimit += 10
+      const linkedNodeslimit = this.linkedNodeslimit
       // prevent double klicks
       if (!this.loading) {
         this.loading = true
@@ -53,10 +54,20 @@ export default {
         this.fetchCurrent({
           slug: '',
           linked_nodes_level_down: 1,
-          linked_nodes_limit: this.linkedNodeslimit
-        }).then(() => {
-          thisVue.loading = false
+          linked_nodes_limit: linkedNodeslimit
         })
+          .then(() => {
+            // thisVue.loading = false
+            thisVue.$gtm.push({
+              event: 'nuxtRoute',
+              routeName: `home (${linkedNodeslimit})`,
+              pageType: 'PageView',
+              pageUrl: '/',
+              pageTitle: `home (${linkedNodeslimit})`
+            })
+          })
+          .catch((e) => console.log({ e }))
+          .finally(() => (thisVue.loading = false))
       }
     }
   }
