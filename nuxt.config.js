@@ -58,7 +58,7 @@ export default {
     id: process.env.GTM_ID || '',
     dev: true,
     scriptDefer: true,
-    pageTracking: true
+    pageTracking: false
   },
   /*
    ** Axios module configuration
