@@ -3,7 +3,11 @@
     <NavBar class="z-10" />
 
     <div v-if="showLogo" class="container my-4">
-      <Logo />
+      <Avatar
+        :src="root.attachment_url"
+        :alt="root.name"
+        class="w-16 h-16 mx-auto mb-8"
+      />
     </div>
 
     <!-- eslint-disable vue/require-component-is -->
@@ -16,9 +20,9 @@
   </div>
 </template>
 <script>
-import { mapState } from 'vuex'
+import { mapState, mapGetters } from 'vuex'
 import NavBar from '@/components/NavBar'
-import Logo from '@/components/Logo'
+import Avatar from '@/components/Avatar'
 
 import Home from '@/components/Home'
 import DefaultNode from '@/components/DefaultNode'
@@ -33,7 +37,7 @@ export default {
   name: 'NodeDispatcher',
   /* eslint-disable */
   components: {
-    Logo,
+    Avatar,
     Home,
     DefaultNode,
     Gallery,
@@ -62,6 +66,7 @@ export default {
     ...mapState({
       node: (state) => state.node
     }),
+    ...mapGetters('node', ['root']),
     requestNodeView() {
       const view = this.node.current.view
       if (

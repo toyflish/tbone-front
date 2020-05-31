@@ -28,6 +28,7 @@ export default {
   },
   getters: {
     currentHydrated: (state) => nodes.nodify(state.current),
-    breadcrumb: (_, getters) => getters.currentHydrated.breadcrumb()
+    breadcrumb: (_, getters) => getters.currentHydrated.breadcrumb(),
+    root: (state) => state.breadCrumbItems[state.breadCrumbItems.length - 1]
   }
 }
