@@ -21,9 +21,23 @@ module.exports = {
       boxShadow: {
         code:
           '0 10px 15px -3px rgba(0, 0, 0, 0.5), 0 4px 6px -2px rgba(0, 0, 0, 0.5)'
+      },
+      colors: {
+        lachs: '#ff5964'
       }
     }
   },
   variants: {},
-  plugins: []
+  plugins: [],
+  purge: {
+    // Learn more on https://tailwindcss.com/docs/controlling-file-size/#removing-unused-css
+    enabled: process.env.NODE_ENV === 'production',
+    content: [
+      'components/**/*.vue',
+      'layouts/**/*.vue',
+      'pages/**/*.vue',
+      'plugins/**/*.js',
+      'nuxt.config.js'
+    ]
+  }
 }
