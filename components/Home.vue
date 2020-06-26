@@ -17,9 +17,9 @@
 
 <script>
 import { mapActions } from 'vuex'
+import Avatar from '@/components/Avatar'
 import MoreBtn from './MoreBtn'
 import ChildList from './ChildList'
-import Avatar from '@/components/Avatar'
 export default {
   name: 'Home',
   components: {
@@ -66,6 +66,7 @@ export default {
               pageTitle: `home (${linkedNodeslimit})`
             })
           })
+          // eslint-disable-next-line no-console
           .catch((e) => console.log({ e }))
           .finally(() => (thisVue.loading = false))
       }

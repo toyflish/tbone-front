@@ -41,8 +41,8 @@
 
 <script>
 import { mapActions, mapState, mapGetters } from 'vuex'
-import { scrollContainerTo } from '../utils/doScrolling'
 import VImg from '@/components/VImg'
+import { scrollContainerTo } from '../utils/doScrolling'
 
 export default {
   nSlide: 'SwiperSlide',
