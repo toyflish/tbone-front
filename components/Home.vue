@@ -7,6 +7,22 @@
     />
     <div class="px-4 container-text">
       <h1>{{ node.name }}</h1>
+    </div>
+    <div class="p-4 container-text">
+      <Highlight>
+        Just for #Fans
+      </Highlight>
+      <Highlight>
+        Selfie first?
+      </Highlight>
+      <Highlight>
+        <nuxt-link
+          :to="'/selfies'"
+          class="text-black hover:text-white"
+          style="text-shadow: none; color: #000"
+          >Yes!</nuxt-link
+        >
+      </Highlight>
       <!-- eslint-disable-next-line vue/no-v-html -->
       <div v-html="node.content"></div>
     </div>
@@ -18,14 +34,16 @@
 <script>
 import { mapActions } from 'vuex'
 import Avatar from '@/components/Avatar'
-import MoreBtn from './MoreBtn'
-import ChildList from './ChildList'
+import MoreBtn from '@/components/MoreBtn'
+import ChildList from '@/components/ChildList'
+import Highlight from '@/components/Highlight'
 export default {
   name: 'Home',
   components: {
     ChildList,
     MoreBtn,
-    Avatar
+    Avatar,
+    Highlight
   },
   props: { node: { type: Object, default: null } },
   data() {
