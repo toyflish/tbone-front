@@ -4,7 +4,22 @@
     "titleBar.activeBackground": "#6F2A1E",
     "titleBar.activeForeground": "#FDF9F8"
   },
-  "vetur.format.defaultFormatter.css": "none",
-  "vetur.format.defaultFormatter.html": "none",
-  "vetur.format.defaultFormatter.js": "none"
+  "vetur.validation.template": false,
+  "eslint.validate": [
+    
+    "vue",
+    "html",
+    "javascript"
+  ],
+  "editor.codeActionsOnSave": {
+    "source.fixAll.eslint": true
+  },
+  "vetur.validation.script": false,
+  "tailwindCSS.emmetCompletions": true,
+  "eslint.packageManager": "yarn",
+  "editor.tabSize": 2,
+  "jshint.enable": false,
+  "headwind.prependCustomClasses": true,
+  "css.validate": false,
+  "editor.formatOnSave": true
 }
