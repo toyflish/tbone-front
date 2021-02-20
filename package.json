@@ -20,14 +20,14 @@
     "@nuxtjs/gtm": "^2.2.2",
     "core-js": "2",
     "highlight.js": "^9.18.1",
-    "nuxt": "^2.12.2",
+    "nuxt": "^2.15.1",
     "vuetensils": "^0.4.3"
   },
   "devDependencies": {
     "@babel/core": "^7.9.0",
     "@nuxtjs/eslint-config": "^1.0.1",
     "@nuxtjs/eslint-module": "^1.0.0",
-    "@nuxtjs/tailwindcss": "^1.0.0",
+    "@nuxtjs/tailwindcss": "^3.4.2",
     "@storybook/addon-actions": "^5.3.17",
     "@storybook/addon-links": "^5.3.17",
     "@storybook/addons": "^5.3.17",
