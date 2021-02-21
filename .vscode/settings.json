@@ -1,7 +1,7 @@
 {
   "workbench.colorCustomizations": {
-    "activityBar.background": "#4F1E15",
-    "titleBar.activeBackground": "#6F2A1E",
+    "activityBar.background": "#b94149",
+    "titleBar.activeBackground": "#ff5964",
     "titleBar.activeForeground": "#FDF9F8"
   },
   "vetur.validation.template": false,

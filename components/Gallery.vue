@@ -4,7 +4,7 @@
       <h1>{{ node.name }}</h1>
       <img :src="node.attachment_url" />
       <!-- eslint-disable-next-line vue/no-v-html -->
-      <div v-html="node.content" class="px-4 container-text"></div>
+      <div v-html="node.content" class="container-text px-4"></div>
       <ThumbGrid
         v-if="validateAllHavePreviewUrl(node.children)"
         :nodes="node.children"
@@ -25,7 +25,7 @@
         </div>
       </div>
     </div>
-    <div class="px-4 container-text">
+    <div class="container-text px-4">
       <!-- <VueDisqus shortname="toyflish" :identifier="String(node.id)" :url="`https://toyflish.com${node.href}`"></VueDisqus> -->
     </div>
     <SwiperSlide v-if="swiperOverlayOpen" :nodes="node.children" />
@@ -75,7 +75,7 @@ export default {
         if (hash !== '') {
           this.$router.push(this.$route.path)
           const scrollToElement = document.querySelector(
-            `.thumb-grid [data-slug="${hash}"]`
+            `[data-slug="${hash}"]`
           )
           this.$nextTick(() => {
             scrollWindowTo(scrollToElement, 500)
@@ -104,15 +104,31 @@ export default {
         return undefined
       }
     },
-
-    sanitizedRouteHash: () => this.$route.hash.replace('#', ''),
-
+    preloadImgSrc(url) {
+      new Image().src = url
+    },
+    pushToNode(node) {
+      console.log('pushToNode')
+      window.history.pushState({}, null, `${this.node.href}#${node.slug}`)
+    },
     swiperShow(node, pushState = true) {
       if (pushState) {
         // set hash
-        window.history.pushState({}, null, `${this.node.href}#${node.slug}`)
+        // eslint-disable-next-line camelcase
+        const imgUrl = node?.attachment_url
+        if (imgUrl) {
+          this.preloadImgSrc(imgUrl)
+          setTimeout(() => {
+            this.pushToNode(node)
+            this.swiperOpen()
+          }, 200)
+        } else {
+          this.pushToNode(node)
+          this.swiperOpen()
+        }
+      } else {
+        this.swiperOpen()
       }
-      this.swiperOpen()
     }
   }
 }
