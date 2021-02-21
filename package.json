@@ -4,6 +4,9 @@
   "description": "My incredible Nuxt.js project",
   "author": "Kai Rautenberg",
   "private": true,
+  "engines": {
+    "node": "14.x"
+  },
   "scripts": {
     "dev": "nuxt",
     "build": "nuxt build",
