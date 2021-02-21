@@ -7,6 +7,10 @@
 const maxWidth = '600px'
 
 module.exports = {
+  future: {
+    purgeLayersByDefault: true,
+    removeDeprecatedGapUtilities: true
+  },
   theme: {
     container: {
       center: true
@@ -27,7 +31,6 @@ module.exports = {
       }
     }
   },
-  variants: {},
   plugins: [],
   purge: {
     // Learn more on https://tailwindcss.com/docs/controlling-file-size/#removing-unused-css

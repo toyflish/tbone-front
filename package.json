@@ -33,6 +33,7 @@
     "@storybook/addons": "^5.3.17",
     "@storybook/vue": "^5.3.17",
     "@vue/test-utils": "^1.0.0-beta.27",
+    "autoprefixer": "^9",
     "babel-eslint": "^10.0.1",
     "babel-jest": "^24.1.0",
     "babel-loader": "^8.1.0",
@@ -43,8 +44,10 @@
     "eslint-plugin-prettier": "^3.0.1",
     "jest": "^24.1.0",
     "node-sass": "^4.13.1",
+    "postcss": "^7",
     "prettier": "^1.16.4",
     "sass-loader": "^8.0.2",
+    "tailwindcss": "npm:@tailwindcss/postcss7-compat",
     "vue-jest": "^4.0.0-0"
   }
 }
