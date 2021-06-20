@@ -1,39 +1,31 @@
 <template>
-  <div
-    id="swiperSlide"
-    ref="slider"
-    class="fixed top-0 left-0 w-full h-full overflow-y-scroll backdrop"
-  >
-    <div class="container swiper-wrapper">
+  <div id="swiperSlide" ref="slider" class="backdrop fixed top-0 left-0 w-full h-full overflow-y-scroll">
+    <div class="swiper-wrapper container">
       <div
         v-for="node in nodes"
-        :id="node.slug"
         :ref="node.slug"
         :key="node.id"
         :data-slug="node.slug"
         :style="{
-          'padding-top': ratioPercent(
-            node.attachment_width,
-            node.attachment_height
-          )
+          'padding-top': ratioPercent(node.attachment_width, node.attachment_height),
         }"
         class="relative w-full my-4"
       >
-        <div class="absolute top-0 left-0 w-full h-full bg-orange-200 wrapper">
+        <div class="wrapper absolute top-0 left-0 w-full h-full bg-orange-200">
           <VImg
             v-if="node.attachment_url"
             :src="node.attachment_url"
             :alt="node.alt"
             :placeholder="node.preview_url"
-            :transitionDuration="1000"
+            :transition-duration="1000"
             :classes="{
               root: '',
               placeholder: 'object-cover object-center w-full',
-              img: 'object-cover object-center w-full'
+              img: 'object-cover object-center w-full',
             }"
           />
         </div>
-        <!-- class="object-cover object-center absolute top-0 left-0 w-full h-full" -->
+        <!-- class="absolute top-0 left-0 object-cover object-center w-full h-full" -->
       </div>
     </div>
   </div>
@@ -45,40 +37,57 @@ import VImg from '@/components/VImg'
 import { scrollContainerTo } from '../utils/doScrolling'
 
 export default {
-  nSlide: 'SwiperSlide',
+  name: 'SwiperSlide',
   components: {
-    VImg
+    VImg,
   },
   props: {
     nodes: {
       type: Array,
-      default: () => []
-    }
+      default: () => [],
+    },
   },
   data() {
     return {
-      currentSlugInView: null
+      currentSlugInView: null,
+      initialScrolling: false,
+      initialScrollTarget: null,
     }
   },
   computed: {
     ...mapState('nav', { navState: (state) => state.state }),
-    ...mapGetters('nav', ['swiperOverlayOpen'])
+    ...mapGetters('nav', ['swiperOverlayOpen']),
+  },
+  watch: {
+    $route({ hash }, { hash: oldHash }) {
+      /**
+       * scroll to image refed by slug , only if we come gallery view with blank hash
+       */
+      if (oldHash === '' && hash !== '') {
+        this.initialScrollTarget = hash.substr(1)
+        this.scrollTo(hash.substr(1))
+      }
+    },
   },
   mounted() {
+    if (this.$route.hash) this.scrollTo(this.$route.hash.substr(1))
     this.bodyScrolls(false)
-    const hash = window.location.hash.substr(1)
-    if (hash !== '') {
-      this.$nextTick(() => {
-        scrollContainerTo(this.$refs.slider, this.$refs[hash][0], 500)
-        this.mountObserver()
-      }, 100)
-    }
+    this.mountObserver()
   },
   beforeDestroy() {
     this.bodyScrolls(true)
   },
   methods: {
     ...mapActions('nav', ['swiperOpen', 'swiperClose']),
+    scrollTo(scrollTargetRef) {
+      this.initialScrolling = true
+      const vm = this
+      this.$nextTick(() => {
+        scrollContainerTo(this.$refs.slider, this.$refs[scrollTargetRef][0], 500, 'center', () => {
+          vm.initialScrolling = false
+        })
+      })
+    },
     bodyScrolls(on) {
       if (!on) {
         document.documentElement.style.overflow = 'hidden'
@@ -93,9 +102,10 @@ export default {
           entries.forEach((entry) => {
             if (entry.intersectionRatio > 0) {
               const slug = entry.target.dataset.slug
-              // this.currentSlugInView = slug
-              this.$router.replace({ path: this.$route.path, hash: slug })
-              // this.$emit('scrolledToSlug', slug)
+              // if not current url
+              if (slug !== this.$route.hash.substr(1) && !this.initialScrolling) {
+                this.$router.replace({ path: this.$route.path, hash: slug })
+              }
             }
           })
         },
@@ -111,8 +121,8 @@ export default {
 
     ratioPercent: (width, height) => {
       return `${(height / width) * 100}%`
-    }
-  }
+    },
+  },
 }
 </script>
 

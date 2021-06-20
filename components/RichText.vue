@@ -1,10 +1,10 @@
 <template>
-  <div v-html="highlighedContent" v-bind="$attrs" />
+  <div v-bind="$attrs" v-html="highlighedContent" />
 </template>
 
 <script>
 import 'highlight.js/styles/monokai-sublime.css'
-const hljs = () => require('highlight.js/lib/highlight.js')
+const hljs = () => require('highlight.js/lib/common')
 const javascript = () => require('highlight.js/lib/languages/javascript.js')
 const css = () => require('highlight.js/lib/languages/css')
 
@@ -12,12 +12,12 @@ export default {
   props: {
     content: {
       type: String,
-      default: ''
-    }
+      default: '',
+    },
   },
   data() {
     return {
-      highlighedContent: 'highlighting ..'
+      highlighedContent: 'highlighting ..',
     }
   },
   async mounted() {
@@ -30,6 +30,6 @@ export default {
         h.highlightBlock(block)
       })
     })
-  }
+  },
 }
 </script>

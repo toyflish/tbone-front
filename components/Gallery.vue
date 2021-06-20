@@ -4,7 +4,7 @@
       <h1>{{ node.name }}</h1>
       <img :src="node.attachment_url" />
       <!-- eslint-disable-next-line vue/no-v-html -->
-      <div v-html="node.content" class="container-text px-4"></div>
+      <div class="container-text px-4" v-html="node.content"></div>
       <ThumbGrid
         v-if="validateAllHavePreviewUrl(node.children)"
         :nodes="node.children"
@@ -13,7 +13,7 @@
       <div v-else class="children">
         <div class="list">
           <div v-for="item in node.children" :key="item.id" class="node">
-            <nuxt-link :to="{ path: item.href }" style="display:block">
+            <nuxt-link :to="{ path: item.href }" style="display: block">
               <img
                 v-if="item.attachment_url"
                 :src="item.attachment_url"
@@ -47,7 +47,7 @@ export default {
   components: {
     // VueDisqus
     ThumbGrid,
-    SwiperSlide
+    SwiperSlide,
   },
   props: { node: { type: Object, default: null } },
 
@@ -56,7 +56,7 @@ export default {
     ...mapGetters('nav', ['swiperOverlayOpen']),
     routeHash() {
       return this !== undefined ? this.$route.hash.replace('#', '') : undefined
-    }
+    },
   },
   watch: {
     routeHash(newValue, oldValue) {
@@ -82,7 +82,7 @@ export default {
           })
         }
       }
-    }
+    },
   },
   mounted() {
     const hash = sanitizedHash(this.$route.hash)
@@ -96,7 +96,7 @@ export default {
     validateAllHavePreviewUrl(nodes) {
       if (Array.isArray(nodes)) {
         return (
-          nodes.find(function(n) {
+          nodes.find(function (n) {
             return n.preview_url === undefined
           }) === undefined
         )
@@ -108,8 +108,11 @@ export default {
       new Image().src = url
     },
     pushToNode(node) {
+      // eslint-disable-next-line no-console
       console.log('pushToNode')
-      window.history.pushState({}, null, `${this.node.href}#${node.slug}`)
+      console.log(`${this.node.href}/#${node.slug}`)
+      this.$router.push({ path: this.node.href, hash: node.slug })
+      // window.history.pushState({}, null, `${this.node.href}#${node.slug}`)
     },
     swiperShow(node, pushState = true) {
       if (pushState) {
@@ -129,8 +132,8 @@ export default {
       } else {
         this.swiperOpen()
       }
-    }
-  }
+    },
+  },
 }
 </script>
 

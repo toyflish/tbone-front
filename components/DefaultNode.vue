@@ -1,7 +1,7 @@
 <template>
-  <div class="container node-default">
-    <div class="px-4 container-text">
-      <h1>{{ node.name }}</h1>
+  <div class="node-default container">
+    <div class="container-text px-4">
+      <h1 class="mb-6">{{ node.name }}</h1>
     </div>
     <img :src="node.attachment_url" />
     <!-- eslint-disable-next-line vue/no-v-html -->
@@ -13,7 +13,7 @@
         class="batch"
       >
         <div v-for="item in batch" :key="item.id" class="node">
-          <nuxt-link :to="{ path: item.href }" style="display:block">
+          <nuxt-link :to="{ path: item.href }" style="display: block">
             <img
               v-if="item.preview_url"
               :src="item.preview_url"
@@ -30,11 +30,11 @@
           <nuxt-link
             v-if="item.attachment_url"
             :to="{ path: item.href }"
-            style="display:block"
+            style="display: block"
           >
             <img :src="item.attachment_url" :alt="item.name" />
           </nuxt-link>
-          <div v-else class="px-4 container-text">
+          <div v-else class="container-text px-4">
             <h2>
               <nuxt-link :to="{ path: item.href }">{{ item.name }}</nuxt-link>
             </h2>
@@ -43,7 +43,7 @@
         </article>
       </div>
     </div>
-    <div class="px-4 container-text">
+    <div class="container-text px-4">
       <!-- <VueDisqus shortname="toyflish" :identifier="String(node.id)" :url="`https://toyflish.com${node.href}`"></VueDisqus> -->
     </div>
   </div>
@@ -56,24 +56,24 @@ import RichText from '@/components/RichText'
 export default {
   name: 'DefaultNode',
   components: {
-    RichText
+    RichText,
   },
   props: { node: { type: Object, default: null } },
   data() {
     return {
-      batches: [1, 2, 3]
+      batches: [1, 2, 3],
     }
   },
   computed: {
     childrenInBatches() {
       return this.inBatches(this.node.children, 3)
-    }
+    },
   },
   methods: {
     validateAllHavePreviewUrl(nodes) {
       if (Array.isArray(nodes)) {
         return (
-          nodes.find(function(n) {
+          nodes.find(function (n) {
             return n.preview_url === undefined
           }) === undefined
         )
@@ -89,8 +89,8 @@ export default {
         }
       }
       return batches
-    }
-  }
+    },
+  },
 }
 </script>
 

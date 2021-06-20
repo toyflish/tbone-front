@@ -12,5 +12,5 @@ pre {
 }
 pre code {
   white-space: pre;
-  @apply rounded-md shadow-code
+  @apply shadow-code block p-4 overflow-hidden rounded-md;
 }

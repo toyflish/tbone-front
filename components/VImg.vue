@@ -1,17 +1,12 @@
 <template>
   <div :class="['vts-img', classes.root]">
     <div
-      ref="placeholder"
       v-if="placeholder || dataUrl"
+      ref="placeholder"
       :class="['vts-img__placeholder', classes.placeholder]"
       :style="{ background }"
     >
-      <img
-        :src="placeholder || dataUrl"
-        v-bind="$attrs"
-        :class="classes.img"
-        alt=""
-      />
+      <img :src="placeholder || dataUrl" v-bind="$attrs" :class="classes.img" alt="" />
     </div>
     <img
       ref="img"
@@ -19,7 +14,7 @@
       :class="['vts-img__img', classes.img]"
       :alt="$attrs.alt || ''"
       :style="{
-        transitionDuration: `${transitionDuration}ms`
+        transitionDuration: `${transitionDuration}ms`,
       }"
       v-bind="$attrs"
       v-on="$listeners"
@@ -45,39 +40,39 @@ export default {
      */
     src: {
       type: String,
-      required: true
+      required: true,
     },
     /**
      * Same as the HTML attribute
      */
     srcset: {
       type: String,
-      default: ''
+      default: '',
     },
     /**
      * URL of the blurred placeholder image to use if you need one (ideally a very small image).
      */
     placeholder: {
       type: String,
-      default: ''
+      default: '',
     },
     /**
      * CSS background styles for the placeholder in case you just want colors.
      */
     background: {
       type: String,
-      default: ''
+      default: '',
     },
 
     transitionDuration: {
       type: [Number, String],
-      default: 3000
+      default: 3000,
     },
 
     classes: {
       type: Object,
-      default: () => ({})
-    }
+      default: () => ({}),
+    },
   },
 
   computed: {
@@ -94,16 +89,16 @@ export default {
       canvas.height = (height / width) * w
 
       return canvas.toDataURL()
-    }
+    },
   },
 
   watch: {
     src: {
-      handler: 'init'
+      handler: 'init',
     },
     srcset: {
-      handler: 'init'
-    }
+      handler: 'init',
+    },
   },
 
   mounted() {
@@ -157,9 +152,9 @@ export default {
         })
       }
 
-      img.removeEventListener('load', this.onLoad)
-    }
-  }
+      if (img) img.removeEventListener('load', this.onLoad)
+    },
+  },
 }
 </script>
 

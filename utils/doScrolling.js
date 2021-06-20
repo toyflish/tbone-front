@@ -16,7 +16,7 @@ function scrollWindowTo(element, duration, offset = 'center') {
   const diff = targetY - startingY
   // Easing function: easeInOutCubic
   // From: https://gist.github.com/gre/1650294
-  const easing = function(t) {
+  const easing = function (t) {
     return t < 0.5 ? 4 * t * t * t : (t - 1) * (2 * t - 2) * (2 * t - 2) + 1
   }
   let start
@@ -46,7 +46,13 @@ function scrollWindowTo(element, duration, offset = 'center') {
 // scroll container based
 // container and element are dom elements
 // offset pixel offset to scroll to from top of container or centered
-function scrollContainerTo(container, element, duration, offset = 'center') {
+function scrollContainerTo(
+  container,
+  element,
+  duration,
+  offset = 'center',
+  finishedCallback = null
+) {
   const startingY = container.scrollTop
   if (offset === 'center') {
     offset = (window.innerHeight - element.clientHeight) / 2
@@ -56,7 +62,7 @@ function scrollContainerTo(container, element, duration, offset = 'center') {
   const diff = targetY - startingY
   // Easing function: easeInOutCubic
   // From: https://gist.github.com/gre/1650294
-  const easing = function(t) {
+  const easing = function (t) {
     return t < 0.5 ? 4 * t * t * t : (t - 1) * (2 * t - 2) * (2 * t - 2) + 1
   }
   let start
@@ -78,7 +84,7 @@ function scrollContainerTo(container, element, duration, offset = 'center') {
     // Proceed with animation as long as we wanted it to.
     if (time < duration) {
       window.requestAnimationFrame(step)
-    }
+    } else if (finishedCallback !== null) finishedCallback()
   })
 }
 
