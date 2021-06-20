@@ -5,14 +5,10 @@ function scrollWindowTo(element, duration, offset = 'center') {
   if (offset === 'center') {
     offset = (window.innerHeight - element.clientHeight) / 2
   }
-  const elementY =
-    window.pageYOffset + element.getBoundingClientRect().top - offset
+  const elementY = window.pageYOffset + element.getBoundingClientRect().top - offset
   const bodyHeight = document.documentElement.scrollHeight
   // If element is close to page's bottom then window will scroll only to some position above the element.
-  const targetY =
-    bodyHeight - elementY < window.innerHeight
-      ? bodyHeight - window.innerHeight
-      : elementY
+  const targetY = bodyHeight - elementY < window.innerHeight ? bodyHeight - window.innerHeight : elementY
   const diff = targetY - startingY
   // Easing function: easeInOutCubic
   // From: https://gist.github.com/gre/1650294
@@ -46,13 +42,7 @@ function scrollWindowTo(element, duration, offset = 'center') {
 // scroll container based
 // container and element are dom elements
 // offset pixel offset to scroll to from top of container or centered
-function scrollContainerTo(
-  container,
-  element,
-  duration,
-  offset = 'center',
-  finishedCallback = null
-) {
+function scrollContainerTo(container, element, duration, offset = 'center', finishedCallback = null) {
   const startingY = container.scrollTop
   if (offset === 'center') {
     offset = (window.innerHeight - element.clientHeight) / 2

@@ -5,11 +5,7 @@
     </div>
     <img v-if="node.attachment_url" :src="node.attachment_url" />
     <!-- eslint-disable-next-line vue/no-v-html -->
-    <div
-      v-if="node.content"
-      v-html="node.content"
-      class="px-4 container-text"
-    ></div>
+    <div v-if="node.content" class="px-4 container-text" v-html="node.content"></div>
     <ChildList :children="node.children" />
   </div>
 </template>
@@ -19,9 +15,9 @@ import ChildList from './ChildList'
 export default {
   name: 'Gems',
   components: {
-    ChildList
+    ChildList,
   },
-  props: { node: { type: Object, default: null } }
+  props: { node: { type: Object, default: null } },
 }
 </script>
 

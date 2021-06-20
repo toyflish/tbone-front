@@ -1,25 +1,14 @@
 <template>
   <div class="container py-16">
-    <Avatar
-      :src="node.attachment_url"
-      :alt="node.name"
-      class="w-48 h-48 mx-auto mb-8"
-    />
+    <Avatar :src="node.attachment_url" :alt="node.name" class="w-48 h-48 mx-auto mb-8" />
     <div class="px-4 container-text">
       <h1>{{ node.name }}</h1>
     </div>
     <div class="p-4 container-text">
+      <Highlight> Just for #Fans </Highlight>
+      <Highlight> Selfie first? </Highlight>
       <Highlight>
-        Just for #Fans
-      </Highlight>
-      <Highlight>
-        Selfie first?
-      </Highlight>
-      <Highlight>
-        <nuxt-link
-          :to="'/selfies'"
-          class="text-black hover:text-white"
-          style="text-shadow: none; color: #000"
+        <nuxt-link :to="'/selfies'" class="text-black hover:text-white" style="text-shadow: none; color: #000"
           >Yes!</nuxt-link
         >
       </Highlight>
@@ -43,20 +32,20 @@ export default {
     ChildList,
     MoreBtn,
     Avatar,
-    Highlight
+    Highlight,
   },
   props: { node: { type: Object, default: null } },
   data() {
     return {
       loading: false,
       linkedNodeOffest: 0,
-      linkedNodeslimit: 10
+      linkedNodeslimit: 10,
     }
   },
   computed: {
     moreBtnLabel() {
       return this.loading ? '... Loading ...' : 'Show More'
-    }
+    },
   },
   methods: {
     ...mapActions('node', ['fetchCurrent']),
@@ -72,7 +61,7 @@ export default {
         this.fetchCurrent({
           slug: '',
           linked_nodes_level_down: 1,
-          linked_nodes_limit: linkedNodeslimit
+          linked_nodes_limit: linkedNodeslimit,
         })
           .then(() => {
             // thisVue.loading = false
@@ -81,14 +70,14 @@ export default {
               routeName: `home (${linkedNodeslimit})`,
               pageType: 'PageView',
               pageUrl: '/',
-              pageTitle: `home (${linkedNodeslimit})`
+              pageTitle: `home (${linkedNodeslimit})`,
             })
           })
           // eslint-disable-next-line no-console
           .catch((e) => console.log({ e }))
           .finally(() => (thisVue.loading = false))
       }
-    }
-  }
+    },
+  },
 }
 </script>

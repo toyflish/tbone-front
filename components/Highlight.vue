@@ -1,6 +1,6 @@
 <template>
   <div class="flex justify-center">
-    <div class="text-white  shadow-lg highlight">
+    <div class="text-white shadow-lg highlight">
       <span>
         <slot></slot>
       </span>

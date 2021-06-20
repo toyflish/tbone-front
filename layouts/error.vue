@@ -1,9 +1,6 @@
 <template>
   <div class="fixed inset-0 flex flex-wrap content-center justify-center">
-    <div
-      class="bg-red-100 border border-red-400 text-red-700 px-4 py-3 pr-12 rounded relative"
-      role="alert"
-    >
+    <div class="bg-red-100 border border-red-400 text-red-700 px-4 py-3 pr-12 rounded relative" role="alert">
       <strong class="font-bold">Holy smokes!</strong>
       <span class="block sm:inline">{{ statusCode }} - {{ message }}</span>
       <nuxt-link to="/">
@@ -32,7 +29,12 @@ export default {
   props: {
     error: {
       type: Object,
-      default: null
+      default: null,
+    },
+  },
+  head() {
+    return {
+      title: this.message,
     }
   },
   computed: {
@@ -41,12 +43,7 @@ export default {
     },
     message() {
       return this.error.message || '<%= messages.client_error %>'
-    }
+    },
   },
-  head() {
-    return {
-      title: this.message
-    }
-  }
 }
 </script>

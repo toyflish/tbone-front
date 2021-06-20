@@ -3,19 +3,11 @@
     <NavBar class="z-10" />
 
     <div v-if="showLogo" class="container my-4">
-      <Avatar
-        :src="root.attachment_url"
-        :alt="root.name"
-        class="w-16 h-16 mx-auto mb-8"
-      />
+      <Avatar :src="root.attachment_url" :alt="root.name" class="w-16 h-16 mx-auto mb-8" />
     </div>
 
     <!-- eslint-disable vue/require-component-is -->
-    <component
-      :is="requestNodeView"
-      :key="node.current.slug"
-      :node="node.current"
-    />
+    <component :is="requestNodeView" :key="node.current.slug" :node="node.current" />
     <!-- eslint-enable vue/require-component-is -->
   </div>
 </template>
@@ -46,50 +38,18 @@ export default {
     Archive,
     Timeline,
     Gems,
-    NavBar
+    NavBar,
   },
   /* eslint-enable */
   props: { slug: { type: String, default: '' } },
-  head() {
-    return {
-      title: this.node.current.title,
-      meta: [
-        {
-          // hid: this.$store.state.requestNode.meta_description,
-          name: 'description',
-          content: this.node.current.meta_description || ''
-        }
-      ]
-    }
-  },
-  computed: {
-    ...mapState({
-      node: (state) => state.node
-    }),
-    ...mapGetters('node', ['root']),
-    requestNodeView() {
-      const view = this.node.current.view
-      if (
-        view === undefined ||
-        !Object.keys(this.$options.components).includes(view)
-      ) {
-        return 'DefaultNode'
-      } else {
-        return view
-      }
-    },
-    showLogo() {
-      return this.node.current.id !== undefined && this.node.current.id !== 1
-    }
-  },
   fetch({ store, params, error }) {
     return Promise.all([
       store.dispatch('node/fetchCurrent', {
         slug: params.slug || '',
         thumb_crop: '300x',
-        full_crop: '600x'
+        full_crop: '600x',
       }),
-      store.dispatch('fetchMenu')
+      store.dispatch('fetchMenu'),
     ]).catch((e) => {
       if (e.isAxiosError) {
         error({ statusCode: e.response.status, message: e.response.statusText })
@@ -99,7 +59,36 @@ export default {
       }
       return false
     })
-  }
+  },
+  head() {
+    return {
+      title: this.node.current.title,
+      meta: [
+        {
+          // hid: this.$store.state.requestNode.meta_description,
+          name: 'description',
+          content: this.node.current.meta_description || '',
+        },
+      ],
+    }
+  },
+  computed: {
+    ...mapState({
+      node: (state) => state.node,
+    }),
+    ...mapGetters('node', ['root']),
+    requestNodeView() {
+      const view = this.node.current.view
+      if (view === undefined || !Object.keys(this.$options.components).includes(view)) {
+        return 'DefaultNode'
+      } else {
+        return view
+      }
+    },
+    showLogo() {
+      return this.node.current.id !== undefined && this.node.current.id !== 1
+    },
+  },
 }
 </script>
 

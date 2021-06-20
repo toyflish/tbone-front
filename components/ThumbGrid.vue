@@ -3,8 +3,8 @@
     <div
       v-for="node in nodes"
       :key="node.id"
-      @click="$emit('click', node)"
       class="pt-square relative overflow-hidden cursor-pointer"
+      @click="$emit('click', node)"
     >
       <VImg
         v-if="node.preview_url"
@@ -12,9 +12,8 @@
         :alt="node.alt"
         :data-slug="node.slug"
         :classes="{
-          root:
-            'transform duration-300 hover:scale-105 overflow-hidden absolute force-absolute inset-0  bg-orange-200',
-          img: 'object-cover absolute inset-0 w-full h-full'
+          root: 'transform duration-300 hover:scale-105 overflow-hidden absolute force-absolute inset-0  bg-orange-200',
+          img: 'object-cover absolute inset-0 w-full h-full',
         }"
       />
       <span v-else class="primer">{{ node.name }}</span>
@@ -28,14 +27,14 @@ import VImg from '@/components/VImg'
 export default {
   name: 'ThumbGrid',
   components: {
-    VImg
+    VImg,
   },
   props: {
     nodes: {
       type: Array,
-      default: () => []
-    }
-  }
+      default: () => [],
+    },
+  },
 }
 </script>
 

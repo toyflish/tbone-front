@@ -13,6 +13,6 @@
 export default {
   name: 'Achievements',
   // eslint-disable-next-line vue/require-prop-types
-  props: ['goals']
+  props: ['goals'],
 }
 </script>

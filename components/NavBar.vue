@@ -2,21 +2,12 @@
   <div class="fixed bottom-0 w-full gradient">
     <nav class="container flex px-4 py-4" role="menubar">
       <div class="w-12">
-        <nuxt-link
-          v-if="breadcrumbVisible && upLink"
-          :to="{ path: upLink.href }"
-          role="menuitem"
-          aria-label="back"
-        >
+        <nuxt-link v-if="breadcrumbVisible && upLink" :to="{ path: upLink.href }" role="menuitem" aria-label="back">
           <BreadCrumbArrow />
         </nuxt-link>
       </div>
       <div class="ml-auto w-12 z-10">
-        <Hamburger
-          :shadow="hamburgerShadow"
-          :open="hamburgerOpen"
-          @click="hamburgerClick"
-        />
+        <Hamburger :shadow="hamburgerShadow" :open="hamburgerOpen" @click="hamburgerClick" />
       </div>
       <MenuOverlay />
     </nav>
@@ -35,12 +26,12 @@ export default {
   components: {
     BreadCrumbArrow,
     Hamburger,
-    MenuOverlay
+    MenuOverlay,
   },
   computed: {
     ...mapState({
       node: (state) => state.node,
-      nav: (state) => state.nav
+      nav: (state) => state.nav,
     }),
     ...mapGetters('node', ['currentHydrated', 'breadcrumb']),
     ...mapGetters('nav', ['hamburgerShadow', 'hamburgerOpen']),
@@ -49,9 +40,9 @@ export default {
     },
     breadcrumbVisible() {
       return this.$store.state.hamburgerClickEvent === 'openMainMenu'
-    }
+    },
   },
-  methods: mapActions('nav', ['hamburgerClick'])
+  methods: mapActions('nav', ['hamburgerClick']),
 }
 </script>
 

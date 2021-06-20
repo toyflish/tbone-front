@@ -6,9 +6,9 @@
     <div v-html="node.content"></div>
     <div class="children">
       <div v-for="child in childrenReverse()" :key="child.id" class="square">
-        <div @click="$router.push({ path: child.href })" class="content">
+        <div class="content" @click="$router.push({ path: child.href })">
           <div class="name">
-            <nuxt-link :to="{ path: child.href }" style="display:block">
+            <nuxt-link :to="{ path: child.href }" style="display: block">
               <span>{{ child.name }}</span>
             </nuxt-link>
           </div>
@@ -52,8 +52,8 @@ export default {
         this.node.children.forEach((child) => arr.unshift(child))
       }
       return arr
-    }
-  }
+    },
+  },
 }
 </script>
 

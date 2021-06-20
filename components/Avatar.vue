@@ -14,17 +14,16 @@ export default {
     src: { type: String, required: true },
     alt: {
       type: String,
-      default: ''
-    }
-  }
+      default: '',
+    },
+  },
 }
 </script>
 <style lang="scss">
 .avatar {
   box-shadow: 0 0 0 3px #fff, 0 0 0 4px #999, 0 2px 5px 4px rgba(0, 0, 0, 0.2);
   &:hover {
-    box-shadow: 0 0 0 4px #fff, 0 0 0 4px #999,
-      0 2px 10px 6px rgba(0, 0, 0, 0.2);
+    box-shadow: 0 0 0 4px #fff, 0 0 0 4px #999, 0 2px 10px 6px rgba(0, 0, 0, 0.2);
   }
   img {
     max-height: 100%;

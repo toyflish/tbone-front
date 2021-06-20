@@ -4,9 +4,9 @@ import MoreBtn from './MoreBtn'
 storiesOf('MoreBtn', module)
   .add('As Text Button', () => ({
     components: { MoreBtn },
-    template: '<MoreBtn label="Some more" />'
+    template: '<MoreBtn label="Some more" />',
   }))
   .add('Loading', () => ({
     components: { MoreBtn },
-    template: '<MoreBtn label="Some more" :loading="true" />'
+    template: '<MoreBtn label="Some more" :loading="true" />',
   }))

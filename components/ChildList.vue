@@ -1,15 +1,7 @@
 <template>
   <section class="children">
-    <article
-      v-for="child in children"
-      :key="child.id"
-      :class="child.view.toLowerCase()"
-    >
-      <nuxt-link
-        v-if="child.attachment_url"
-        :to="{ path: child.href }"
-        style="display:block"
-      >
+    <article v-for="child in children" :key="child.id" :class="child.view.toLowerCase()">
+      <nuxt-link v-if="child.attachment_url" :to="{ path: child.href }" style="display: block">
         <VImg
           :src="child.attachment_url"
           :placeholder="child.preview_url"
@@ -17,7 +9,7 @@
           :classes="{
             root: 'w-full mx-auto',
             placeholder: 'w-full',
-            img: 'w-full'
+            img: 'w-full',
           }"
           class="w-full mx-auto"
         />
@@ -46,14 +38,14 @@ export default {
   name: 'ChildList',
   components: {
     ThumbGrid,
-    VImg
+    VImg,
   },
   props: { children: { type: Array, default: null } },
   methods: {
     routerPush(node) {
       this.$router.push({ path: node.slug })
-    }
-  }
+    },
+  },
 }
 </script>
 

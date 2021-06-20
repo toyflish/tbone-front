@@ -8,12 +8,12 @@ const createStore = () => {
   return new Vuex.Store({
     modules: {
       node,
-      nav
+      nav,
     },
     state: {
       menuItems: [],
       breadCrumbItems: [],
-      hamburgerClickEvent: 'openMainMenu'
+      hamburgerClickEvent: 'openMainMenu',
     },
     mutations: {
       setMenuItems(state, items) {
@@ -21,16 +21,14 @@ const createStore = () => {
       },
       setHamburgerClickEvent(state, ename) {
         state.hamburgerClickEvent = ename
-      }
+      },
     },
     actions: {
       fetchMenu(context, payload) {
         const ns = new NodeService()
-        return ns
-          .fetchMenu()
-          .then((items) => context.commit('setMenuItems', items))
-      }
-    }
+        return ns.fetchMenu().then((items) => context.commit('setMenuItems', items))
+      },
+    },
   })
 }
 

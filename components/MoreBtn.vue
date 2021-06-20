@@ -1,6 +1,6 @@
 <template>
   <div :class="{ loading: loading }" class="more-btn">
-    <a @click.prevent.stop="$emit('hit')" href="/archive">{{ label }}</a>
+    <a href="/archive" @click.prevent.stop="$emit('hit')">{{ label }}</a>
   </div>
 </template>
 
@@ -10,18 +10,18 @@ export default {
   props: {
     label: {
       type: String,
-      default: 'More'
+      default: 'More',
     },
     loading: {
       type: Boolean,
-      default: false
-    }
+      default: false,
+    },
   },
   mounted() {
     // trigger click if window scrollposition is one window-height away
     const options = {
       rootMargin: `${window.innerHeight}px`,
-      threshold: 1.0
+      threshold: 1.0,
     }
     const target = this.$el
     const callback = (entries, observer) => {
@@ -34,7 +34,7 @@ export default {
   },
   beforeDestroy() {
     this.observer.disconnect()
-  }
+  },
 }
 </script>
 

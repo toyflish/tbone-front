@@ -5,18 +5,10 @@
     <!-- eslint-disable-next-line vue/no-v-html -->
     <div v-html="node.content"></div>
     <div v-if="validateAllHavePreviewUrl(node.children)" class="children">
-      <div
-        v-for="(batch, index) in childrenInBatches"
-        :key="index"
-        class="batch"
-      >
+      <div v-for="(batch, index) in childrenInBatches" :key="index" class="batch">
         <div v-for="item in batch" :key="item.id" class="node">
-          <nuxt-link :to="{ path: item.href }" style="display:block">
-            <img
-              v-if="item.preview_url"
-              :src="item.preview_url"
-              :alt="item.name"
-            />
+          <nuxt-link :to="{ path: item.href }" style="display: block">
+            <img v-if="item.preview_url" :src="item.preview_url" :alt="item.name" />
             <span v-else class="primer">{{ item.name }}</span>
           </nuxt-link>
         </div>
@@ -25,12 +17,8 @@
     <div v-else class="children">
       <div class="list">
         <div v-for="item in node.children" :key="item.id" class="node">
-          <nuxt-link :to="{ path: item.href }" style="display:block">
-            <img
-              v-if="item.attachment_url"
-              :src="item.attachment_url"
-              :alt="item.name"
-            />
+          <nuxt-link :to="{ path: item.href }" style="display: block">
+            <img v-if="item.attachment_url" :src="item.attachment_url" :alt="item.name" />
             <span v-else class="primer">{{ item.name }}</span>
           </nuxt-link>
         </div>
@@ -45,19 +33,19 @@ export default {
   props: { node: { type: Object, default: null } },
   data() {
     return {
-      batches: [1, 2, 3]
+      batches: [1, 2, 3],
     }
   },
   computed: {
     childrenInBatches() {
       return this.inBatches(this.node.children, 3)
-    }
+    },
   },
   methods: {
     validateAllHavePreviewUrl(nodes) {
       if (Array.isArray(nodes)) {
         return (
-          nodes.find(function(n) {
+          nodes.find(function (n) {
             return n.preview_url === undefined
           }) === undefined
         )
@@ -73,8 +61,8 @@ export default {
         }
       }
       return batches
-    }
-  }
+    },
+  },
 }
 </script>
 

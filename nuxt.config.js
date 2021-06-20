@@ -3,7 +3,7 @@ require('dotenv').config()
 export default {
   mode: 'universal',
   env: {
-    API_URL: process.env.API_URL || 'https://api.toyflish.com'
+    API_URL: process.env.API_URL || 'https://api.toyflish.com',
   },
   /*
    ** Headers of the page
@@ -16,10 +16,10 @@ export default {
       {
         hid: 'description',
         name: 'description',
-        content: ''
-      }
+        content: '',
+      },
     ],
-    link: [{ rel: 'icon', type: 'image/x-icon', href: '/favicon.ico' }]
+    link: [{ rel: 'icon', type: 'image/x-icon', href: '/favicon.ico' }],
   },
   /*
    ** Customize the progress-bar color
@@ -41,10 +41,10 @@ export default {
     '@nuxtjs/eslint-module',
     // Doc: https://github.com/nuxt-community/nuxt-tailwindcss
     '@nuxtjs/tailwindcss',
-    '@nuxtjs/gtm'
+    '@nuxtjs/gtm',
   ],
   purgeCSS: {
-    paths: ['./node_modules/highlight.js/styles/monokai-sublime.css']
+    paths: ['./node_modules/highlight.js/styles/monokai-sublime.css'],
   },
 
   /*
@@ -52,13 +52,13 @@ export default {
    */
   modules: [
     // Doc: https://axios.nuxtjs.org/usage
-    '@nuxtjs/axios'
+    '@nuxtjs/axios',
   ],
   gtm: {
     id: process.env.GTM_ID || '',
     dev: true,
     scriptDefer: true,
-    pageTracking: false
+    pageTracking: false,
   },
   /*
    ** Axios module configuration
@@ -72,6 +72,6 @@ export default {
     /*
      ** You can extend webpack config here
      */
-    extend(config, ctx) {}
-  }
+    extend(config, ctx) {},
+  },
 }

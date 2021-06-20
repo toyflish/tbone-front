@@ -2,14 +2,8 @@
   <div :class="{ open: menuOverlayOpen }" class="overlay-menu">
     <nav>
       <ul>
-        <li
-          v-for="(item, index) in $store.state.menuItems"
-          :key="index"
-          style="height: 20%"
-        >
-          <nuxt-link :to="{ path: item.href }" @click.native="closeMenu">{{
-            item.link_name
-          }}</nuxt-link>
+        <li v-for="(item, index) in $store.state.menuItems" :key="index" style="height: 20%">
+          <nuxt-link :to="{ path: item.href }" @click.native="closeMenu">{{ item.link_name }}</nuxt-link>
         </li>
       </ul>
     </nav>
@@ -21,7 +15,7 @@ import { mapGetters, mapActions } from 'vuex'
 export default {
   name: 'MenuOverlay',
   computed: mapGetters('nav', ['menuOverlayOpen']),
-  methods: mapActions('nav', ['closeMenu'])
+  methods: mapActions('nav', ['closeMenu']),
 }
 </script>
 <style lang="scss">

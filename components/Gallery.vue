@@ -5,20 +5,12 @@
       <img :src="node.attachment_url" />
       <!-- eslint-disable-next-line vue/no-v-html -->
       <div class="container-text px-4" v-html="node.content"></div>
-      <ThumbGrid
-        v-if="validateAllHavePreviewUrl(node.children)"
-        :nodes="node.children"
-        @click="swiperShow"
-      />
+      <ThumbGrid v-if="validateAllHavePreviewUrl(node.children)" :nodes="node.children" @click="swiperShow" />
       <div v-else class="children">
         <div class="list">
           <div v-for="item in node.children" :key="item.id" class="node">
             <nuxt-link :to="{ path: item.href }" style="display: block">
-              <img
-                v-if="item.attachment_url"
-                :src="item.attachment_url"
-                :alt="item.name"
-              />
+              <img v-if="item.attachment_url" :src="item.attachment_url" :alt="item.name" />
               <span v-else class="primer">{{ item.name }}</span>
             </nuxt-link>
           </div>
@@ -74,9 +66,7 @@ export default {
         // on History-back hash is not present
         if (hash !== '') {
           this.$router.push(this.$route.path)
-          const scrollToElement = document.querySelector(
-            `[data-slug="${hash}"]`
-          )
+          const scrollToElement = document.querySelector(`[data-slug="${hash}"]`)
           this.$nextTick(() => {
             scrollWindowTo(scrollToElement, 500)
           })
@@ -108,11 +98,7 @@ export default {
       new Image().src = url
     },
     pushToNode(node) {
-      // eslint-disable-next-line no-console
-      console.log('pushToNode')
-      console.log(`${this.node.href}/#${node.slug}`)
       this.$router.push({ path: this.node.href, hash: node.slug })
-      // window.history.pushState({}, null, `${this.node.href}#${node.slug}`)
     },
     swiperShow(node, pushState = true) {
       if (pushState) {

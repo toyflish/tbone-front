@@ -15,7 +15,7 @@ import ChildList from './ChildList'
 export default {
   name: 'ArchiveYear',
   components: {
-    ChildList
+    ChildList,
   },
   props: { node: { type: Object, default: null } },
   methods: {
@@ -26,8 +26,8 @@ export default {
         this.node.children.forEach((child) => arr.unshift(child))
       }
       return arr
-    }
-  }
+    },
+  },
 }
 </script>
 

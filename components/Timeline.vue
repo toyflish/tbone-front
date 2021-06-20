@@ -14,9 +14,9 @@ import ChildList from './ChildList'
 export default {
   name: 'Timeline',
   components: {
-    ChildList
+    ChildList,
   },
-  props: { node: { type: Object, default: null } }
+  props: { node: { type: Object, default: null } },
 }
 </script>
 

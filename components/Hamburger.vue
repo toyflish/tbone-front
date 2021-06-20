@@ -1,10 +1,10 @@
 <template>
   <button
     :class="{ open: open }"
-    @click="$emit('click')"
     class="hamburger-icon"
     role="menuitem"
     aria-label="toggle main menu"
+    @click="$emit('click')"
   >
     <span :class="{ shadow }"></span>
     <span :class="{ shadow }"></span>
@@ -18,13 +18,13 @@ export default {
   props: {
     open: {
       type: Boolean,
-      default: false
+      default: false,
     },
     shadow: {
       type: Boolean,
-      default: false
-    }
-  }
+      default: false,
+    },
+  },
 }
 </script>
 <style lang="scss">

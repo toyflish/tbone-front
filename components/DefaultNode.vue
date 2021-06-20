@@ -7,18 +7,10 @@
     <!-- eslint-disable-next-line vue/no-v-html -->
     <RichText :content="node.content" class="px-4 pb-8" />
     <div v-if="validateAllHavePreviewUrl(node.children)" class="children">
-      <div
-        v-for="(batch, index) in childrenInBatches"
-        :key="index"
-        class="batch"
-      >
+      <div v-for="(batch, index) in childrenInBatches" :key="index" class="batch">
         <div v-for="item in batch" :key="item.id" class="node">
           <nuxt-link :to="{ path: item.href }" style="display: block">
-            <img
-              v-if="item.preview_url"
-              :src="item.preview_url"
-              :alt="item.name"
-            />
+            <img v-if="item.preview_url" :src="item.preview_url" :alt="item.name" />
             <span v-else class="primer">{{ item.name }}</span>
           </nuxt-link>
         </div>
@@ -27,11 +19,7 @@
     <div v-else class="children">
       <div class="list">
         <article v-for="item in node.children" :key="item.id" class="node">
-          <nuxt-link
-            v-if="item.attachment_url"
-            :to="{ path: item.href }"
-            style="display: block"
-          >
+          <nuxt-link v-if="item.attachment_url" :to="{ path: item.href }" style="display: block">
             <img :src="item.attachment_url" :alt="item.name" />
           </nuxt-link>
           <div v-else class="container-text px-4">

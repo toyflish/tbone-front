@@ -8,7 +8,11 @@ h1 {
   font-size: 2em;
   font-weight: 500;
 }
-h2,h3,h4,h5,h6 {
+h2,
+h3,
+h4,
+h5,
+h6 {
   font-size: 1.5em;
   font-weight: 500;
 }
@@ -36,8 +40,7 @@ a {
   background-size: 100% 1.5px;
   background-position: center bottom 27%;
   background-origin: padding-box;
-  text-shadow: 3px 0 #fff, 2px 0 #fff, 1px 0 #fff, -1px 0 #fff, -2px 0 #fff,
-    -3px 0 #fff;
+  text-shadow: 3px 0 #fff, 2px 0 #fff, 1px 0 #fff, -1px 0 #fff, -2px 0 #fff, -3px 0 #fff;
 
   &:hover {
     color: $link-color-hover;
@@ -49,13 +52,12 @@ a {
 
 .subtitle {
   font-size: 24px;
-  font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, Oxygen,
-    Ubuntu, Cantarell, 'Open Sans', 'Helvetica Neue', sans-serif;
+  font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, Oxygen, Ubuntu, Cantarell, 'Open Sans',
+    'Helvetica Neue', sans-serif;
   letter-spacing: 0;
   font-weight: 300;
   font-style: normal;
   color: $subtitle-color;
   fill: $subtitle-color;
 }
-
 </styles>
