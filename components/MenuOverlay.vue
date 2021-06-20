@@ -1,21 +1,27 @@
 <template>
-  <div :class="{ open: menuOverlayOpen }" class="overlay-menu">
+  <div :class="{ open: navOpen }" class="overlay-menu">
     <nav>
       <ul>
         <li v-for="(item, index) in $store.state.menuItems" :key="index" style="height: 20%">
-          <nuxt-link :to="{ path: item.href }" @click.native="closeMenu">{{ item.link_name }}</nuxt-link>
+          <nuxt-link :to="{ path: item.href }" @click.native="closeNav">{{ item.link_name }}</nuxt-link>
         </li>
       </ul>
     </nav>
   </div>
 </template>
 <script>
-import { mapGetters, mapActions } from 'vuex'
+// import { mapGetters, mapActions } from 'vuex'
+import { useNav } from '@/composables/useNav'
 
 export default {
   name: 'MenuOverlay',
-  computed: mapGetters('nav', ['menuOverlayOpen']),
-  methods: mapActions('nav', ['closeMenu']),
+  // computed: mapGetters('nav', ['menuOverlayOpen']),
+  // methods: mapActions('nav', ['closeMenu']),
+  setup() {
+    const { navOpen, closeNav } = useNav()
+
+    return { navOpen, closeNav }
+  },
 }
 </script>
 <style lang="scss">

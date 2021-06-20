@@ -1,13 +1,13 @@
 <template>
-  <div class="fixed bottom-0 w-full gradient">
+  <div class="gradient fixed bottom-0 w-full">
     <nav class="container flex px-4 py-4" role="menubar">
       <div class="w-12">
         <nuxt-link v-if="breadcrumbVisible && upLink" :to="{ path: upLink.href }" role="menuitem" aria-label="back">
           <BreadCrumbArrow />
         </nuxt-link>
       </div>
-      <div class="ml-auto w-12 z-10">
-        <Hamburger :shadow="hamburgerShadow" :open="hamburgerOpen" @click="hamburgerClick" />
+      <div class="z-10 w-12 ml-auto">
+        <Hamburger :shadow="hamburgerShadow" :open="navOpen" @click="toggleNav" />
       </div>
       <MenuOverlay />
     </nav>
@@ -15,12 +15,12 @@
 </template>
 
 <script>
-import { mapState, mapGetters, mapActions } from 'vuex'
+// import { mapState, mapGetters, mapActions } from 'vuex'
 
 import MenuOverlay from '@/components/MenuOverlay'
 import Hamburger from '@/components/Hamburger'
 import BreadCrumbArrow from '@/components/BreadCrumbArrow'
-
+import { useNav } from '@/composables/useNav'
 export default {
   name: 'NavBar',
   components: {
@@ -28,21 +28,32 @@ export default {
     Hamburger,
     MenuOverlay,
   },
-  computed: {
-    ...mapState({
-      node: (state) => state.node,
-      nav: (state) => state.nav,
-    }),
-    ...mapGetters('node', ['currentHydrated', 'breadcrumb']),
-    ...mapGetters('nav', ['hamburgerShadow', 'hamburgerOpen']),
-    upLink() {
-      return this.breadcrumb[0]
-    },
-    breadcrumbVisible() {
-      return this.$store.state.hamburgerClickEvent === 'openMainMenu'
-    },
+
+  setup() {
+    const { navOpen, toggleNav, hamburgerShadow } = useNav()
+    return {
+      navOpen,
+      hamburgerShadow,
+      toggleNav,
+      breadcrumbVisible: false,
+      upLink: null,
+    }
   },
-  methods: mapActions('nav', ['hamburgerClick']),
+  // computed: {
+  //   ...mapState({
+  //     node: (state) => state.node,
+  //     nav: (state) => state.nav,
+  //   }),
+  //   ...mapGetters('node', ['currentHydrated', 'breadcrumb']),
+  //   ...mapGetters('nav', ['hamburgerShadow', 'hamburgerOpen']),
+  //   upLink() {
+  //     return this.breadcrumb[0]
+  //   },
+  //   breadcrumbVisible() {
+  //     return this.$store.state.hamburgerClickEvent === 'openMainMenu'
+  //   },
+  // },
+  // methods: mapActions('nav', ['hamburgerClick']),
 }
 </script>
 
