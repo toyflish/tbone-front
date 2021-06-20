@@ -29,7 +29,10 @@ module.exports = {
       colors: {
         lachs: '#ff5964'
       }
-    }
+    },
+  },
+  variants: {
+    extend: {},
   },
   plugins: [],
   purge: {
@@ -42,5 +45,6 @@ module.exports = {
       'plugins/**/*.js',
       'nuxt.config.js'
     ]
-  }
+  },
+  darkMode: false
 }
