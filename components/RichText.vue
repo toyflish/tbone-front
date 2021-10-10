@@ -5,9 +5,10 @@
 
 <script>
 import 'highlight.js/styles/monokai-sublime.css'
-const hljs = () => require('highlight.js/lib/common')
-const javascript = () => require('highlight.js/lib/languages/javascript.js')
-const css = () => require('highlight.js/lib/languages/css')
+// import javascript from 'highlight.js/lib/languages/javascript.js'
+const hljs = () => import('highlight.js/lib/core')
+const javascript = () => import('highlight.js/lib/languages/javascript')
+const css = () => import('highlight.js/lib/languages/css')
 
 export default {
   props: {
@@ -21,16 +22,23 @@ export default {
       highlighedContent: 'highlighting ..',
     }
   },
-  async mounted() {
-    const h = await hljs()
-    await h.registerLanguage('javascript', await javascript())
-    await h.registerLanguage('css', await css())
-    this.highlighedContent = this.$props.content
-    this.$nextTick(() => {
-      this.$el.querySelectorAll('pre code').forEach((block) => {
-        h.highlightBlock(block)
+  mounted() {
+    this.highlight()
+  },
+  methods: {
+    async highlight() {
+      const h = await hljs()
+      const jsLang = await javascript().then((mod) => mod.default)
+      const cssLang = await css().then((mod) => mod.default)
+      await h.registerLanguage('javascript', jsLang)
+      await h.registerLanguage('css', cssLang)
+      this.highlighedContent = this.$props.content
+      this.$nextTick(() => {
+        this.$el.querySelectorAll('pre code').forEach((block) => {
+          h.highlightBlock(block)
+        })
       })
-    })
+    },
   },
 }
 </script>

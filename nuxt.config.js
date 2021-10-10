@@ -1,7 +1,6 @@
 require('dotenv').config()
 
 export default {
-  mode: 'universal',
   env: {
     API_URL: process.env.API_URL || 'https://api.toyflish.com',
   },
@@ -41,7 +40,6 @@ export default {
     '@nuxtjs/eslint-module',
     // Doc: https://github.com/nuxt-community/nuxt-tailwindcss
     '@nuxtjs/tailwindcss',
-    '@nuxtjs/gtm',
   ],
   purgeCSS: {
     paths: ['./node_modules/highlight.js/styles/monokai-sublime.css'],
@@ -53,6 +51,7 @@ export default {
   modules: [
     // Doc: https://axios.nuxtjs.org/usage
     '@nuxtjs/axios',
+    '@nuxtjs/gtm',
   ],
   gtm: {
     id: process.env.GTM_ID || '',
