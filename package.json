@@ -24,7 +24,7 @@
     "autoprefixer": "^9",
     "core-js": "^3.14.0",
     "highlight.js": "^11.0.1",
-    "nuxt": "2.15.7",
+    "nuxt": "2.15.8",
     "vuetensils": "^0.8.0"
   },
   "devDependencies": {
