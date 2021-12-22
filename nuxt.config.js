@@ -1,6 +1,7 @@
 require('dotenv').config()
 
 export default {
+  serverMiddleware: ['~/middleware/responseHeaders.js'],
   env: {
     API_URL: process.env.API_URL || 'https://api.toyflish.com',
   },
